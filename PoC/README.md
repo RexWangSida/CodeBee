@@ -212,3 +212,86 @@ The planned communication workflow between the front-end and parser is as follow
 ##### Diagrams
 
 #### Bee Examples
+
+<!-- FIX: If (else less) statements cause errors -->
+
+###### Simple Maximum
+```
+program max_example() do
+  define max(num1, num2) do
+    if (num1 > num2)
+      return (num1)
+    return (num2)
+  end
+
+  output (max(6,7) = 7)
+  output (max(7,6) = 7)
+  output (max(-2,4) = 4)
+  output (max(3,9) = max(9,3))
+end
+```
+
+###### For Loop Implementation
+```
+program for_loop() do
+  // Print 10 to 1
+  i := 10
+  while (i > 0)
+  do
+    output (i)
+    i--
+  end
+end
+```
+
+###### FizzBuzz
+```
+program fizzbuzz() do
+  limit := 60
+  i := 0
+
+  while (i <= limit) do
+    if (i % 5 = 0 or i % 3 = 0)
+      if (i % 5 = 0 and i % 3 = 0)
+        output ('FizzBuzz')
+      else
+        if (i % 5 = 0)
+          output ('Fizz')
+        else
+          output ('Buzz')
+    i++
+  end
+end
+```
+
+###### Simple Guess-the-Number
+```
+program guess_game() do
+
+  num := input()
+  guess := 50
+
+  if (num >= 3 and num <= 97)
+  do
+    output (guess)
+
+    while (guess != num)
+    do
+      if (guess > actual)
+        guess := int:(guess - guess/2)
+      else
+        guess := int:(guess + guess/2)
+
+      output (guess)
+    end
+
+    output (guess)
+    return (guess)
+  end
+  else
+  do
+    output ('Number must be between 3 and 97')
+    return
+  end
+end
+```
