@@ -51,8 +51,6 @@ of statements, allowing for multiple statements where one would normally be allo
 contains generic `if`, `if/ else`, `while`, assignment, function declaration (called `define`), return, block and print (called `output`) statements. All statements are
 discussed in more detail below.
 
-The full Bee grammar can be found in _proof\_grammar.txt_.
-
 ##### Expressions
 
 Expressions are used in Bee to evaluate the result of mathematical operations.
@@ -75,10 +73,14 @@ parentheses to follow the precidence order below.
 | 1 |   ++, --, Params, Select   |
 | 0 |         Parentheses        |
 
-All binary operators are left associative. Inline incrementing (`++`) and decrementing
-(`--`) can only be used as postfix operators. Params are used to represent a function
-call and Select is used to index an array. Parameters and selection are expressed
-by the following:
+All binary operators are left associative. All operators at the 4th precidence number
+and higher are infix, all operators from 3rd to 2nd are prefix and 1st is postfix.
+Params are used to represent a function call and Select is used to index an array.
+
+To show how the code is structured, each statement will be shown in Backus–Naur form
+(BNF).
+The full Bee grammar can be found in _proof\_grammar.txt_. Two basic Parameters
+and selection are expressed by the following:
 
 `PARAM ::= '(' [EXPR (',' EXPR)*] ')'`  
 `SELECT ::= '[' [EXPR (',' EXPR)*] ']'`
@@ -93,14 +95,17 @@ include file importing or calling programs with arguments.
 
 ##### Block Statement
 
-`CPLX_STMT ::= 'do' '\n' ([STMT] '\n')* 'end'`  
+`STMT ::= 'do' '\n' STMT_LIST 'end' '\n'`  
 Block statements allow for multiple statements to be used when only one would normally
 be allowed. These statements will almost always follow the program statement. Empty
-lines are allowed in Bee and are captured here.
+lines are allowed in Bee and are captured here.  
+In the production, `STMT_LIST` simply accepts an arbitrary amount of statements and
+newlines with the production:  
+`STMT_LIST   ::= STMT | '\n'`
 
 ##### Assignment Statement
 
-`EXPR_STMT ::= [IDENT ':='] EXPR`  
+`STMT ::= POST_EXPR ':=' EXPR '\n' | EXPR`  
 Assignment expressions capture two uses, first being variable assignment and the
 second being function calling. Since Bee is a dynamically typed language, there is
 no need to verify the type of the variable before assignment. The optionality of the
@@ -108,7 +113,7 @@ identifier and becomes means that language literals can be expressed as statemen
 
 ##### If Statement
 
-`SLCT_STMT ::= 'if' '(' EXPR ')' '\n' STMT '\n'`  
+`STMT ::= 'if' '(' EXPR ')' '\n' STMT`  
 If statements are on of the fundamental control flow mechanisms in Bee. An if statement
 consists of the keyword 'if' and the conditional surrounded by additional paretheses.
 These parentheses are required as they help the reader recognize what the condition
@@ -117,32 +122,33 @@ only execute when the condition is true.
 
 ##### If/ Else Statement
 
-`SLCT_STMT ::= 'if' '(' EXPR ')' '\n' STMT '\n' 'else' '\n' STMT '\n'`  
+`STMT ::= 'if' '(' EXPR ')' '\n' STMT 'else' '\n' STMT'`  
 If/ else statements function similarly to if statements, but contain an additional
 branch which will execute when the condition is evaluated to false.
 
 ##### While Loop
-`ITER_STMT ::= 'while' '(' EXPR ')' '\n' STMT`  
+
+`STMT ::= 'while' '(' EXPR ')' '\n' STMT`
 Bee has only one iterable statement, the while loop. Like the if statements, the while
 loop has a condition which will execute when the condition is true. However, unlike the
 if statement, the while loop's body will continue to execute as long as the condition
 is true.
 
 ##### Define (Function) Statement
-`DEFN_STMT ::= 'define' IDENT PARAMS STMT`  
+`STMT ::= 'define' IDENT PARAMS STMT`  
 Define statements are structured identically to program statements, except they require
 the text 'define'. Define statements declare and assign functions to a specified identifier.
 Functions are allowed to take parameters, and unlike progra statements, parameters are
 planned to have an effect in Bee functions
 
 ##### Print (Output) Statement
-`OUTP_STMT   ::= 'output' '(' EXPR ')'`  
+`STMT   ::= 'output' '(' EXPR ')' '\n'`  
 Output statements will simply output the expression between the brackets to the
 output channel. Once again, parentheses are required around the what will be outputted
 to make it easier to see.
 
 ##### Return Statement
-`RETN_STMT   ::= 'return' ['(' EXPR ')']`  
+`RETN_STMT   ::= 'return' ['(' EXPR ')'] '\n'`  
 Return statements are similar to output statements in structure. Return statements
 will halt execution and return to the parent caller where the function was called.
 This can be used to stop execution prematurely. Return statements have an optional
