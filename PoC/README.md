@@ -250,7 +250,8 @@ program fizzbuzz() do
   limit := 60
   i := 0
 
-  while (i <= limit) do
+  while (i <= limit)
+  do
     if (i % 5 = 0 or i % 3 = 0)
       if (i % 5 = 0 and i % 3 = 0)
         output ('FizzBuzz')
