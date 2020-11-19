@@ -1,0 +1,21 @@
+.drag-box {
+  background-color: lightgray;
+  float: left;
+  width: 400px;
+  min-height: 1000px; /*lengthened the height slightly*/
+  padding-bottom: 30px;
+  height: auto;
+  margin: 30px;
+  cursor: move; /*added the 'cross' cursor*/
+}
+.drag-task {
+  background-color: white;
+  margin: 10px;
+  padding: 5px; /*added padding to make tiles bigger*/
+  border:1px dashed #000000; /*set an outline*/
+}
+
+.drop-active {
+  border: 1px dashed red;
+  cursor: pointer; /*change the pointer back to the default cursor while moving between lists*/
+}
