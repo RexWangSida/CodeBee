@@ -152,7 +152,10 @@ def getSym():
         if ch == '-': getChar(); sym = DECC
         else: sym = MINUS
     elif ch == '*': getChar(); sym = MULT
-    elif ch == '/': getChar(); sym = DIV
+    elif ch == '/':
+        getChar();
+        if ch == '/': linecomment()
+        else: sym = DIV
     elif ch == '%': getChar(); sym = MOD
     elif ch == ':':
         getChar();
