@@ -58,10 +58,11 @@ KEYWORDS = {'int': INT, 'real': FLOAT, 'str': STRING, 'bool': BOOL, 'if': IF,
 def init(file : str, src : str) -> None:
     # Initializes scanner for new source code
     global line, lastline, errline, pos, lastpos, errpos, filename
-    global sym, val, error, source, index
+    global sym, val, error, source, index, lastsym, lastval
     line, lastline, errline = 0, 0, 0
     pos, lastpos, errpos = 0, 0, 0
     sym, val, error = None, None, False
+    lastsym, lastval = None, None
     source, index, filename = src, 0, file
     getChar(); getSym()
 
@@ -85,7 +86,7 @@ def mark(msg):
 
 def number():
     global sym, val
-    sym, val, frac, div = INTEGER, 0, 0, 10
+    sym, val, frac, div, lastval = INTEGER, 0, 0, 10, val
     while '0' <= ch <= '9':
         val = 10 * val + int(ch)
         getChar()
@@ -100,20 +101,21 @@ def number():
         mark('number too large'); val = 0
 
 def raw_string(open : str):
-    global sym, val
+    global sym, val, lastval
     getChar()
     start = index - 1
     while chr(0) != ch != open: getChar()
     if ch == chr(0): mark('string not terminated'); sym = None;
     else:
-        sym = STRING_LITERAL; val = source[start:index-1]
+        sym = STRING_LITERAL
+        val, lastval = source[start:index-1], val
         getChar(); # Get rid of terminating '
 
 def identKW():
-    global sym, val
+    global sym, val, lastval
     start = index - 1
     while ('A' <= ch <= 'Z') or ('a' <= ch <= 'z') or ('0' <= ch <= '9') or (ch == '_'): getChar()
-    val = source[start:index-1]
+    val, lastval = source[start:index-1], val
     sym = KEYWORDS[val] if val in KEYWORDS else IDENT # (USRFUNC if val in usrfunc else IDENT)
 
 def blockcomment():
@@ -133,7 +135,9 @@ def linecomment():
 
 # Determines the next symbol in the input
 def getSym():
-    global sym, jump, source
+    global sym, lastsym
+
+    lastsym = sym
 
     while chr(0) < ch <= ' ' and ch != '\n':
         getChar()
