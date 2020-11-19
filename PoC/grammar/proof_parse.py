@@ -1,4 +1,5 @@
 
+from sys import argv
 import proof_scanner as SC
 from proof_scanner import PLUS, MINUS, INCC, DECC, MULT, DIV, MOD, AND, OR, NOT, EQ, NE, LT, GT, LE, GE, BECOMES, LINEEND, COMMA, LPAREN, RPAREN, LBRAK, RBRAK, LCURLY, RCURLY, COLON, INTEGER, REAL, STRING_LITERAL, IDENT, INT, FLOAT, STRING, BOOL, DO, END, IF, THEN, ELSE, WHILE, PROGRAM, FUNCTION, RETURN, OUTPUT, EOF, mark, getSym
 
@@ -457,7 +458,11 @@ def _readsource(fname):
     return src
 
 if __name__ == '__main__':
-    fname = 'proof_file'
+    if len(argv) >= 2:
+        fname = argv[1]
+    else:
+        fname = 'proof_file'
+        
     src = _readsource(fname)
 
     SC.init(fname, src)
