@@ -14,7 +14,7 @@ CPLX_STMT   ::= ('do' | '{') '\n' STMT_LIST ('end' | '}')
 
 STMT_LIST   ::= [STMT] '\n'
 
-SLCT_STMT   ::= 'if' '(' EXPR ')' '\n' STMT '\n' ['else' STMT '\n']
+SLCT_STMT   ::= 'if' '(' EXPR ')' '\n' STMT '\n' ['else' '\n' STMT '\n']
 
 ITER_STMT   ::= 'while' '(' EXPR ')' '\n' STMT
 

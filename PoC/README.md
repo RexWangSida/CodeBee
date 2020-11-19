@@ -116,7 +116,7 @@ only execute when the condition is true.
 
 ##### If/ Else Statement
 
-`SLCT_STMT ::= 'if' '(' EXPR ')' '\n' STMT '\n' 'else' STMT '\n'`  
+`SLCT_STMT ::= 'if' '(' EXPR ')' '\n' STMT '\n' 'else' '\n' STMT '\n'`  
 If/ else statements function similarly to if statements, but contain an additional
 branch which will execute when the condition is evaluated to false.
 
