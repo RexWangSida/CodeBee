@@ -150,14 +150,65 @@ back a value to the caller. Otherwise, the caller will get nothing back.
 
 #### Future
 
-##### Tree Parser
+All the contents of this file up to now have been concerned about the language parser
+and its operation. Everything in this section will be concerned with how the parser
+will actually execute the Bee code and how communication between the parser and front-end
+will work.
 
-##### Front to Back End
+##### Abstract Syntax Tree
 
-##### Execution
+CodeBee will be a block based system which will allow users to create Bee programs
+to be executed by this Bee parser. To facilitate communication between the front-end
+and parser, a datatype must be agreed upon that the front-end can write and the parser
+can read. Thankfully, this is not a new problem and many languages have a solution
+that would work extremely well, an abstract syntax tree (AST). Fundamentally, an AST
+breaks down a program into a series of nodes which in turn have their own child nodes.
+Each of these nodes encodes a logic unit of the language, like an if statement, binary
+operation or even the entire program. These ASTs can then be transmitted from the
+front-end to the parser.
+
+The block system of the front-end will also benefit from the nested node communication
+system. Each block can contain other blocks which the user can fill out by dragging blocks
+into specific spaces. This ability for a parent block to recognize children blocks
+can be used to determine the children for the purpose of creating nodes. This
+creation method will have to be a recursive algorithm.
+
+To facilitate this communication, a technology that may work well is JSON. This
+technology was chosen as a potential solution because it is very simple to create and
+read and also has the built in ability to deal with nested nodes. The front-end
+is also planned to be in JavaScript, so JSON will be readily available. To facilitate
+recieving JSON data, a library may have to be used to reading depending on the final
+implementation language of the parser.
+
+##### AST Execution
+
+Once an AST has been recieved, the parser can simply iterate through the recieved nodes
+to execute the program. Due to the method of AST creation, operator precidence will
+not be of concern and all nodes will have their children filled out completely.
+
+##### Feedback
+
+Once the AST has been evaluated, communication must come from the parser to the front-end.
+A similar JSON structure can be used, but it does not need to follow the AST structure.
+A simple JSON file can be created with required metadata and any outputs from the
+program. The parser should have no difficulty writing a JSON file, especially with help
+of a library and the front-end JavaScript should have no issues either. Once recieved,
+the front end can simply interpret the results and then display them to the user.
+
+Some planned pieces of feedback from the parser to user includes the error state, warning
+messages, code output and execution time.
+
+##### Communication Workflow
+
+The planned communication workflow between the front-end and parser is as follows:
+<!-- &#8594; is the code for right arrow and &#8595; for down arrow-->
+
+> Front-end: Code is created in CodeBee  
+> &#8595; Communication via JSON containing AST of code  
+> Parser: AST is read and evaluated  
+> &#8595; Communication via JSON containing code results  
+> Front-end: Results are interpreted and displayed to user  
 
 ##### Diagrams
-
-##### Workflow
 
 #### Bee Examples
