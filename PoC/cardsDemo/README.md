@@ -6,3 +6,5 @@
 ### 🚀 For the final application 
  - The front-end will send a JSON data to the back-end for execution.
  - The back-end will reformulate the JSON data and parse it.
+
+### 🦈Open up the index.html to play with it
