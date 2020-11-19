@@ -165,6 +165,9 @@ def cplx_stmt():
     if SC.sym == END: getSym()
     else: mark("expected 'end'")
 
+    if SC.sym == LINEEND: getSym()
+    else: mark("expected newline")
+
 def slct_stmt():
     if SC.sym not in FIRSTSLCT_STMT:
         mark('invalid slct_stmt first token')
@@ -187,9 +190,6 @@ def slct_stmt():
         else: mark("expected newline")
 
     stmt()
-
-    if SC.sym == LINEEND: getSym()
-    else: mark('expected newline')
 
     if SC.sym == ELSE:
         getSym()
@@ -239,9 +239,13 @@ def expr_stmt():
 
     if assignment:
         expr()
+
+        if SC.sym == LINEEND: getSym()
+        else: mark("expected newline")
     else:
         if SC.sym in BINARYOP:
             # MIDWAY THROUGH EXPR, NEED TO PICKUP
+            # ASK: May break operator precidence
             if SC.sym in {OR}:
                 expr()
             elif SC.sym in {AND}:
@@ -262,7 +266,7 @@ def expr_stmt():
             pass
 
         else:
-            mark('unknown expression end')
+            mark('unknown expression state')
 
 def func_stmt():
     if SC.sym not in FIRSTFUNC_STMT:
@@ -295,8 +299,12 @@ def retn_stmt():
 
         if SC.sym == RPAREN: getSym()
         else: mark("expected ')'")
+
     elif SC.sym != LINEEND:
         mark('return bracketed expression or none')
+
+    if SC.sym == LINEEND: getSym()
+    else: mark("expected newline")
 
 def outp_stmt():
     if SC.sym not in FIRSTOUTP_STMT:
@@ -314,6 +322,9 @@ def outp_stmt():
     if SC.sym == RPAREN: getSym()
     else: mark("expected ')'")
 
+    if SC.sym == LINEEND: getSym()
+    else: mark("expected newline")
+
 def stmt_list():
     if SC.sym not in FIRSTSTMT_LIST:
         mark('invalid stmt_list first token')
@@ -322,11 +333,11 @@ def stmt_list():
         if SC.sym in FIRSTSTMT:
             stmt()
 
-        if SC.sym == LINEEND: getSym()
+        elif SC.sym == LINEEND:
+            getSym()
+
         else:
-            mark('expected newline')
-            # BREAK OUT OF POTENTIAL INFINITE LOOPS
-            while SC.sym != LINEEND: getSym()
+            mark('unknown statement strt')
 
 def expr():
     if SC.sym not in FIRSTEXPR:
