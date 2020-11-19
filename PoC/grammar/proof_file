@@ -1,0 +1,36 @@
+program test() do
+
+  define modGuess(guess,actual) do
+    if (guess > actual)
+      return (int:(guess - guess/2))
+    else
+      return (int:(guess + guess/2))
+  end
+
+  fixed := true
+  guess := 50
+
+  if (fixed = true)
+    num := 42
+  else
+    num := input()
+
+  if (num >= 3 and num <= 97)
+  do
+    output (guess)
+    while (guess != num)
+    do
+      guess := modGuess(guess,num)
+      output (guess)
+    end
+
+    output (guess)
+    return (guess)
+  end
+  else
+  do
+    output ('Number must be between 3 and 97')
+    return
+  end
+
+end

@@ -1,0 +1,55 @@
+Grammar for potential CodeBee language
+
+PROGRAM     ::= 'program' IDENT PARAMS STMT
+
+STMT        ::= CPLX_STMT
+              | SLCT_STMT
+              | ITER_STMT
+              | EXPR_STMT
+              | DEFN_STMT
+              | RETN_STMT
+              | OUTP_STMT
+
+CPLX_STMT   ::= ('do' | '{') '\n' STMT_LIST ('end' | '}')
+
+STMT_LIST   ::= [STMT] '\n'
+
+SLCT_STMT   ::= 'if' '(' EXPR ')' '\n' STMT '\n' ['else' STMT '\n']
+
+ITER_STMT   ::= 'while' '(' EXPR ')' '\n' STMT
+
+EXPR_STMT   ::= [POST_EXPR ':='] EXPR
+
+DEFN_STMT   ::= 'define' IDENT PARAMS STMT
+
+RETN_STMT   ::= 'return' ['(' EXPR ')']
+
+OUTP_STMT   ::= 'output' '(' EXPR ')'
+
+EXPR        ::= AND_EXPR ['or' AND_EXPR]
+
+AND_EXPR    ::= EQLTY_EXPR ['and' EQLTY_EXPR]
+
+EQLTY_EXPR  ::= RLTN_EXPR [('=' | '!=') RLTN_EXPR]
+
+RLTN_EXPR   ::= ADD_EXPR [('<' | '>' | '<=' | '>=') ADD_EXPR]
+
+ADD_EXPR    ::= MULT_EXPR [('+' | '-') MULT_EXPR]
+
+MULT_EXPR   ::= CAST_EXPR [('*' | '/' | '%') CAST_EXPR]
+
+CAST_EXPR   ::= [('int' | 'real' | 'str' | 'bool') ':'] UNARY_EXPR
+
+UNARY_EXPR  ::= ['+' | '-' | 'not' | '!'] POST_EXPR
+
+POST_EXPR   ::= PRIME_EXPR ['++' | '--' | PARAMS | SELECTOR]*
+
+PRIME_EXPR  ::= IDENT
+              | INTEGER
+              | REAL
+              | STRING_LITERAL
+              | '(' EXPR (',' EXPR)* ')'
+
+PARAMS      ::= '(' [EXPR (',' EXPR)*] ')'
+
+SELECTOR    ::= '[' [EXPR (',' EXPR)*] ']'
