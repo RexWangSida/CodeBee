@@ -23,7 +23,8 @@ is designed to be easy to read and write for people with no former experience wi
 programming, only supporting integer, float, string and boolean primitives and array
 collection types. Bee supports basic unary and binary operations along with
 in place incrementing and decrementing. Bee also supports creation of functions which
-can be called from within Bee code.
+can be called from within Bee code. Single line comments can also be written by
+placing `//` before the comment itself. Block comments are not planned to be implemented.
 
 #### File Execution
 
