@@ -3,9 +3,9 @@
 In _README.md_, a system for communication between the CodeBee front-end and Bee
 parser is described. Basically, the front-end will create a JSON file containing
 code nodes that can be sent to the parser for execution.   
-In this file, a short example of how the JSON object could be structured is shown.  
-The example will be a program which which will calculate the fibonnaci numbers up to 100
-and print them. The codes is defined as the following:
+In this file, a short example of how the JSON object could be structured is shown.
+The example will be a program which which will calculate the fibonacci numbers up to 100
+and print them. The code is defined as the following:
 
 ```
 program fib() do
@@ -33,7 +33,7 @@ false branch. Additionally, binary and unary operations are represented by a uni
 'binop' or 'unop' node which has children for the arguments and the operation itself.
 Nodes that do not take any children are called 'literal's because they define themselves.
 Identifiers, numbers, strings, booleans and operators are all considered literals. Below is a AST
-breakdown of the fibonnaci function:
+breakdown of the fibonacci function:
 
 ```
 program node
