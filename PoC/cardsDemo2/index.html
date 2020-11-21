@@ -2,10 +2,17 @@
 <head>
   <meta charset="utf-8" />
   <style>
-    /* .nestable{
-      max-width: 60%;
+    .nestable{
+      /* max-width: 60%; */
+      padding:.5em;
+      margin-bottom:1em;
+      margin-left:.5em;
+      margin-right:.5em;
     }
-    .nested-item{
+    .program{
+      padding:1em;
+    }
+    /* .nested-item{
       max-width: 60%;
     } */
   </style>
@@ -20,14 +27,9 @@
 <div id="nested-example">
   <input id="textbox" action="addElement" placeholder="Add an element">
   <div id="drag-scope">
-    <div id="program" class="nestable center yellow">
-      <div class="yellow z-depth-1"><p>Program</p></div>
+    <div id="program" class="nestable program center yellow">
+      <p>Program</p>
 
-      <div class="nestable w-1-3 grey nested-item accent-1 z-depth-3">
-        <div class="handle grey z-depth-1"><p>Assignment Statement</p></div>
-        <div class="nestable blue z-depth-1"><p>Variable</p></div>
-        <div class="nestable green z-depth-1"><p>Expression</p></div>
-      </div>
 
       <!-- <div class="nestable w-1-3 grey nested-item accent-1 z-depth-3">
       <div class="handle grey z-depth-1"><p>If/ Else Statement</p></div>
@@ -89,7 +91,7 @@
   lmdd.set(document.getElementById('nested-example'), {
       containerClass: 'nestable',
       draggableItemClass: 'nested-item'
-      // handleClass: 'handle'
+      // handleClass: 'handle' // Not working for some reason
   });
 
   program = document.getElementById("program");
@@ -98,23 +100,26 @@
   input.addEventListener("keyup", function(event) {
     if (event.key === 'Enter' || event.keyCode === 13) {
 
-// <div class="nestable w-1-3 grey nested-item accent-1 z-depth-3">
-//   <div class="handle grey z-depth-1"><p>Assignment Statement</p></div>
-//   <div class="nestable blue z-depth-1"><p>Variable</p></div>
-//   <div class="nestable green z-depth-1"><p>Expression</p></div>
-// </div>
+      classStmt = 'nested-item w-1-3 grey accent-1 z-depth-3';
+
+      classExpr = 'nestable green z-depth-1';
+      classVar = 'nestable blue z-depth-1';
+      classReqStmt = 'nestable purple z-depth-1';
+
+      classOp = 'nested-item cyan z-depth-1';
+      classLit = 'nested-item cyan z-depth-1';
 
       if (input.value == 'assign'){
         var stmt = document.createElement("div");
         stmt.innerHTML = '<p>Assignment Statement</p></div>';
-        stmt.className = 'nestable w-1-3 grey nested-item accent-1 z-depth-3';
+        stmt.className = classStmt;
 
         var variable = document.createElement("div");
         variable.innerHTML = '<p>Variable</p>';
-        variable.className = 'nestable blue z-depth-1';
+        variable.className = classVar;
         var expression = document.createElement("div");
         expression.innerHTML = '<p>Expression</p>';
-        expression.className = 'nestable green z-depth-1';
+        expression.className = classExpr;
 
         stmt.appendChild(variable);
         stmt.appendChild(expression);
@@ -122,30 +127,86 @@
       }else if (input.value == 'if'){
         var stmt = document.createElement("div");
         stmt.innerHTML = '<p>If/ Else Statement</p></div>';
-        stmt.className = 'nestable w-1-3 grey nested-item accent-1 z-depth-3';
+        stmt.className = classStmt;
 
         var condition = document.createElement("div");
         condition.innerHTML = '<p>Condition</p>';
-        condition.className = 'nestable green z-depth-1';
+        condition.className = classExpr;
         var true_branch = document.createElement("div");
         true_branch.innerHTML = '<p>True Branch</p>';
-        true_branch.className = 'nestable purple z-depth-1';
+        true_branch.className = classReqStmt;
         var false_branch = document.createElement("div");
         false_branch.innerHTML = '<p>False Branch</p>';
-        false_branch.className = 'nestable purple z-depth-1';
+        false_branch.className = classReqStmt;
 
         stmt.appendChild(condition);
         stmt.appendChild(true_branch);
         stmt.appendChild(false_branch);
 
+      }else if (input.value == 'while'){
+        var stmt = document.createElement("div");
+        stmt.innerHTML = '<p>While Statement</p></div>';
+        stmt.className = classStmt;
+
+        var condition = document.createElement("div");
+        condition.innerHTML = '<p>Condition</p>';
+        condition.className = classExpr;
+        var body = document.createElement("div");
+        body.innerHTML = '<p>Body</p>';
+        body.className = classReqStmt;
+
+        stmt.appendChild(condition);
+        stmt.appendChild(body);
+
+      }else if (input.value == 'define'){
+        var stmt = document.createElement("div");
+        stmt.innerHTML = '<p>Define Statement</p></div>';
+        stmt.className = classStmt;
+
+        var name = document.createElement("div");
+        name.innerHTML = '<p>Identifier</p>';
+        name.className = classVar;
+        var params = document.createElement("div");
+        params.innerHTML = '<p>Parameters</p>';
+        params.className = classExpr;
+        var body = document.createElement("div");
+        body.innerHTML = '<p>Function Body</p>';
+        body.className = classReqStmt;
+
+        stmt.appendChild(name);
+        stmt.appendChild(params);
+        stmt.appendChild(body);
+
+      }else if (input.value == 'output'){
+        var stmt = document.createElement("div");
+        stmt.innerHTML = '<p>Output Statement</p></div>';
+        stmt.className = classStmt;
+
+        var condition = document.createElement("div");
+        condition.innerHTML = '<p>Expression</p>';
+        condition.className = classExpr;
+
+        stmt.appendChild(expression);
+
+      }else if (input.value == 'return'){
+        var stmt = document.createElement("div");
+        stmt.innerHTML = '<p>Return Statement</p></div>';
+        stmt.className = classStmt;
+
+        var expression = document.createElement("div");
+        expression.innerHTML = '<p>Expression</p>';
+        expression.className = classExpr;
+
+        stmt.appendChild(expression);
+
       }else if (['+', '-', '*', '/', '%', 'and', 'or', '=', '!=', '<', '>', '<=', '>='].indexOf(input.value) >= 0){
         var stmt = document.createElement("div");
         stmt.innerHTML = '<p>Op: ' + input.value + '</p>';
-        stmt.className = 'nested-item cyan z-depth-1';
+        stmt.className = classOp;
 
         var operand = document.createElement("div");
         operand.innerHTML = '<p>Operands</p>';
-        operand.className = 'nestable blue z-depth-1';
+        operand.className = classVar;
 
         stmt.appendChild(operand);
       }
@@ -153,7 +214,7 @@
       else{
         var stmt = document.createElement("div");
         stmt.innerHTML = '<p>' + input.value + '</p>';
-        stmt.className = 'nested-item cyan z-depth-1';
+        stmt.className = classLit;
       }
 
       program.appendChild(stmt);
