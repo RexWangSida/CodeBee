@@ -1,23 +1,69 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
+  <style>
+    /* .nestable{
+      max-width: 60%;
+    }
+    .nested-item{
+      max-width: 60%;
+    } */
+  </style>
 </head>
 <link href="./lmdd.min.css" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css" type="text/css"
       rel="stylesheet" media="screen,projection">
 <script src="./lmdd.min.js"></script>
 
-<div id="nested-example" class="example">
+<!-- Set children to have different colour interior nodes and will inheret the background of the clas they are dragged into -->
+
+<div id="nested-example">
   <input id="textbox" action="addElement" placeholder="Add an element">
   <div id="drag-scope">
-    <div id="program" class="nestable light yellow">
-      Program
-      <div class="nestable w-1-3 light purple nested-item accent-1 z-depth-3">
-        Assign
-        <div class="nestable purple z-depth-1"><p>Variable</p></div>
-        <div class="nestable purple z-depth-1"><p>Expression</p></div>
+    <div id="program" class="nestable center yellow">
+      <div class="yellow z-depth-1"><p>Program</p></div>
+
+      <div class="nestable w-1-3 grey nested-item accent-1 z-depth-3">
+        <div class="handle grey z-depth-1"><p>Assignment Statement</p></div>
+        <div class="nestable blue z-depth-1"><p>Variable</p></div>
+        <div class="nestable green z-depth-1"><p>Expression</p></div>
       </div>
-      <div class="nestable w-1-3 light red nested-item accent-1 z-depth-3">
+
+      <!-- <div class="nestable w-1-3 grey nested-item accent-1 z-depth-3">
+      <div class="handle grey z-depth-1"><p>If/ Else Statement</p></div>
+        <div class="nestable green z-depth-1"><p>Condition</p></div>
+        <div class="nestable purple z-depth-1"><p>True Branch</p></div>
+        <div class="nestable purple z-depth-1"><p>False Branch</p></div>
+      </div>
+
+      <div class="nestable w-1-3 grey nested-item accent-1 z-depth-3">
+      <div class="handle grey z-depth-1"><p>While Statement</p></div>
+        <div class="nestable green z-depth-1"><p>Condition</p></div>
+        <div class="nestable purple z-depth-1"><p>Loop Body</p></div>
+      </div>
+
+      <div class="nestable w-1-3 grey nested-item accent-1 z-depth-3">
+      <div class="handle grey z-depth-1"><p>Output Statement</p></div>
+        <div class="nestable green z-depth-1"><p>Expression</p></div>
+      </div>
+
+      <div class="nestable w-1-3 grey nested-item accent-1 z-depth-3">
+      <div class="handle grey z-depth-1"><p>Return Statement</p></div>
+        <div class="nestable green z-depth-1"><p>Expression</p></div>
+      </div>
+
+      <div class="nestable w-1-3 grey nested-item accent-1 z-depth-3">
+      <div class="handle grey z-depth-1"><p>Define Statement</p></div>
+        <div class="nestable blue z-depth-1"><p>Identifier</p></div>
+        <div class="nestable green z-depth-1"><p>Parameters</p></div>
+        <div class="nestable purple z-depth-1"><p>Function Body</p></div>
+      </div>
+
+      <div class="nested-item cyan z-depth-1"><p>var1</p></div>
+      <div class="nested-item cyan z-depth-1"><p>var2</p></div>
+      <div class="nested-item cyan z-depth-1"><p>var3</p></div> -->
+
+      <!-- <div class="nestable w-1-3 light red nested-item accent-1 z-depth-3">
           <div class="nested-item red z-depth-1"><p>Red</p></div>
           <div class="nested-item red z-depth-1"><p>Red</p></div>
           <div class="nested-item red z-depth-1"><p>Red</p></div>
@@ -31,7 +77,10 @@
           <div class="nested-item blue z-depth-1"><p>Blue</p></div>
           <div class="nested-item blue z-depth-1"><p>Blue</p></div>
           <div class="nested-item blue z-depth-1"><p>Blue</p></div>
-      </div>
+      </div> -->
+
+
+      <!-- <div class="yellow z-depth-1"><p>Program End</p></div> -->
     </div>
   </div>
 </div>
@@ -40,6 +89,7 @@
   lmdd.set(document.getElementById('nested-example'), {
       containerClass: 'nestable',
       draggableItemClass: 'nested-item'
+      // handleClass: 'handle'
   });
 
   program = document.getElementById("program");
@@ -47,9 +97,66 @@
   input = document.getElementById("textbox");
   input.addEventListener("keyup", function(event) {
     if (event.key === 'Enter' || event.keyCode === 13) {
-      var btn = document.createElement("BUTTON");   // Create a <button> element
-      btn.innerHTML = "CLICK ME";                   // Insert text
-      program.appendChild(btn);
+
+// <div class="nestable w-1-3 grey nested-item accent-1 z-depth-3">
+//   <div class="handle grey z-depth-1"><p>Assignment Statement</p></div>
+//   <div class="nestable blue z-depth-1"><p>Variable</p></div>
+//   <div class="nestable green z-depth-1"><p>Expression</p></div>
+// </div>
+
+      if (input.value == 'assign'){
+        var stmt = document.createElement("div");
+        stmt.innerHTML = '<p>Assignment Statement</p></div>';
+        stmt.className = 'nestable w-1-3 grey nested-item accent-1 z-depth-3';
+
+        var variable = document.createElement("div");
+        variable.innerHTML = '<p>Variable</p>';
+        variable.className = 'nestable blue z-depth-1';
+        var expression = document.createElement("div");
+        expression.innerHTML = '<p>Expression</p>';
+        expression.className = 'nestable green z-depth-1';
+
+        stmt.appendChild(variable);
+        stmt.appendChild(expression);
+
+      }else if (input.value == 'if'){
+        var stmt = document.createElement("div");
+        stmt.innerHTML = '<p>If/ Else Statement</p></div>';
+        stmt.className = 'nestable w-1-3 grey nested-item accent-1 z-depth-3';
+
+        var condition = document.createElement("div");
+        condition.innerHTML = '<p>Condition</p>';
+        condition.className = 'nestable green z-depth-1';
+        var true_branch = document.createElement("div");
+        true_branch.innerHTML = '<p>True Branch</p>';
+        true_branch.className = 'nestable purple z-depth-1';
+        var false_branch = document.createElement("div");
+        false_branch.innerHTML = '<p>False Branch</p>';
+        false_branch.className = 'nestable purple z-depth-1';
+
+        stmt.appendChild(condition);
+        stmt.appendChild(true_branch);
+        stmt.appendChild(false_branch);
+
+      }else if (['+', '-', '*', '/', '%', 'and', 'or', '=', '!=', '<', '>', '<=', '>='].indexOf(input.value) >= 0){
+        var stmt = document.createElement("div");
+        stmt.innerHTML = '<p>Op: ' + input.value + '</p>';
+        stmt.className = 'nested-item cyan z-depth-1';
+
+        var operand = document.createElement("div");
+        operand.innerHTML = '<p>Operands</p>';
+        operand.className = 'nestable blue z-depth-1';
+
+        stmt.appendChild(operand);
+      }
+
+      else{
+        var stmt = document.createElement("div");
+        stmt.innerHTML = '<p>' + input.value + '</p>';
+        stmt.className = 'nested-item cyan z-depth-1';
+      }
+
+      program.appendChild(stmt);
     }
   });
 </script>
