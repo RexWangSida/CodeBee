@@ -187,6 +187,18 @@ def getSym():
     elif ch == '[': getChar(); sym = LBRAK
     elif ch == ']': getChar(); sym = RBRAK
 
+
+    elif ch == '|':
+        getChar()
+        if ch == '|': getSym()
+        sym = OR
+        mark("boolean or operation is written as 'or'")
+    elif ch == '&':
+        getChar()
+        if ch == '&': getSym()
+        sym = AND
+        mark("boolean and operation is written as 'and'")
+
     # FOR SIMPLER WRITING
     elif ch == '{': getChar(); sym = DO # LCURLY
     elif ch == '}': getChar(); sym = END # RCURLY
