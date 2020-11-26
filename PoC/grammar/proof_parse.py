@@ -176,7 +176,7 @@ def slct_stmt():
     else: mark("expected 'if'")
 
     if SC.sym == LPAREN: getSym()
-    else: mark("if statement expectes '('")
+    else: mark("if statement expects '('")
 
     if SC.sym in FIRSTEXPR: expr()
     else: mark("expected expression")
@@ -210,7 +210,7 @@ def iter_stmt():
     else: mark("expected 'while'")
 
     if SC.sym == LPAREN: getSym()
-    else: mark("while statement expectes '('")
+    else: mark("while statement expects '('")
 
     if SC.sym in FIRSTEXPR: expr()
     else: mark("expected expression")
@@ -291,20 +291,21 @@ def retn_stmt():
     if SC.sym == RETURN: getSym()
     else: mark("expected 'return'")
 
-    if SC.sym == LPAREN:
-        getSym()
+    # if SC.sym == LPAREN:
+    #     getSym()
 
-        if SC.sym in FIRSTEXPR: expr()
-        else: mark("expected expression")
+    if SC.sym in FIRSTEXPR:
+        expr()
 
-        if SC.sym == RPAREN: getSym()
-        else: mark("expected ')'")
+        # if SC.sym == RPAREN: getSym()
+        # else: mark("expected ')'")
 
     elif SC.sym != LINEEND:
         mark('return bracketed expression or none')
 
-    if SC.sym == LINEEND: getSym()
-    else: mark("expected newline")
+    # if SC.sym == LINEEND: getSym()
+    else:
+        pass #mark("expected newline")
 
 def outp_stmt():
     if SC.sym not in FIRSTOUTP_STMT:
@@ -313,14 +314,16 @@ def outp_stmt():
     if SC.sym == OUTPUT: getSym()
     else: mark("expected 'output'")
 
-    if SC.sym == LPAREN: getSym()
-    else: mark("return statement expectes '('")
+    # errOpen = False
+    # if SC.sym == LPAREN: getSym()
+    # else: mark("output statement expects '('"); errOpen = True
 
     if SC.sym in FIRSTEXPR: expr()
     else: mark("expected expression")
 
-    if SC.sym == RPAREN: getSym()
-    else: mark("expected ')'")
+    # if SC.sym == RPAREN: getSym()
+    # else:
+    #     if not errOpen: mark("expected ')'")
 
     if SC.sym == LINEEND: getSym()
     else: mark("expected newline")
@@ -361,7 +364,10 @@ def and_expr():
 
 def eqlty_expr():
     if SC.sym not in FIRSTEQLTY_EXPR:
-        mark('invalid eqlty_expr first token')
+        if SC.sym == EQ:
+            mark("assignment requires ':='")
+        else:
+            mark('invalid eqlty_expr first token')
 
     rltn_expr()
 
@@ -407,7 +413,7 @@ def cast_expr():
         getSym()
 
         if SC.sym == COLON: getSym()
-        else: mark("cast expectes ':'")
+        else: mark("cast expects ':'")
 
     unary_expr()
 
@@ -473,7 +479,7 @@ if __name__ == '__main__':
         fname = argv[1]
     else:
         fname = 'proof_file'
-        
+
     src = _readsource(fname)
 
     SC.init(fname, src)
