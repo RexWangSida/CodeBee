@@ -24,9 +24,9 @@ ITER_STMT   ::= 'while' '(' EXPR ')' '\n' STMT
 
 FUNC_STMT   ::= 'define' IDENT PARAMS STMT
 
-OUTP_STMT   ::= 'output' '(' EXPR ')' '\n'
+OUTP_STMT   ::= 'output' EXPR '\n'
 
-RETN_STMT   ::= 'return' ['(' EXPR ')'] '\n'
+RETN_STMT   ::= 'return' [EXPR] '\n'
 
 EXPR        ::= AND_EXPR ['or' AND_EXPR]
 

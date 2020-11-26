@@ -142,13 +142,13 @@ Functions are allowed to take parameters, and unlike progra statements, paramete
 planned to have an effect in Bee functions
 
 ##### Print (Output) Statement
-`STMT   ::= 'output' '(' EXPR ')' '\n'`  
+`STMT   ::= 'output' EXPR '\n'`  
 Output statements will simply output the expression between the brackets to the
 output channel. Once again, parentheses are required around the what will be outputted
 to make it easier to see.
 
 ##### Return Statement
-`RETN_STMT   ::= 'return' ['(' EXPR ')'] '\n'`  
+`RETN_STMT   ::= 'return' [EXPR] '\n'`  
 Return statements are similar to output statements in structure. Return statements
 will halt execution and return to the parent caller where the function was called.
 This can be used to stop execution prematurely. Return statements have an optional
