@@ -25,6 +25,10 @@
 <!-- Set children to have different colour interior nodes and will inheret the background of the clas they are dragged into -->
 
 <div id="nested-example">
+  <p>Available statements are: assign, if, while, define, output, return</br>
+  Available operations are: +, -, *, /, %, and, or, =, !=, <, >, <=, >=</br>
+  All other inputs are literals</br>
+  <b>Note:</b> There is currently no way to remove statements or save layout</p>
   <input id="textbox" action="addElement" placeholder="Add an element">
   <div id="drag-scope">
     <div id="program" class="nestable program center yellow">
@@ -93,6 +97,10 @@
       draggableItemClass: 'nested-item'
       // handleClass: 'handle' // Not working for some reason
   });
+
+  function remove(element) {
+      element.parentNode.removeChild(element);
+  }
 
   program = document.getElementById("program");
 
@@ -218,6 +226,7 @@
       }
 
       program.appendChild(stmt);
+      input.value = '';
     }
   });
 </script>

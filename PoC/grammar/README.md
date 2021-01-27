@@ -228,7 +228,8 @@ program max_example() do
   define max(num1, num2) do
     if (num1 > num2)
       return (num1)
-    return (num2)
+    else
+      return (num2)
   end
 
   output (max(6,7) = 7)
@@ -272,7 +273,7 @@ program fizzbuzz() do
 end
 ```
 
-###### Simple Guess-the-Number
+###### Simple Guess-the-Number Game
 ```
 program guess_game() do
 

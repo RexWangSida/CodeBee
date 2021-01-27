@@ -186,7 +186,7 @@ def slct_stmt():
 
     if SC.sym == LINEEND: getSym()
     else:
-        if SC.sym in FIRSTSTMT: mark("expected stmt on newline")
+        if SC.sym in FIRSTSTMT: mark("expected stmt on new line")
         else: mark("expected newline")
 
     stmt()
@@ -196,7 +196,7 @@ def slct_stmt():
 
         if SC.sym == LINEEND: getSym()
         else:
-            if SC.sym in FIRSTSTMT: mark("expected stmt on newline")
+            if SC.sym in FIRSTSTMT: mark("expected stmt on new line")
             else: mark("expected newline")
 
         if SC.sym in FIRSTSTMT: stmt()
@@ -220,7 +220,7 @@ def iter_stmt():
 
     if SC.sym == LINEEND: getSym()
     else:
-        if SC.sym in FIRSTSTMT: mark("expected stmt on newline")
+        if SC.sym in FIRSTSTMT: mark("expected stmt on new line")
         else: mark("expected newline")
 
     stmt()

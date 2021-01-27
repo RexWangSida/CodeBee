@@ -1,5 +1,7 @@
 Bee Grammar
 
+Start symbol is PROGRAM
+
 PROGRAM     ::= 'program' IDENT PARAMS STMT
 
 STMT        ::= CPLX_STMT
@@ -16,7 +18,7 @@ STMT_LIST   ::= STMT
               | '\n'
 
 EXPR_STMT   ::= POST_EXPR ':=' EXPR '\n'
-| EXPR
+              | EXPR
 
 SLCT_STMT   ::= 'if' '(' EXPR ')' '\n' STMT ['else' '\n' STMT]
 
