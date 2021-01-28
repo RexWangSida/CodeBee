@@ -9,9 +9,9 @@ import SignUp from "./component/signup";
 function App() {
   return (<Router>
     <div className="App">
-      <nav className="navbar navbar-expand-lg navbar-light fixed-top">
+      <nav className="navbar navbar-expand-lg navbar-light fixed-top" style={{backgroundColor:"transparent"}}>
         <div className="container">
-          <Link className="navbar-brand" to={"/sign-in"}>Home</Link>
+          <Link className="navbar-brand" to={"/sign-in"}><img src="Bee.png" style={{width: "15%", height:"15%", float:"left"}}></img></Link>
           <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
             <ul className="navbar-nav ml-auto">
               <li className="nav-item">
