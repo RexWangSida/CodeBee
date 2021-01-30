@@ -1,0 +1,19 @@
+#canvas {
+    background-color: darkcyan;
+}
+
+.achievement {
+    height: 30px;
+    border: solid black;
+    margin: 5px;
+}
+
+.unlocked {
+    background-color: darkcyan;
+    color: black;
+}
+
+.locked {
+    background-color: rgb(128, 128, 128);
+    color: black;
+}
