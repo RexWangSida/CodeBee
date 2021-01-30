@@ -7,8 +7,8 @@ var users = [
 ];
 
 
-function check(uid, email, password){
-  if(users[uid].email == email && users[uid].password == password){
+function check(email, password){
+  if(users[0].email == email && users[0].password == password){
     return true;
   }
   return false;

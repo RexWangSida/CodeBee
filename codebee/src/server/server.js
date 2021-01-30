@@ -4,9 +4,9 @@ var login = require('./api/login');
 var cors = require('cors')
 
 app.use(cors());
-app.get('/login/:userId', (req, res) => {
+app.get('/login', (req, res) => {
   console.log("in");
-  if(login.check(request.params.userId, req.body.email, req.body.password)){
+  if(login.check(req.body.email, req.body.password)){
     return res.send("good");
   }
     return res.send("bad");
