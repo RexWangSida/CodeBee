@@ -1,0 +1,9 @@
+#levelGrid {
+    margin: 100px auto auto auto;
+    width: 800px
+}
+
+#levelButton {
+    width: 100px;
+    height: 80px;
+}
