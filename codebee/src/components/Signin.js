@@ -6,7 +6,14 @@ export default class Signin extends Component {
         super(props);
     }
     signin(){
-      fetch('/login/0')
+
+      fetch('http://localhost:8080/login/0', {
+          method: 'post',
+          body: {
+            email:"wangs132@mcmaster.ca",
+            password:"108740",
+          }
+      })
         .then(res => console.log(res))
         .catch(()=>{console.log("bad request!")});
     }

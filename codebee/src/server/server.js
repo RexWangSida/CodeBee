@@ -1,9 +1,12 @@
 const express = require('express');
 const app = express();
-var tools = require('./api/login');
+var login = require('./api/login');
+var cors = require('cors')
 
+app.use(cors());
 app.get('/login/:userId', (req, res) => {
-  if(login.check(userId, req.email, req.password)){
+  console.log("in");
+  if(login.check(request.params.userId, req.body.email, req.body.password)){
     return res.send("good");
   }
     return res.send("bad");
