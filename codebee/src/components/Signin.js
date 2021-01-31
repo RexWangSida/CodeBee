@@ -1,6 +1,29 @@
 import React, { Component } from "react";
 
 export default class Signin extends Component {
+
+    constructor(props) {
+        super(props);
+    }
+    
+    signin(email, password){
+
+      fetch('http://localhost:8080/login', {
+          method: 'post',
+          body: {
+            email:email,
+            password:password,
+          }
+      })
+        .then((res) =>{
+          if(res === "good"){
+            return true;
+          }
+          return false;
+        })
+        .catch(()=>{console.log("bad request!")});
+    }
+
     render() {
         return (
             <div className="max-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
@@ -36,7 +59,7 @@ export default class Signin extends Component {
         </div>
       </div>
       <div>
-        <button type="submit" className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+        <button type="button" onClick={this.signin} className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
           <span className="absolute left-0 inset-y-0 flex items-center pl-3">
             {/* Heroicon name: lock-closed */}
             <svg className="h-5 w-5 text-indigo-500 group-hover:text-indigo-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
