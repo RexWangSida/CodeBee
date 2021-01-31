@@ -5,21 +5,28 @@ export default class Signin extends Component {
     constructor(props) {
         super(props);
     }
-    
-    signin(email, password){
+
+    signin(emails="wangs132mcmaster.ca", password="108740"){
+
+      const data = {
+        email:"wangs132@mcmaster.ca",
+        password:"108740",
+      };
 
       fetch('http://localhost:8080/login', {
-          method: 'post',
-          body: {
-            email:email,
-            password:password,
-          }
+          method: 'POST',
+          headers:{
+                'Accept':'application/json,text/plain,*/*',
+                'Content-Type':'application/json'
+            },
+          body: JSON.stringify(data),
       })
         .then((res) =>{
+          console.log(res);
           if(res === "good"){
-            return true;
+            console.log("good");
           }
-          return false;
+          console.log("bad");
         })
         .catch(()=>{console.log("bad request!")});
     }
