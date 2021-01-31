@@ -4,13 +4,25 @@ export default class Signin extends Component {
 
     constructor(props) {
         super(props);
+        this.state = {
+          email: null,
+          password: null,
+        };
     }
 
-    signin(emails="wangs132mcmaster.ca", password="108740"){
+    inputEmail(){
+
+    }
+
+    inputPassword(){
+
+    }
+
+    signin(){
 
       const data = {
-        email:"wangs132@mcmaster.ca",
-        password:"108740",
+        email: this.state.email,
+        password: this.state.password,
       };
 
       fetch('http://localhost:8080/login', {
@@ -20,18 +32,17 @@ export default class Signin extends Component {
                 'Content-Type':'application/json'
             },
           body: JSON.stringify(data),
-      })
-        .then((res) =>{
-          console.log(res);
-          if(res === "good"){
-            console.log("good");
+      }).then(res => res.text())
+        .then(data =>{
+          if(String(data) === "good"){
+            return true;
           }
-          console.log("bad");
+          return false;
         })
         .catch(()=>{console.log("bad request!")});
     }
 
-    render() {
+    render(){
         return (
             <div className="max-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
   <div className="max-w-md w-full space-y-8">
