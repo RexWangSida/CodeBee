@@ -5,7 +5,8 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Signin from "./Signin";
 import Home from "./Home"
 import SignUp from "./Signup";
-
+import Level from "./Level";
+import Achievement from "./Achievement";
 
 export default function Navbar({ disableLinks }) {
   const [isExpanded, toggleExpansion] = useState(false);
@@ -44,9 +45,8 @@ export default function Navbar({ disableLinks }) {
         </div>
         {!disableLinks && (
           <div
-            className={`${
-              isExpanded ? `block` : `hidden`
-            } top-navbar border-gray-900 w-full md:inline-flex md:w-auto px-2`}
+            className={`${isExpanded ? `block` : `hidden`
+              } top-navbar border-gray-900 w-full md:inline-flex md:w-auto px-2`}
             id="menu"
           >
             <a
@@ -93,17 +93,19 @@ export default function Navbar({ disableLinks }) {
       </header>
 
       <Router>
-    <div className="App">
-      <div className="auth-wrapper">
-        <div className="auth-inner">
-          <Switch>
-            <Route exact path='/' component={Home} />
-            <Route path="/sign-in" component={Signin} />
-            <Route path="/sign-up" component={SignUp} />
-          </Switch>
-        </div>
-      </div>
-    </div></Router>
+        <div className="App">
+          <div className="auth-wrapper">
+            <div className="auth-inner">
+              <Switch>
+                <Route exact path='/' component={Home} />
+                <Route path="/sign-in" component={Signin} />
+                <Route path="/sign-up" component={SignUp} />
+                <Route path="/level-selection" component={Level} />
+                <Route path="/achievements" component={Achievement} />
+              </Switch>
+            </div>
+          </div>
+        </div></Router>
     </>
   );
 }
