@@ -24,17 +24,18 @@ export default function Signin() {
     fetch("http://localhost:8080/login", {
       method: "POST",
       headers: {
-        Accept: "application/json,text/plain,*/*",
+        "Accept": "application/json,text/plain,*/*",
         "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
     })
       .then((res) => res.text())
       .then((data) => {
-        if (String(data) === "good") {
-          console.log("success")
+        console.log(data);
+        if (parseInt(data, 10) === 0) {
+          return true;
         }
-        console.log("failed")
+        return false;
       })
       .catch(() => {
         console.log("bad request!");

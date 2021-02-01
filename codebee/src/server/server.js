@@ -14,11 +14,12 @@ app.use(bodyParser.json());
 
 
 //login handler
+//return 0 for success, 1 for fail to login authentication
 app.post('/login', (req, res) => {
   if(login.check(req.body.email, req.body.password)){
-    return res.json("good");
+    return res.json(0);
   }
-    return res.send("bad");
+    return res.json(1);
 });
 
 app.listen(8080);

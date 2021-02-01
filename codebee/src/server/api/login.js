@@ -1,6 +1,7 @@
 var users = [
   {
   uid: 0,
+  name: "Sida Wang",
   email : "wangs132@mcmaster.ca",
   password : "108740",
   }
