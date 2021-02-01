@@ -3,7 +3,7 @@ import logo from "../images/codebee.jpg";
 import cx from "classnames";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Signin from "./Signin";
-import Home from "./Home"
+import Home from "./Home";
 import SignUp from "./Signup";
 import Level from "./Level";
 import Achievement from "./Achievement";
@@ -20,7 +20,7 @@ export default function Navbar({ disableLinks }) {
           </a>
         </div>
         <div className="block md:hidden">
-        <button
+          <button
             onClick={() => toggleExpansion(!isExpanded)}
             aria-label="Expand Navigation links"
             className="transition duration-700 ease-in-out hover:bg-gray-300 rounded flex items-center px-3 py-2 text-gray-700"
@@ -45,8 +45,9 @@ export default function Navbar({ disableLinks }) {
         </div>
         {!disableLinks && (
           <div
-            className={`${isExpanded ? `block` : `hidden`
-              } top-navbar border-gray-900 w-full md:inline-flex md:w-auto px-2`}
+            className={`${
+              isExpanded ? `block` : `hidden`
+            } top-navbar border-gray-900 w-full md:inline-flex md:w-auto px-2`}
             id="menu"
           >
             <a
@@ -96,7 +97,7 @@ export default function Navbar({ disableLinks }) {
           <div className="auth-wrapper">
             <div className="auth-inner">
               <Switch>
-                <Route exact path='/' component={Home} />
+                <Route exact path="/" component={Home} />
                 <Route path="/sign-in" component={Signin} />
                 <Route path="/sign-up" component={SignUp} />
                 <Route path="/level-selection" component={Level} />
@@ -104,7 +105,8 @@ export default function Navbar({ disableLinks }) {
               </Switch>
             </div>
           </div>
-        </div></Router>
+        </div>
+      </Router>
     </>
   );
 }
