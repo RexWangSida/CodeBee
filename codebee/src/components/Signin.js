@@ -12,6 +12,15 @@ export default function Signin() {
     event.preventDefault();
   }
 
+
+
+  /*
+  return data type: JSON
+  return data format: {
+    result(int): 0 for good authentication, 1 for email exists but password not correct, 2 for email not registered
+    name(string): "name" for user name when good authentication, "" for others
+  }
+  */
   function signin() {
     console.log(email);
     console.log(password);
@@ -29,14 +38,10 @@ export default function Signin() {
       },
       body: JSON.stringify(data),
     })
-      .then((res) => res.text())
+      .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        if (parseInt(data, 10) === 0) {
-          return true;
-        }
-        return false;
-      })
+        return data;})
       .catch(() => {
         console.log("bad request!");
       });
