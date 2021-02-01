@@ -13,3 +13,5 @@ function check(email, password){
   }
   return false;
 }
+
+module.exports = { check };

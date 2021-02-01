@@ -1,9 +1,16 @@
 #levelGrid {
-    margin: 100px auto auto auto;
-    width: 800px
+    padding: 20px;
+    margin: auto;
+    width: 600px
 }
 
 #levelButton {
-    width: 100px;
+    margin: auto;
+    width: 120px;
     height: 80px;
+}
+
+.disabled {
+    filter: grayscale();
+    cursor: not-allowed;
 }

@@ -17,31 +17,20 @@ export default class Achievement extends React.Component {
     //     this.setState({ unlockedAchievements: unlockedAchievements})
     // }
 
-    isUnlocked = () => {
-        const unlockedAchievements = ['01', '02', '04', '06'];
-        if (this.props.achievementname in unlockedAchievements) {
-            return "unlocked achievement";
-        }
-        else {
-            return "locked achievement";
-        }
-    }
-
-    select = () => {
-        console.log(this.props.levelname)
-        // this.setState({ selected: this.props.levelname });
-    }
-
     render() {
         //load();
-        // var classNames = [];
-        // var i;
-        // for (i = 0; i<this.state.allAchievements.length; i++) {
-        //     classNames.push(this.state.allAchievements[i] in this.state.unlockedAchievements);
-        // }
+        var achievements = [];
+        var i;
+        for (i = 0; i < this.state.allAchievements.length; i++) {
+            var achievement = this.state.allAchievements[i];
+            if (this.state.unlockedAchievements.includes(achievement)) {
+                achievements.push(<li className="achievement" achievementname={achievement} key={achievement} onClick={this.select}>{achievement}</li>);
+            }
+            else {
+                achievements.push(<li className="locked achievement" achievementname={achievement} key={achievement} >{achievement}</li>);
+            }
+        }
 
-        const achievements = this.state.allAchievements.map((achievement) =>
-            <li className={this.isUnlocked} achievementname={achievement} key={achievement} onClick={this.select}>{achievement}</li>);
         return (
             <ul id="canvas" className="list-disc">
                 {achievements}
