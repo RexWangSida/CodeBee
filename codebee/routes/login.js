@@ -6,15 +6,16 @@ const uri = "mongodb+srv://Sida:108740@cluster0.5fddy.mongodb.net/codebee?retryW
 const client = new MongoClient(uri, { useNewUrlParser: true });
 
 
-
+client.connect(err => {
+    if (err) throw err;
+    console.log('Database has been connected successfully...');
+});
 
 /*
-
 return data: {
   result(int): 0 for good authentication, 1 for email found but password not correct, 2 for email not registered
   name(string): "name" for user name when good authentication, "" for others
 }
-
 */
 
 
@@ -22,9 +23,7 @@ return data: {
 router.post('/', (req, res,next) => {
 
     //retrieve user data from database
-    client.connect(err => {
-        if (err) throw err;
-        console.log('Database has been connected successfully...');
+
         const users = client.db("codebee").collection("users");
         // perform actions on the collection object
         users.findOne({email:req.body.email})
@@ -47,8 +46,6 @@ router.post('/', (req, res,next) => {
           }); //email not found
         });
 
-        client.close();
-    });
   });
 
 
