@@ -34,6 +34,14 @@ class Decoder(json.JSONDecoder):
                 result = Decoder._loadVariable(dct)
                 if DEBUG: print('Variable Finished')
 
+            elif dct['block'] == 'binop':
+                result = Decoder._loadBinOp(dct)
+                if DEBUG: print('BinOp Finished')
+
+            elif dct['block'] == 'unop':
+                result = Decoder._loadUnOp(dct)
+                if DEBUG: print('UnOp Finished')
+
             else:
                 print('Unknown block:', dct['block'])
 
@@ -52,6 +60,19 @@ class Decoder(json.JSONDecoder):
         typ = dct['type']
         value = dct['value']
         return LiteralBlock(typ,value)
+
+    @staticmethod
+    def _loadBinOp(dct):
+        oper = dct['oper']
+        expr1 = dct['expr1']
+        expr2 = dct['expr2']
+        return BinOpBlock(oper,expr1,expr2)
+
+    @staticmethod
+    def _loadUnOp(dct):
+        oper = dct['oper']
+        expr1 = dct['expr1']
+        return UnOpBlock(oper,expr1)
 
     @staticmethod
     def _loadAssignment(dct):
@@ -81,6 +102,12 @@ class Decoder(json.JSONDecoder):
 
         elif dct['block'] == 'variable':
             return Decoder._loadVariable(dct)
+
+        elif dct['block'] == 'binop':
+            return Decoder._loadBinOp(dct)
+
+        elif dct['block'] == 'unop':
+            return Decoder._loadBinOp(dct)
 
         else:
             print('Unknown Expr \'block\':',dct['block'])
@@ -155,22 +182,36 @@ class VariableBlock(_Block):
         self.block = 'variable'
         self.ident = ident
 
+class BinOpBlock(_Block):
+    def __init__(self, oper, expr1, expr2):
+        self.block = 'binop'
+        self.oper = oper
+        self.expr1 = expr1
+        self.expr2 = expr2
+
+class UnOpBlock(_Block):
+    def __init__(self, oper, expr1):
+        self.block = 'unop'
+        self.oper = oper
+        self.expr1 = expr1
+
 if __name__ == '__main__':
     progname = VariableBlock('testProg')
     var1 = VariableBlock('var1')
     var2 = VariableBlock('var2')
     param = VariableBlock('param1')
+    res = BinOpBlock('+',LiteralBlock('int','8'),param)
 
     body = ScopeBlock([
-        AssignmentBlock(var1,param),
-        AssignmentBlock(var2,LiteralBlock('int','8'))
+        AssignmentBlock(var1,UnOpBlock("--",param)),
+        AssignmentBlock(var2,res)
     ])
     prog = ProgramBlock(progname,body,param) # Object Version
 
     prog_original_json = prog.get_json() # JSON Version
 
     with open(filename, 'w') as openFile:
-        openFile.write( json.dumps(prog_original_json, indent=4, sort_keys=True) )
+        openFile.write( json.dumps(prog_original_json, indent=2, sort_keys=True) )
         if DEBUG: print('Write Original Success')
 
     with open(filename, 'r') as openFile:
@@ -186,7 +227,7 @@ if __name__ == '__main__':
     with open(filename, 'a') as openFile:
         openFile.write( '\n\n\n' )
         prog_read_json = prog_read.get_json()
-        openFile.write( json.dumps(prog_read_json, indent=4, sort_keys=True) )
+        openFile.write( json.dumps(prog_read_json, indent=2, sort_keys=True) )
         if DEBUG: print('Write Clone Success')
 
     # print(prog_original_json == prog_read_json)
