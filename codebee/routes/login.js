@@ -4,12 +4,10 @@ const User = require('../model/User')
 
 
 /*
-
 return data: {
   result(int): 0 for good authentication, 1 for email found but password not correct, 2 for email not registered
   name(string): "name" for user name when good authentication, "" for others
 }
-
 */
 
 
