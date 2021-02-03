@@ -34,6 +34,7 @@ mongoose.connect(
 
     app.use('/', indexRouter);
     app.use('/users', usersRouter);
+    app.use('/createuser', usersRouter);
     app.use('/login', loginRouter);
 
     // catch 404 and forward to error handler

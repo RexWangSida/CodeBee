@@ -1,6 +1,37 @@
 import React, { Component } from "react";
 
 export default class Signup extends Component {
+
+
+
+  signup() {
+    const data = {
+      name : "Steve Jobs",
+      email: "jokerrexwong@gmail.com",
+      password: "108740",
+    };
+
+    fetch("/createuser", {
+      method: "POST",
+      headers: {
+        "Accept": "application/json,text/plain,*/*",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if(data.result === 0){
+          alert("already signed up");//////////////////////////////////////////////////////////////replace for good signup
+        }else if(data.result === 1){
+          alert("The email is already signed up");//////////////////////replace for duplicate email
+        }
+      })
+      .catch(() => {
+        console.log("bad request!");
+      });
+  }
+
   render() {
     return (
       <div class="bg-grey-lighter min-h-screen flex flex-col">
@@ -35,7 +66,7 @@ export default class Signup extends Component {
             />
 
             <button
-              type="submit"
+              type="submit" onClick={this.signup}
               class="w-full text-center py-3 rounded bg-green text-white hover:bg-green-dark focus:outline-none my-1"
             >
               Create Account

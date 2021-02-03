@@ -25,4 +25,16 @@ router.post('/', async(req, res) => {
     }
 });
 
+
+/*
+request data {
+name : string,
+email: string,
+password: string,
+}
+*/
+router.post('/createuser', (req, res) =>{
+    res.json({result:0, name:""});
+});
+
 module.exports = router;

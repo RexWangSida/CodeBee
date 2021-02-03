@@ -11,13 +11,10 @@ export default function Signin() {
 
 
   function signin() {
-    console.log(email);
-    console.log(password);
     const data = {
       email: email,
       password: password,
     };
-    console.log(data)
 
     fetch("/login", {
       method: "POST",
