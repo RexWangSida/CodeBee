@@ -17,28 +17,27 @@ router.post('/', async(req, res) => {
       const {email,password} = req.body;
       const user = await User.findOne({
         email:email
-      });
+      })
       if(!user){
-        return res.json({
+        res.json({
             result: 2,
             name : "",
           }); //email not found
       }
       if(user.password !== password){
-        return res.json({
+        res.json({
                 result: 1,
                 name : "",
               }); //email - password not paired
       }
-      return res.json({
+      res.json({
                 result: 0,
-                name : result.name,
+                name : user.name,
               }); //good authentication
-
     }catch(e){
-      return res.status(400).json({
+      res.status(400).json({
         message:e.message,
-      })；
+      });
     }
 });
 
