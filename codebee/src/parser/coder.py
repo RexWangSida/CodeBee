@@ -42,19 +42,19 @@ class Decoder(json.JSONDecoder):
             sys.exit(1)
 
         # Catch misassigned blocks - TODO make cleaner or remove when confident
-        if not (result.block == 'program' and type(result) != blocks.ProgramBlock):
+        if result.block == 'program' and type(result) != blocks.ProgramBlock:
             logging.critical('Misassigned program block'); sys.exit(1)
-        elif not (result.block == 'scope' and type(result) != blocks.ScopeBlock):
+        elif result.block == 'scope' and type(result) != blocks.ScopeBlock:
             logging.critical('Misassigned scope block'); sys.exit(1)
-        elif not (result.block == 'assignment' and type(result) != blocks.AssignmentBlock):
+        elif result.block == 'assignment' and type(result) != blocks.AssignmentBlock:
             logging.critical('Misassigned assignment block'); sys.exit(1)
-        elif not (result.block == 'variable' and type(result) != blocks.VariableBlock):
+        elif result.block == 'variable' and type(result) != blocks.VariableBlock:
             logging.critical('Misassigned variable block'); sys.exit(1)
-        elif not (result.block == 'literal' and type(result) != blocks.LiteralBlock):
+        elif result.block == 'literal' and type(result) != blocks.LiteralBlock:
             logging.critical('Misassigned literal block'); sys.exit(1)
-        elif not (result.block == 'binop' and type(result) != blocks.BinOpBlock):
+        elif result.block == 'binop' and type(result) != blocks.BinOpBlock:
             logging.critical('Misassigned binop block'); sys.exit(1)
-        elif not (result.block == 'unop' and type(result) != blocks.UnOpBlock):
+        elif result.block == 'unop' and type(result) != blocks.UnOpBlock:
             logging.critical('Misassigned unop block'); sys.exit(1)
         else:
             return result
