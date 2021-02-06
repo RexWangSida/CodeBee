@@ -2,20 +2,19 @@
 import json, logging, sys
 import blocks, state, coder
 
-def readJSON(filename):
+def readFile(filename):
+    '''Reads raw json and converts it to blocks'''
     with open(filename, 'r') as openFile:
-        # Get block class implementation
         prog = json.load(openFile, cls=coder.Decoder)
 
     logging.debug('Successful JSON read')
     return prog
 
-def writeJSON(filename, result):
-    '''str_json is a string json from the json module'''
-
+def writeFile(filename, state):
+    '''Converts state dictionary to json and writes it to file'''
+    text = json.dumps(state, indent=2, sort_keys=True)
     with open(filename, 'w') as openFile:
-        # Write JSON representation of blocks
-        openFile.write( json.dumps(result, indent=2, sort_keys=True) )
+        openFile.write(text)
 
     logging.debug('Successful JSON write')
 
@@ -137,22 +136,24 @@ def ParseBlockExpr(struct):
     elif type(struct) == blocks.UnOpBlock:
         result = ParseBlockUnOp(struct)
 
+    if not result:
+        logging.warning('unassigned result')
     return result
 
 def parse():
     readfile = 'sample_prog.json'
     writefile = 'response_prog.json'
 
-    logging.basicConfig(filename='log_parser.txt', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+    logging.basicConfig(filename='log_parser.txt', level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
     logging.info("===Start Parse===")
     logging.info('JSON Read : ' + readfile)
     logging.info('JSON Write: ' + writefile)
 
-    struct = readJSON(readfile) # Read JSON and convert to blocks
+    struct = readFile(readfile) # Read JSON and convert to blocks
 
     ParseBlockProgram(struct)
 
-    writeJSON(writefile, state.getState()) # Write internal state to JSON
+    writeFile(writefile, state.getState()) # Write internal state to JSON
 
 
 
