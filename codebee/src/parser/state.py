@@ -13,18 +13,16 @@ def stateSym(name, value):
     logging.info('Set state '+name+' to '+value)
     state[name] = value
 
-def newSym(name,value):#type='int',value=0):
+def newSym(name,packet):
     if name in state['ident']:
         logging.info('duplicate symbol (overwrite): '+str(name))
 
-    packet = value#[type, value]
     state['ident'][name] = packet
 
-def setSym(name,value):#type='int',value=0):
+def setSym(name,packet):
     if name not in state['ident']:
         logging.info('missing symbol (add): '+str(name))
 
-    packet = value#[type, value]
     state['ident'][name] = packet
 
 def isSym(name):

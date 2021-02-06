@@ -40,36 +40,49 @@ def ParseBlockAssignment(struct):
         logging.critical('Attempt to parse '+struct.block+' as Assignment')
         sys.exit(1)
 
-    store = ParseBlockExpr(struct.expr)
-    state.setSym(struct.ident.ident,store)
+    name = struct.ident.ident # one ident gets a variable block
+    store = ParseBlockExpr(struct.expr) # (type, value)
+
+    logging.debug('assigned variable '+name+' to '+str(store))
+    state.setSym(name,store)
 
 def ParseBlockLiteral(struct):
     if type(struct) != blocks.LiteralBlock:
         logging.critical('Attempt to parse '+struct.block+' as Literal')
         sys.exit(1)
 
-    if struct.type == 'int':
-        return int(struct.value)
-    elif struct.type == 'str':
-        return str(struct.value)
-    elif struct.type == 'float':
-        return float(struct.value)
-    elif struct.type == 'bool':
-        return bool(struct.value)
+    try:
+        if struct.type == 'int':
+            int(struct.value)
+        elif struct.type == 'str':
+            str(struct.value)
+        elif struct.type == 'float':
+            float(struct.value)
+        elif struct.type == 'bool':
+            bool(struct.value)
+        else:
+            logging.error('Unknown literal type: '+struct.type)
+            sys.exit(1)
+    except ValueError:
+        logging.critical('invalid literal type-value pair: ('+struct.type+','+struct.value+')')
+        sys.exit(1)
 
-    logging.error('Unknown literal type: '+struct.type)
-    sys.exit(1)
+    logging.debug('loaded literal ('+struct.type+','+struct.value+')')
+    return (struct.type,struct.value)
 
 def ParseBlockVariable(struct):
     if type(struct) != blocks.VariableBlock:
         logging.critical('Attempt to parse '+struct.block+' as Variable')
         sys.exit(1)
 
-    if not state.isSym(struct.ident):
-        logging.critical('missing identifier: '+str(struct.ident))
+    name = struct.ident
+
+    if not state.isSym(name):
+        logging.critical('missing identifier: '+str(name))
         sys.exit(1)
 
-    value = state.getSym(struct.ident)
+    value = state.getSym(name)
+    logging.debug('loaded variable '+name+' '+str(value))
     return value
 
 def ParseBlockBinOp(struct):
