@@ -160,15 +160,15 @@ def _coder_test():
     progname = blocks.VariableBlock('testProg')
     var1 = blocks.VariableBlock('var1')
     var2 = blocks.VariableBlock('var2')
-    param = blocks.VariableBlock('param1')
-    res = blocks.BinOpBlock('+',blocks.LiteralBlock('int','8'),param)
+    var3 = blocks.VariableBlock('var3')
 
     body = blocks.ScopeBlock([
-        blocks.AssignmentBlock(var1,blocks.UnOpBlock("--",param)),
-        blocks.AssignmentBlock(var2,res)
+        blocks.AssignmentBlock(var1,blocks.LiteralBlock('int','1')),
+        blocks.AssignmentBlock(var2,blocks.LiteralBlock('int','3')),
+        blocks.AssignmentBlock(var3,blocks.BinOpBlock('+',var1,var2))
     ])
 
-    prog = blocks.ProgramBlock(progname,body,param) # Object Version
+    prog = blocks.ProgramBlock(progname,body) # Object Version
     prog_original_json = prog.get_json() # JSON Version
 
     with open(filename, 'w') as openFile:
