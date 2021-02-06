@@ -5,9 +5,11 @@ import blocks, state, coder
 def readFile(filename):
     '''Reads raw json and converts it to blocks'''
     with open(filename, 'r') as openFile:
+        logging.debug('start JSON parse')
         prog = json.load(openFile, cls=coder.Decoder)
+        logging.debug('finished JSON parse')
 
-    logging.debug('Successful JSON read')
+    logging.debug('Successful file read')
     return prog
 
 def writeFile(filename, state):
@@ -16,7 +18,7 @@ def writeFile(filename, state):
     with open(filename, 'w') as openFile:
         openFile.write(text)
 
-    logging.debug('Successful JSON write')
+    logging.debug('Successful file write')
 
 def ParseBlockProgram(struct):
     if type(struct) != blocks.ProgramBlock:
@@ -32,8 +34,10 @@ def ParseBlockScope(struct):
         logging.critical('Attempt to parse '+struct.block+' as Scope')
         sys.exit(1)
 
+    logging.debug('open stmt scope')
     for stmt in struct.stmts:
         ParseBlockStmt(stmt)
+    logging.debug('close stmt scope')
 
 def ParseBlockAssignment(struct):
     if type(struct) != blocks.AssignmentBlock:
@@ -230,7 +234,7 @@ def parse():
     readfile = 'sample_prog.json'
     writefile = 'response_prog.json'
 
-    logging.basicConfig(filename='log_parser.txt', level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
+    logging.basicConfig(filename='log_parser.txt', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
     logging.info("===Start Parse===")
     logging.info('JSON Read : ' + readfile)
     logging.info('JSON Write: ' + writefile)
