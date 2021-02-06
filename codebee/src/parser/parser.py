@@ -77,43 +77,116 @@ def ParseBlockBinOp(struct):
         logging.critical('Attempt to parse '+struct.block+' as BinOp')
         sys.exit(1)
 
-    expr1 = ParseBlockExpr(struct.expr1)
-    expr2 = ParseBlockExpr(struct.expr2)
+    type1,value1 = ParseBlockExpr(struct.expr1) # index 0: type, index 1: value
+    type2,value2 = ParseBlockExpr(struct.expr2)
 
-    if struct.oper == '+':
-        return expr1 + expr2
-    elif struct.oper == '-':
-        return expr1 - expr2
-    elif struct.oper == '*':
-        return expr1 * expr2
-    elif struct.oper == '/':
-        return expr1 / expr2
-    elif struct.oper == '%':
-        return expr1 % expr2
+    if type1 == 'int':
+        value1 = int(value1)
+    elif type1 == 'float':
+        value1 = float(value1)
+    elif type1 == 'str':
+        value1 = str(value1)
+    elif type1 == 'bool':
+        value1 = bool(value1)
+
+    if type2 == 'int':
+        value2 = int(value2)
+    elif type2 == 'float':
+        value2 = float(value2)
+    elif type2 == 'str':
+        value2 = str(value2)
+    elif type2 == 'bool':
+        value2 = bool(value2)
+
+    try:
+        if struct.oper == '+':
+            value3 = value1 + value2
+        elif struct.oper == '-':
+            value3 = value1 - value2
+        elif struct.oper == '*':
+            value3 = value1 * value2
+        elif struct.oper == '/':
+            value3 = value1 / value2
+        elif struct.oper == '%':
+            value3 = value1 % value2
+        else:
+            logging.critical('unknown operator '+struct.oper)
+            sys.exit(1)
+    except TypeError:
+        logging.critical('incompatible types for '+struct.oper+': '+str(value1)+', '+str(value2))
+        sys.exit(1)
+
+    testtype = type(value3)
+
+    if testtype == int:
+        type3 = 'int'
+    elif testtype == float:
+        type3 = 'float'
+    elif testtype == str:
+        type3 = 'str'
+    elif testtype == bool:
+        type3 = 'bool'
+
+    logging.debug('calculated '+str(value1)+struct.oper+str(value2)+'='+str(value3))
+    packet = (type3, str(value3))
+    return packet
 
 def ParseBlockUnOp(struct):
     if type(struct) != blocks.UnOpBlock:
         logging.critical('Attempt to parse '+struct.block+' as UnOp')
         sys.exit(1)
 
-    expr1 = ParseBlockExpr(struct.expr1)
+    type1,value1 = ParseBlockExpr(struct.expr1) # index 0: type, index 1: value
 
-    if struct.oper == '+':
-        return expr1
-    elif struct.oper == '-':
-        return - expr1
-    elif struct.oper == '++':
-        return expr1 + 1
-    elif struct.oper == '--':
-        return expr1 - 1
-    elif struct.oper == 'int':
-        return int(expr1)
-    elif struct.oper == 'str':
-        return str(expr1)
-    elif struct.oper == 'float':
-        return float(expr1)
-    elif struct.oper == 'bool':
-        return bool(expr1)
+    if type1 == 'int':
+        value1 = int(value1)
+    elif type1 == 'float':
+        value1 = float(value1)
+    elif type1 == 'str':
+        value1 = str(value1)
+    elif type1 == 'bool':
+        value1 = bool(value1)
+
+    try:
+        if struct.oper == '+':
+            value2 = + value1
+        elif struct.oper == '-':
+            value2 = - value1
+        elif struct.oper == '++':
+            value2 = value1 - 1
+        elif struct.oper == '--':
+            value2 = value1 - 1
+        elif struct.oper == 'int':
+            value2 = int(value1)
+        elif struct.oper == 'float':
+            value2 = float(value1)
+        elif struct.oper == 'str':
+            value2 = str(value1)
+        elif struct.oper == 'bool':
+            value2 = bool(value1)
+        else:
+            logging.critical('unknown operator '+struct.oper)
+            sys.exit(1)
+    except TypeError:
+        logging.critical('incompatible type for '+struct.oper+': '+str(expr1[0]))
+        sys.exit(1)
+    except ValueError:
+        logging.critical('incompatible value for '+struct.oper+': '+str(expr1[0]))
+        sys.exit(1)
+
+    testtype = type(value2)
+    if testtype == int:
+        type2 = 'int'
+    elif testtype == float:
+        type2 = 'float'
+    elif testtype == str:
+        type2 = 'str'
+    elif testtype == bool:
+        type2 = 'bool'
+
+    logging.debug('calculated '+struct.oper+str(value1)+'='+str(value2))
+    packet = (type2, str(value2))
+    return packet
 
 def ParseBlockStmt(struct):
     if type(struct) == blocks.ProgramBlock:
