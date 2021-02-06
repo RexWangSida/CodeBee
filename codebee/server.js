@@ -33,7 +33,6 @@ mongoose.connect(
     app.use(express.static(path.join(__dirname, 'build')));
 
     app.use('/', indexRouter);
-    app.use('/users', usersRouter);
     app.use('/createuser', usersRouter);
     app.use('/login', loginRouter);
 
