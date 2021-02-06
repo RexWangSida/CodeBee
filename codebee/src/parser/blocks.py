@@ -52,7 +52,9 @@ class AssignmentBlock(_Block):
 class LiteralBlock(_Block):
     def __init__(self, type, value):
         self.block = 'literal'
+        # Available types are int, float, str, bool
         self.type = type
+        # value for bool is '1' for true and '' for false
         self.value = value
 
 class VariableBlock(_Block):
