@@ -7,9 +7,6 @@ export default function Signin() {
     return email.length > 0 && password.length > 0;
   }
 
-
-
-
   function signin() {
     const data = {
       email: email,
