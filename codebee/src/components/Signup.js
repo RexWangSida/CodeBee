@@ -1,14 +1,21 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 
-export default class Signup extends Component {
+export default function Signup (){
 
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+  
+    const [name, setName] = useState("");
 
+    function validateForm() {
+      return email.length > 0 && password.length > 0;
+    }
 
-  signup() {
+  function signup() {
     const data = {
-      name : "Steve Jobs",
-      email: "wangs132@mcmaster.ca",
-      password: "108740",
+      name : name,
+      email: email,
+      password: password,
     };
 
     fetch("/createuser", {
@@ -32,7 +39,6 @@ export default class Signup extends Component {
       });
   }
 
-  render() {
     return (
       <div class="bg-grey-lighter max-h-screen flex flex-col">
         <div class="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2">
@@ -43,6 +49,7 @@ export default class Signup extends Component {
               class="block border border-grey-light w-full p-3 rounded mb-4"
               name="fullname"
               placeholder="Full Name"
+              onChange={(e) => setName(e.target.value)}
             />
 
             <input
@@ -50,6 +57,7 @@ export default class Signup extends Component {
               class="block border border-grey-light w-full p-3 rounded mb-4"
               name="email"
               placeholder="Email"
+              onChange={(e) => setEmail(e.target.value)}
             />
 
             <input
@@ -57,6 +65,7 @@ export default class Signup extends Component {
               class="block border border-grey-light w-full p-3 rounded mb-4"
               name="password"
               placeholder="Password"
+              onChange={(e) => setPassword(e.target.value)}
             />
             <input
               type="password"
@@ -66,8 +75,8 @@ export default class Signup extends Component {
             />
 
             <button
-              type="button" onClick={this.signup}
-              class="w-full text-center py-3 rounded bg-green text-white hover:bg-green-dark focus:outline-none my-1"
+              type="button" onClick={signup}
+              class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
             >
               Create Account
             </button>
@@ -87,4 +96,3 @@ export default class Signup extends Component {
       </div>
     );
   }
-}

@@ -36,8 +36,8 @@ class Game extends React.Component {
     return (
       <>
           <DragDropContext onDragEnd={this.onDragEnd}>
-            <div className="container">
-              <div className="columns">
+            <div className="container mx-auto row-auto">
+               <h2>Marvel</h2>
                 <Dropzone
                   id={COMICS.MARVEL}
                   heroes={this.state[COMICS.MARVEL]}
@@ -49,7 +49,6 @@ class Game extends React.Component {
                   heroes={this.state[COMICS.DC]}
                   isDropDisabled={isDropDisabled}
                 />
-              </div>
             </div>
           </DragDropContext>
         

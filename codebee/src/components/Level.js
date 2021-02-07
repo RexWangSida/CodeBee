@@ -1,5 +1,7 @@
 import React from "react";
 import "./Level.css"
+import Game from "./GameSystem/Game"
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 var unlockedLevels = ["1-1", "1-2", "2-1", "2-2"]
 
@@ -47,9 +49,26 @@ export default class Level extends React.Component {
         }
 
         return (
+            <>
+
             <div id="levelGrid" className="grid grid-rows-3 grid-flow-col gap-4" >
+            <Link to="/game">
                 {buttons}
+                </Link>
             </div>
+            
+            <Router>
+        <div className="App">
+          <div className="auth-wrapper">
+            <div className="auth-inner">
+              <Switch>
+                <Route exact path="/game" component={Game} />
+              </Switch>
+            </div>
+          </div>
+        </div>
+      </Router>
+            </>
         );
     }
 }

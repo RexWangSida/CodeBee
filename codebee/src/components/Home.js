@@ -3,6 +3,7 @@ import HighlightedChar from "./HighlightedChar";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Level from "./Level";
 import Achievement from "./Achievement";
+import Game from "./GameSystem/Game";
 
 export default class Home extends Component {
   render() {
@@ -43,8 +44,19 @@ export default class Home extends Component {
                   View Achievement
                 </a>
               </div>
+              <div className="mt-3 sm:mt-0 sm:ml-3">
+                <a
+                  href="/game"
+                  className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200 md:py-4 md:text-lg md:px-10"
+                >
+                  Game
+                </a>
+              </div>
             </div>
           </div>
+          <div>
+</div>
+
         </main>
 
         <Router>
@@ -54,6 +66,7 @@ export default class Home extends Component {
                 <Switch>
                   <Route path="/level-selection" component={Level} />
                   <Route path="/achievements" component={Achievement} />
+                  <Route path="/game" component={Game} />
                 </Switch>
               </div>
             </div>
