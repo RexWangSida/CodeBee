@@ -1,4 +1,4 @@
-import { HEROES, COMICS } from './data';
+import { HEROES, COMICS } from './Data';
 
 // the Knuth shuffle algorithm
 export function shuffle(array) {

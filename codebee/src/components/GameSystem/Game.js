@@ -1,13 +1,9 @@
 import React from 'react';
 import { DragDropContext } from 'react-beautiful-dnd';
 
-import { HEROES, COMICS } from './custom/data';
-import { shuffle, move, GAME_STATE } from './custom/utils';
-
-import Modal from './components/Modal';
-import Header from './components/Header';
-import Dropzone from './components/Dropzone';
-import Footer from './components/Footer';
+import { HEROES, COMICS } from './Data';
+import { shuffle, move, GAME_STATE } from './utils';
+import Dropzone from './Dropzone';
 
 const GAME_DURATION = 1000 * 30; // 30 seconds
 
@@ -39,18 +35,6 @@ class Game extends React.Component {
 
     return (
       <>
-        <Header gameState={gameState} timeLeft={timeLeft} endGame={this.endGame} />
-        {this.state.gameState !== GAME_STATE.PLAYING && (
-          <Modal
-            startGame={this.startGame}
-            resetGame={this.resetGame}
-            timeLeft={timeLeft}
-            gameState={gameState}
-            groups={groups}
-          />
-        )}
-        {(this.state.gameState === GAME_STATE.PLAYING ||
-          this.state.gameState === GAME_STATE.DONE) && (
           <DragDropContext onDragEnd={this.onDragEnd}>
             <div className="container">
               <div className="columns">
@@ -68,8 +52,7 @@ class Game extends React.Component {
               </div>
             </div>
           </DragDropContext>
-        )}
-        <Footer />
+        
       </>
     );
   }
