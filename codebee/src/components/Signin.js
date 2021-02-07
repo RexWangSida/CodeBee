@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import axios from 'axios'
 export default function Signin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -12,13 +11,10 @@ export default function Signin() {
 
 
   function signin() {
-    console.log(email);
-    console.log(password);
     const data = {
       email: email,
       password: password,
     };
-    console.log(data)
 
     fetch("/login", {
       method: "POST",
