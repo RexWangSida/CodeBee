@@ -8,7 +8,7 @@ const mongoose = require('mongoose');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var loginRouter = require('./routes/login');
-
+var gameRouter = require('./routes/game');
 
 const DB = "mongodb+srv://Sida:108740@cluster0.5fddy.mongodb.net/codebee?retryWrites=true&w=majority";
 
@@ -35,6 +35,7 @@ mongoose.connect(
     app.use('/', indexRouter);
     app.use('/createuser', usersRouter);
     app.use('/login', loginRouter);
+    app.use('/game', gameRouter);
 
     // catch 404 and forward to error handler
     app.use(function(req, res, next) {

@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+var Int32 = require('mongoose-int32');
 const UserSchema = new mongoose.Schema({
   uid:{
     type:Int32,
