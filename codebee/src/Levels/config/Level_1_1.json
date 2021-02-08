@@ -6,7 +6,7 @@
     This data can be viewed, changed and use for other purposes. For example, a variable called num stores a value 5 as:\n\n
     num = 5\n\n 
     Your challenge here is to store the values 2 and 3 in two variables called a and b. 
-    Then store the result of adding the value in these two variables in a new variable called c." ,
+    Then store the result of adding the value in these two variables in a new variable called c.",
     "hints": [
                 "1: The assignment operator can be used to assign a value to a variable.",
                 "2: The + operator can be assigned on two variables. Eg: num1 + num2.",
