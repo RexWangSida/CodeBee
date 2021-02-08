@@ -7,6 +7,7 @@ import Home from "./Home";
 import SignUp from "./Signup";
 import Level from "./Level";
 import Achievement from "./Achievement";
+import Game from "./GameSystem/Game";
 
 export default function Navbar({ disableLinks }) {
   const [isExpanded, toggleExpansion] = useState(false);
@@ -102,6 +103,7 @@ export default function Navbar({ disableLinks }) {
                 <Route path="/sign-up" component={SignUp} />
                 <Route path="/level-selection" component={Level} />
                 <Route path="/achievements" component={Achievement} />
+                <Route path="/game" component={Game} />
               </Switch>
             </div>
           </div>

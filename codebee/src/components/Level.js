@@ -33,14 +33,15 @@ export default class Level extends React.Component {
             var levelname = this.state.allLevels[i];
             if (this.state.unlockedLevels.includes(levelname)) {
                 buttons.push(
-                    <button
-                        id="levelButton"
-                        className="py-2 px-4 font-semibold rounded-lg shadow-md text-white bg-blue-500 hover:bg-blue-700"
-                        onClick={this.select}
-                        key={levelname}
-                        value={levelname}>
-                        {levelname}
-                    </button>
+                    <Link to="/game" key={levelname}>
+                        <button
+                            id="levelButton"
+                            className="py-2 px-4 font-semibold rounded-lg shadow-md text-white bg-blue-500 hover:bg-blue-700"
+                            onClick={this.select}
+                            value={levelname}>
+                            {levelname}
+                        </button>
+                    </Link>
                 );
             }
             else {
@@ -51,23 +52,21 @@ export default class Level extends React.Component {
         return (
             <>
 
-            <div id="levelGrid" className="grid grid-rows-3 grid-flow-col gap-4" >
-            <Link to="/game">
-                {buttons}
-                </Link>
-            </div>
-            
-            <Router>
-        <div className="App">
-          <div className="auth-wrapper">
-            <div className="auth-inner">
-              <Switch>
-                <Route exact path="/game" component={Game} />
-              </Switch>
-            </div>
-          </div>
-        </div>
-      </Router>
+                <div id="levelGrid" className="grid grid-rows-3 grid-flow-col gap-4" >
+                    {buttons}
+                </div>
+
+                <Router>
+                    <div className="App">
+                        <div className="auth-wrapper">
+                            <div className="auth-inner">
+                                <Switch>
+                                    <Route exact path="/game" component={Game} />
+                                </Switch>
+                            </div>
+                        </div>
+                    </div>
+                </Router>
             </>
         );
     }
