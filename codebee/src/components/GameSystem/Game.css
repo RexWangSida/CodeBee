@@ -1,0 +1,47 @@
+.canves {
+    padding: 0 20px 0 20px;
+    height: calc(100vh - 122px);
+    display: flex;
+    flex-direction: column;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+}
+
+.left {
+    width: 70%;
+    margin-left: 0;
+}
+
+.right {
+    width: 30%;
+    margin-right: 0;
+}
+
+.instruction {
+    white-space: pre-line;
+    padding: 20px;
+    margin-top: 0;
+    min-height: 200px;
+    text-align: left;
+}
+
+.result {
+    margin-bottom: 0;
+    padding: 20px;
+    white-space: pre-line;
+    padding: 20px;
+    min-height: 200px;
+    text-align: left;
+}
+
+.buttonGroup {
+    margin: auto;
+}
+
+.dropzone {
+    height: 100%;
+}
+

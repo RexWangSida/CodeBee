@@ -1,4 +1,4 @@
-import { HEROES, COMICS } from './Data';
+import { BLOCKS, ATTRS } from './Data';
 
 // the Knuth shuffle algorithm
 export function shuffle(array) {
@@ -22,30 +22,30 @@ export function shuffle(array) {
 }
 
 // method to handle points calculation based on sort order as well as grouping
-function calculateScore(groupedHeroes, comics) {
-  const correctOrder = HEROES.filter(hero => hero.comics === comics).sort((a, b) =>
+function calculateScore(groupedBlocks, attrs) {
+  const correctOrder = BLOCKS.filter(block => block.attrs === attrs).sort((a, b) =>
     a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1
   );
 
-  return groupedHeroes.reduce((score, { name }, index) => {
-    const maxPoint = HEROES.length;
-    const heroIndex = correctOrder.findIndex(hero => hero.name === name);
-    const penalty = heroIndex >= 0 ? Math.abs(index - heroIndex) : maxPoint;
+  return groupedBlocks.reduce((score, { name }, index) => {
+    const maxPoint = BLOCKS.length;
+    const blockIndex = correctOrder.findIndex(block => block.name === name);
+    const penalty = blockIndex >= 0 ? Math.abs(index - blockIndex) : maxPoint;
     console.log({ name, points: maxPoint - penalty });
     return score + (maxPoint - penalty);
   }, 0);
 }
 
 export function getTotalScore(groups, timeLeft) {
-  const gameScore = Object.values(COMICS).reduce(
-    (sum, comicsName) => sum + calculateScore(groups[comicsName], comicsName),
+  const gameScore = Object.values(ATTRS).reduce(
+    (sum, attrsName) => sum + calculateScore(groups[attrsName], attrsName),
     0
   );
   const timeBonus = getSeconds(timeLeft);
   return gameScore ? gameScore + timeBonus : 0;
 }
 
-// method to handle to the heroe cards movement
+// method to handle to the blocke cards movement
 export const move = (state, source, destination) => {
   const srcListClone = [...state[source.droppableId]];
   const destListClone =

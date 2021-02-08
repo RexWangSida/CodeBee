@@ -1,55 +1,18 @@
-export const COMICS = {
-    DC: 'dc',
-    MARVEL: 'marvel',
+export const ATTRS = {
+    PLAY: 'play',
   };
   
-  export const HEROES = [
+  export const BLOCKS = [
     {
-      name: 'Superman',
-      comics: 'dc',
+      name: 'a = 1',
+      attrs: 'play',
     },
     {
-      name: 'Batman',
-      comics: 'dc',
+      name: 'b = 3',
+      attrs: 'play',
     },
     {
-      name: 'Flash',
-      comics: 'dc',
-    },
-    {
-      name: 'Aquaman',
-      comics: 'dc',
-    },
-    {
-      name: 'Wonder Woman',
-      comics: 'dc',
-    },
-    {
-      name: 'Green Lantern',
-      comics: 'dc',
-    },
-    {
-      name: 'Iron Man',
-      comics: 'marvel',
-    },
-    {
-      name: 'Spiderman',
-      comics: 'marvel',
-    },
-    {
-      name: 'Captain America',
-      comics: 'marvel',
-    },
-    {
-      name: 'Thor',
-      comics: 'marvel',
-    },
-    {
-      name: 'Hulk',
-      comics: 'marvel',
-    },
-    {
-      name: 'Black Widow',
-      comics: 'marvel',
+      name: 'c = a + b',
+      attrs: 'play',
     },
   ];
