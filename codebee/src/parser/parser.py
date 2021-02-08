@@ -230,12 +230,13 @@ def ParseBlockExpr(struct):
         logging.warning('unassigned result')
     return result
 
-def parse():
+def file_parse():
+    '''Parses from and writes to a file'''
     readfile = 'sample_prog.json'
     writefile = 'response_prog.json'
 
     logging.basicConfig(filename='log_parser.txt', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-    logging.info("===Start Parse===")
+    logging.info("===Start File Parse===")
     logging.info('JSON Read : ' + readfile)
     logging.info('JSON Write: ' + writefile)
 
@@ -245,7 +246,20 @@ def parse():
 
     writeFile(writefile, state.getState()) # Write internal state to JSON
 
+def parse(str_json):
+    '''Takes a string json as input and returns a string json'''
+    logging.basicConfig(filename='log_parser.txt', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+    logging.info("===Start Arg Parse===")
+
+    struct = json.loads(str_json, cls=coder.Decoder)
+
+    ParseBlockProgram(struct)
+
+    return json.dumps(state.getState(), indent=2, sort_keys=True)
 
 
 if __name__ == '__main__':
-    parse()
+    # with open('sample_prog.json','r') as openFile:
+    #     text = openFile.read()
+
+    parse(sys.argv[1])
