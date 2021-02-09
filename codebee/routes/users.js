@@ -10,17 +10,18 @@ router.post('/create', async(req, res) => {
       });
       if(user !== null){  res.json({result:1, name:""})}; //check if this email is registered, if yes return result as 1
       var decU = await User.find({}).sort({"_uid":-1}).limit(1); // get the user with largest uid
-      var num = (decU[0]); // get largest uid
+      var num = (decU[0].toObject()._uid); // get largest uid
       console.log(num);
       const uInfo = {
-        uid: num+1,
+        _uid: num+1,
         name:name,
         email:email,
         password:password
       };
-      const newUser = new User(uInfo);
+      console.log(uInfo);
+      const newUser = new User(uInfo.toObject());
       await newUser.save();
-      res.json({result:0, name:username}); //send a successful message includes the name to be displayed
+      res.json({result:0, name:name}); //send a successful message includes the name to be displayed
     }catch(e){
       return res.status(400).json({
         message:e.message,
