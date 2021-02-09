@@ -15,7 +15,7 @@ export default function Signin() {
       password: password,
     };
 
-    fetch("/login", {
+    fetch("/user/login", {
       method: "POST",
       headers: {
         "Accept": "application/json,text/plain,*/*",

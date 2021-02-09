@@ -4,11 +4,11 @@ export default function Signup (){
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-  
+
     const [name, setName] = useState("");
 
     function validateForm() {
-      return email.length > 0 && password.length > 0;
+      return name.length > 0 && email.length > 0 && password.length > 0;
     }
 
   function signup() {
@@ -17,8 +17,7 @@ export default function Signup (){
       email: email,
       password: password,
     };
-
-    fetch("/createuser", {
+    fetch("/user/create", {
       method: "POST",
       headers: {
         "Accept": "application/json,text/plain,*/*",
@@ -84,7 +83,7 @@ export default function Signup (){
           </div>
 
           <div class="text-grey-dark mt-6">
-            Already have an account? 
+            Already have an account?
             <a
               class="no-underline border-b border-blue text-indigo-500"
               href="/sign-in/"

@@ -1,0 +1,55 @@
+{
+  "block": "program",
+  "body": {
+    "block": "scope",
+    "stmts": [
+      {
+        "block": "assignment",
+        "expr": {
+          "block": "literal",
+          "type": "int",
+          "value": "1"
+        },
+        "ident": {
+          "block": "variable",
+          "ident": "var1"
+        }
+      },
+      {
+        "block": "assignment",
+        "expr": {
+          "block": "literal",
+          "type": "int",
+          "value": "3"
+        },
+        "ident": {
+          "block": "variable",
+          "ident": "var2"
+        }
+      },
+      {
+        "block": "assignment",
+        "expr": {
+          "block": "binop",
+          "expr1": {
+            "block": "variable",
+            "ident": "var1"
+          },
+          "expr2": {
+            "block": "variable",
+            "ident": "var2"
+          },
+          "oper": "+"
+        },
+        "ident": {
+          "block": "variable",
+          "ident": "var3"
+        }
+      }
+    ]
+  },
+  "ident": {
+    "block": "variable",
+    "ident": "testProg"
+  }
+}
