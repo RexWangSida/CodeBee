@@ -17,7 +17,6 @@ export default function Signup (){
       email: email,
       password: password,
     };
-
     fetch("/user/create", {
       method: "POST",
       headers: {
