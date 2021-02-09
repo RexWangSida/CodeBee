@@ -1,0 +1,17 @@
+{
+  "ident": {
+    "var1": [
+      "int",
+      "1"
+    ],
+    "var2": [
+      "int",
+      "3"
+    ],
+    "var3": [
+      "int",
+      "4"
+    ]
+  },
+  "program": "testProg"
+}

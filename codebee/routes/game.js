@@ -5,17 +5,14 @@ const {PythonShell} = require('python-shell');
 //parser handler
 router.post('/parse', async(req, res) => {
   let options = {
-    mode: 'text',
-    pythonPath: '/path/to/python/bin/python3.7',
-    pythonOptions: ['-u'], // get print results in real-time
-    scriptPath: '/absolute/path/to/script/',
-    args: ['Bruce Wayne']
+    args: [JSON.stringify(req.body)]
   };
 
-  PythonShell.run('numSO1.py', options, function (err, results) {
-    if (err) throw err;
-    // results is an array consisting of messages collected during execution
-    console.log('results: %j', results);
+  // run a simple script
+  PythonShell.run('./parser/parser.py', options, (err, results) => {
+    // script finished
+    console.log(JSON.parse(results));
+    res.json(JSON.parse(results));
   });
 });
 
