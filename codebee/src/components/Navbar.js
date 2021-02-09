@@ -51,7 +51,7 @@ export default function Navbar({ disableLinks }) {
             } top-navbar border-gray-900 w-full md:inline-flex md:w-auto px-2`}
             id="menu"
           >
-            <a
+            <h4
               activeClass="active"
               to="About"
               spy={true}
@@ -59,11 +59,10 @@ export default function Navbar({ disableLinks }) {
               offset={50}
               duration={500}
               delay={200}
-              className="md:p-4 pl-2 py-3 px-0 block border-b-2 border-transparent transition duration-150 hover:bg-gray-100 ease-in-out width:1px text-gray-700 tracking-wider rounded-md"
-              href="/"
+              className="md:p-4 pl-2 py-3 px-0 block border-b-2 border-transparent  width:1px text-gray-700 tracking-wider rounded-md"
             >
-              Home
-            </a>
+              Hi There
+            </h4>
             <a
               activeClass="active"
               to="Events"

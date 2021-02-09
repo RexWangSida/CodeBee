@@ -2,6 +2,8 @@ import React, { useState } from "react";
 export default function Signin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [status, setStatus] = useState(false);
+  const [name, setName] = useState("");
 
   function validateForm() {
     return email.length > 0 && password.length > 0;
@@ -24,7 +26,9 @@ export default function Signin() {
       .then((res) => res.json())
       .then((data) => {
         if(data.result === 0){
-          alert(data.name);//////////////////////////////////////////////////////////////replace for good authentication operations
+            this.setName(data.name)
+            console.log(name)
+            alert(data.name);//////////////////////////////////////////////////////////////replace for good authentication operations
         }else if(data.result === 1){
           alert("The password does not match the email you registered");//////////////////////replace for email-password not matching(email exists)
         }else{
