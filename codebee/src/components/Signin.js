@@ -1,3 +1,4 @@
+import { stat } from "fs";
 import React, { useState } from "react";
 export default function Signin() {
   const [email, setEmail] = useState("");
@@ -26,8 +27,10 @@ export default function Signin() {
       .then((res) => res.json())
       .then((data) => {
         if(data.result === 0){
+            this.setStatus(true)
             this.setName(data.name)
             console.log(name)
+            console.log(status)
             alert(data.name);//////////////////////////////////////////////////////////////replace for good authentication operations
         }else if(data.result === 1){
           alert("The password does not match the email you registered");//////////////////////replace for email-password not matching(email exists)
