@@ -52,13 +52,17 @@ class Buttons extends React.Component {
     this.state = {
     }
   }
+
+  restart = () => {
+    window.location.reload();
+  }
   render() {
     return (
       <div className="right buttonGroup">
         <Link to="/level-selection">
           <button className="py-2 px-4 font-semibold rounded-lg shadow-md text-white bg-blue-500">Return</button>
         </Link>
-        <button className="py-2 px-4 font-semibold rounded-lg shadow-md text-white bg-blue-500" >Restart</button>
+        <button className="py-2 px-4 font-semibold rounded-lg shadow-md text-white bg-blue-500" onClick={this.restart}>Restart</button>
         <button className="py-2 px-4 font-semibold rounded-lg shadow-md text-white bg-blue-500">Save</button>
       </div>
     );
@@ -77,6 +81,85 @@ class Game extends React.Component {
       return move(state, source, destination);
     });
   };
+
+  submit = () => {
+    var stms = []
+    var blocks = this.state[ATTRS.PLAY];
+    for (var i=0; i < blocks.length; i++) {
+      var block = blocks[i];
+      var stmt = {
+        "block": block.attr1,
+        "expr": {
+          "block": block.attr3,
+          "type": block.attr4,
+          "value": block.name.split[-1]
+        },
+        "ident": {
+          "block": block.attr2,
+          "ident": block.name.split[0]
+        }
+      }
+      stms.push(stmt);
+    }
+    console.log(stmt);
+    const code = {
+      "block": "program",
+      "body": {
+        "block": "scope",
+        "stmts": [
+          {
+            "block": "assignment",
+            "expr": {
+              "block": "literal",
+              "type": "int",
+              "value": "1"
+            },
+            "ident": {
+              "block": "variable",
+              "ident": "var1"
+            }
+          },
+          {
+            "block": "assignment",
+            "expr": {
+              "block": "literal",
+              "type": "int",
+              "value": "3"
+            },
+            "ident": {
+              "block": "variable",
+              "ident": "var2"
+            }
+          },
+          {
+            "block": "assignment",
+            "expr": {
+              "block": "binop",
+              "expr1": {
+                "block": "variable",
+                "ident": "var1"
+              },
+              "expr2": {
+                "block": "variable",
+                "ident": "var2"
+              },
+              "oper": "+"
+            },
+            "ident": {
+              "block": "variable",
+              "ident": "var3"
+            }
+          }
+        ]
+      },
+      "ident": {
+        "block": "variable",
+        "ident": "testProg"
+      }
+    }
+    //need a fetch here to send to backend?
+    console.log(code);
+  }
 
   render() {
     const { gameState, timeLeft, bench, ...groups } = this.state;
@@ -103,7 +186,7 @@ class Game extends React.Component {
         <div className='row' style={{ bottom: "0px" }}>
           <Result />
           <div className='right' style={{ margin: "auto" }}>
-            <button className="py-2 px-4 font-semibold rounded-lg shadow-md text-white bg-blue-500" >Submit</button>
+            <button className="py-2 px-4 font-semibold rounded-lg shadow-md text-white bg-blue-500" onClick={this.submit}>Submit</button>
           </div></div>
       </div>
     );

@@ -4,16 +4,15 @@ import { Droppable, Draggable } from 'react-beautiful-dnd';
 const Dropzone = ({ isDropDisabled, blocks, id, pos }) => (
   <div className={pos + " dropzone flex row-auto flex-row"}>
     <a style={{width: "100%"}}className="hover:bg-indigo-500 hover:border-transparent hover:shadow-lg group block rounded-lg p-4 border border-gray-200">
-      <dl className="grid sm:block lg:grid xl:block grid-cols-2 grid-rows-2 items-center">
-        <div>
-          <dt class="sr-only">Title</dt>
-            <dd class="group-hover:text-white leading-6 font-medium text-black">
+      <dl className="grid sm:block lg:grid xl:block items-center" style={{ height: "100%" }}>
+        <div style={{ height: "100%" }}>
+          <dd className="group-hover:text-white leading-6 font-medium text-black" style={{ height: "100%" }} >
             <Droppable droppableId={id} isDropDisabled={isDropDisabled}>
       {provided => {
         return (
-          <div className="menu block-list" {...provided.droppableProps} ref={provided.innerRef}>
+          <div className="menu block-list " {...provided.droppableProps} style={{height: "100%"}} ref={provided.innerRef}>
             {blocks.map(({ name }, index) => (
-              <Block key={name} name={name} index={index} />
+              <Block key={name} name={name} index={index}/>
             ))}
             {provided.placeholder}
           </div>
@@ -37,7 +36,7 @@ const Block = ({ name, index }) => (
           {...provided.draggableProps}
           {...provided.dragHandleProps}
         >
-          <div className="tile-content">{name}</div>
+          <div className="tile-content" style={{margin: "auto", maxWidth: "100px"}}>{name}</div>
         </div>
       );
     }}
