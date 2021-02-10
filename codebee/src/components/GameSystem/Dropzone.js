@@ -11,8 +11,8 @@ const Dropzone = ({ isDropDisabled, blocks, id, pos }) => (
       {provided => {
         return (
           <div className="menu block-list " {...provided.droppableProps} style={{height: "100%"}} ref={provided.innerRef}>
-            {blocks.map(({ name }, index) => (
-              <Block key={name} name={name} index={index}/>
+            {blocks.map(({ name, ddd }, index) => (
+              <Block key={ddd} ddd={ddd} name={name} index={index}/>
             ))}
             {provided.placeholder}
           </div>
@@ -26,8 +26,8 @@ const Dropzone = ({ isDropDisabled, blocks, id, pos }) => (
   </div>
 );
 
-const Block = ({ name, index }) => (
-  <Draggable key={name} draggableId={name} index={index}>
+const Block = ({ name, index, ddd }) => (
+  <Draggable name={name} key={ddd} draggableId={ddd} index={index}>
     {provided => {
       return (
         <div
@@ -36,7 +36,7 @@ const Block = ({ name, index }) => (
           {...provided.draggableProps}
           {...provided.dragHandleProps}
         >
-          <div className="tile-content" style={{margin: "auto", maxWidth: "100px"}}>{name}</div>
+          <div className="codeblock tile-content" >{name}</div>
         </div>
       );
     }}

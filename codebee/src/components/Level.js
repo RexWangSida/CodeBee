@@ -10,7 +10,7 @@ export default class Level extends React.Component {
         super(props);
         this.state = {
             allLevels: ["1-1", "1-2", "1-3", "2-1", "2-2"],
-            unlockedLevels: ["1-1", "1-2", "2-1", "2-2"],
+            unlockedLevels: ["1-1"],
             selected: ""
         }
     }
@@ -20,7 +20,7 @@ export default class Level extends React.Component {
     //     this.setState({ unlockedLevels: unlockedLevels})
     // }
 
-    select = event => {
+    select = (event) => {
         console.log(event.target.value)
         this.setState({ selected: event.target.value });
     }
@@ -36,7 +36,7 @@ export default class Level extends React.Component {
                     <Link to="/game" key={levelname}>
                         <button
                             id="levelButton"
-                            className="py-2 px-4 font-semibold rounded-lg shadow-md text-white bg-blue-500 hover:bg-blue-700"
+                            className="py-2 px-4 font-semibold rounded-lg shadow-md text-white bg-indigo-600 hover:bg-indigo"
                             onClick={this.select}
                             value={levelname}>
                             {levelname}
@@ -45,7 +45,7 @@ export default class Level extends React.Component {
                 );
             }
             else {
-                buttons.push(<button id="levelButton" className="disabled py-2 px-4 font-semibold rounded-lg shadow-md text-white bg-blue-500" disabled key={levelname}> {levelname} </button>);
+                buttons.push(<button id="levelButton" className="disabled py-2 px-4 font-semibold rounded-lg shadow-md text-white bg-indigo-600" disabled key={levelname}> {levelname} </button>);
             }
         }
 

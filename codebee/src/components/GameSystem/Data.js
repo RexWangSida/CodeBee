@@ -1,27 +1,72 @@
 export const ATTRS = {
-  PLAY: 'play',
+  VAR: 'var',
+  OP: 'op',
+  VAL: 'val',
 };
 
 export const BLOCKS = [
   {
-    name: 'a = 1',
+    name: 'a',
+    name: 'a',
+    attr1: 'assignment',
+    ddd: '0'
+  },
+  {
+    name: 'b',
     attr1: 'assignment',
     attr2: 'variable',
     attr3: 'literal',
-    attr4: 'int'
+    ddd: '1'
   },
   {
-    name: 'b = 3',
+    name: 'c',
     attr1: 'assignment',
     attr2: 'variable',
     attr3: 'literal',
-    attr4: 'int'
+    attr4: 'int',
+    ddd: '2'
   },
   {
-    name: 'c = a + b',
+    name: '=',
     attr1: 'assignment',
     attr2: 'variable',
-    attr3: 'variable',
-    attr4: 'variable',
+    attr3: 'literal',
+    ddd: '3'
+  },
+  {
+    name: '=',
+    attr1: 'assignment',
+    attr2: 'variable',
+    attr3: 'literal',
+    ddd: '4'
+  },
+  {
+    name: '=',
+    attr1: 'assignment',
+    attr2: 'variable',
+    attr3: 'literal',
+    ddd: '5'
+  },
+  {
+    name: 'a + b',
+    attr1: 'assignment',
+    attr2: 'variable',
+    attr3: 'literal',
+    ddd: '6'
+  },
+  {
+    name: '1',
+    attr1: 'assignment',
+    attr2: 'variable',
+    attr3: 'literal',
+    ddd: '7'
+  },
+  {
+    name: '3',
+    attr1: 'assignment',
+    attr2: 'variable',
+    attr3: 'literal',
+    ddd: '8'
   },
 ];
+

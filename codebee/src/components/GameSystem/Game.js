@@ -11,7 +11,9 @@ const GAME_DURATION = 1000 * 30; // 30 seconds
 const initialState = {
   // we initialize the state by populating the bench with a shuffled collection of blocks
   bench: shuffle(BLOCKS),
-  [ATTRS.PLAY]: [],
+  [ATTRS.VAR]: [],
+  [ATTRS.OP]: [],
+  [ATTRS.VAL]: [],
   gameState: GAME_STATE.READY,
   timeLeft: 0,
 };
@@ -60,10 +62,10 @@ class Buttons extends React.Component {
     return (
       <div className="right buttonGroup">
         <Link to="/level-selection">
-          <button className="py-2 px-4 font-semibold rounded-lg shadow-md text-white bg-blue-500">Return</button>
+          <button className="gamebutton py-2 px-4 font-semibold rounded-lg shadow-md text-white bg-indigo-600 hover:bg-indigo-700">Return</button>
         </Link>
-        <button className="py-2 px-4 font-semibold rounded-lg shadow-md text-white bg-blue-500" onClick={this.restart}>Restart</button>
-        <button className="py-2 px-4 font-semibold rounded-lg shadow-md text-white bg-blue-500">Save</button>
+        <button className="gamebutton py-2 px-4 font-semibold rounded-lg shadow-md text-white bg-indigo-600 hover:bg-indigo-700" onClick={this.restart}>Restart</button>
+        <button className="gamebutton py-2 px-4 font-semibold rounded-lg shadow-md text-white bg-indigo-600 hover:bg-indigo-700">Save</button>
       </div>
     );
   }
@@ -83,25 +85,25 @@ class Game extends React.Component {
   };
 
   submit = () => {
-    var stms = []
-    var blocks = this.state[ATTRS.PLAY];
-    for (var i=0; i < blocks.length; i++) {
-      var block = blocks[i];
-      var stmt = {
-        "block": block.attr1,
-        "expr": {
-          "block": block.attr3,
-          "type": block.attr4,
-          "value": block.name.split[-1]
-        },
-        "ident": {
-          "block": block.attr2,
-          "ident": block.name.split[0]
-        }
-      }
-      stms.push(stmt);
-    }
-    console.log(stmt);
+    // var stms = []
+    // var blocks = this.state[ATTRS.PLAY];
+    // for (var i=0; i < blocks.length; i++) {
+    //   var block = blocks[i];
+    //   var stmt = {
+    //     "block": block.attr1,
+    //     "expr": {
+    //       "block": block.attr3,
+    //       "type": block.attr4,
+    //       "value": block.name.split[-1]
+    //     },
+    //     "ident": {
+    //       "block": block.attr2,
+    //       "ident": block.name.split[0]
+    //     }
+    //   }
+    //   stms.push(stmt);
+    // }
+    // console.log(stmt);
     const code = {
       "block": "program",
       "body": {
@@ -169,15 +171,29 @@ class Game extends React.Component {
       <div className='canves'>
         <div className='row'><Instruction /><Buttons /></div>
         <DragDropContext onDragEnd={this.onDragEnd}>
-          <div className="row container row-auto" style={{ height: "calc(100% - 400px)" }}>
+          <div className="row row-auto" style={{ height: "calc(100% - 400px)" }}>
+            <div className="row">
+              <Dropzone
+                pos="col"
+                id={ATTRS.VAR}
+                blocks={this.state[ATTRS.VAR]}
+                isDropDisabled={isDropDisabled}
+              />
+              <Dropzone
+                pos="col"
+                id={ATTRS.OP}
+                blocks={this.state[ATTRS.OP]}
+                isDropDisabled={isDropDisabled}
+              />
+              <Dropzone
+                pos="col"
+                id={ATTRS.VAL}
+                blocks={this.state[ATTRS.VAL]}
+                isDropDisabled={isDropDisabled}
+              />
+            </div>
             <Dropzone
-              pos="left"
-              id={ATTRS.PLAY}
-              blocks={this.state[ATTRS.PLAY]}
-              isDropDisabled={isDropDisabled}
-            />
-            <Dropzone
-              pos="right"
+              pos="right scrollble"
               id="bench"
               blocks={bench}
               isDropDisabled={isDropDisabled} />
@@ -186,7 +202,7 @@ class Game extends React.Component {
         <div className='row' style={{ bottom: "0px" }}>
           <Result />
           <div className='right' style={{ margin: "auto" }}>
-            <button className="py-2 px-4 font-semibold rounded-lg shadow-md text-white bg-blue-500" onClick={this.submit}>Submit</button>
+            <button className="py-2 px-4 font-semibold rounded-lg shadow-md text-white bg-indigo-600 hover:bg-indigo-700" onClick={this.submit}>Submit</button>
           </div></div>
       </div>
     );
