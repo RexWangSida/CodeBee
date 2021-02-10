@@ -20,7 +20,7 @@ class Instruction extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      instruction: "A variable can be thought of as a container with a name, that stores some data. \nThis data can be viewed, changed and use for other purposes.For example, a variable called num stores a value 5 as: \nnum = 5\nYour challenge here is to store the values 2 and 3 in two variables called a and b. \nThen store the result of adding the value in these two variables in a new variable called c."
+      instruction: "A variable can be thought of as a container with a name. The container is uniquely named and can be assigned a value, which will then be stored as the contents of the container. The name can then be used to retrieve the contents of the container.\nThe retrieved data can be viewed, modified or used in other, more complex operations. As an example, a variable can be called \"num\" and assigned a value 5 through the code:\nnum = 5\nYour challenge here is to store the values 2 and 3 in two variables called \"a\" and \"b\". \nStore the result of adding the value in these two variables in a new variable called \"c\"."
     }
   }
 
