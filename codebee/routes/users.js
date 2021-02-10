@@ -13,13 +13,12 @@ router.post('/create', async(req, res) => {
       var num = (decU[0].toObject()._uid); // get largest uid
       console.log(num);
       const uInfo = {
-        _uid: num+1,
+        uid: num+1,
         name:name,
         email:email,
         password:password
       };
-      console.log(uInfo);
-      const newUser = new User(uInfo.toObject());
+      const newUser = new User(uInfo);
       await newUser.save();
       res.json({result:0, name:name}); //send a successful message includes the name to be displayed
     }catch(e){
