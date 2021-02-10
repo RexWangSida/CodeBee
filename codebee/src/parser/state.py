@@ -5,8 +5,9 @@ import json, logging, sys
 
 # Set initial state of symtab
     # program is program name
+    # error is if an error occured
     # ident is dictionary of variable names and values
-state = {'program': None, 'ident':{}}
+state = {'program': None, 'error': False, 'ident':{}}
 
 def stateSym(name, value):
     '''Sets the value of a state (@ prefix) symbol'''

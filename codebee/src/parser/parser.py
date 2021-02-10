@@ -23,6 +23,7 @@ def writeFile(filename, state):
 def ParseBlockProgram(struct):
     if type(struct) != blocks.ProgramBlock:
         logging.critical('Attempt to parse '+struct.block+' as Program')
+        state.setSym('error', True)
         sys.exit(1)
 
     state.stateSym('program',struct.ident.ident)
@@ -32,6 +33,7 @@ def ParseBlockProgram(struct):
 def ParseBlockScope(struct):
     if type(struct) != blocks.ScopeBlock:
         logging.critical('Attempt to parse '+struct.block+' as Scope')
+        state.setSym('error', True)
         sys.exit(1)
 
     logging.debug('open stmt scope')
@@ -42,6 +44,7 @@ def ParseBlockScope(struct):
 def ParseBlockAssignment(struct):
     if type(struct) != blocks.AssignmentBlock:
         logging.critical('Attempt to parse '+struct.block+' as Assignment')
+        state.setSym('error', True)
         sys.exit(1)
 
     name = struct.ident.ident # one ident gets a variable block
@@ -53,6 +56,7 @@ def ParseBlockAssignment(struct):
 def ParseBlockLiteral(struct):
     if type(struct) != blocks.LiteralBlock:
         logging.critical('Attempt to parse '+struct.block+' as Literal')
+        state.setSym('error', True)
         sys.exit(1)
 
     try:
@@ -66,9 +70,11 @@ def ParseBlockLiteral(struct):
             bool(struct.value)
         else:
             logging.error('Unknown literal type: '+struct.type)
+            state.setSym('error', True)
             sys.exit(1)
     except ValueError:
         logging.critical('invalid literal type-value pair: ('+struct.type+','+struct.value+')')
+        state.setSym('error', True)
         sys.exit(1)
 
     logging.debug('loaded literal ('+struct.type+','+struct.value+')')
@@ -77,12 +83,14 @@ def ParseBlockLiteral(struct):
 def ParseBlockVariable(struct):
     if type(struct) != blocks.VariableBlock:
         logging.critical('Attempt to parse '+struct.block+' as Variable')
+        state.setSym('error', True)
         sys.exit(1)
 
     name = struct.ident
 
     if not state.isSym(name):
         logging.critical('missing identifier: '+str(name))
+        state.setSym('error', True)
         sys.exit(1)
 
     value = state.getSym(name)
@@ -92,6 +100,7 @@ def ParseBlockVariable(struct):
 def ParseBlockBinOp(struct):
     if type(struct) != blocks.BinOpBlock:
         logging.critical('Attempt to parse '+struct.block+' as BinOp')
+        state.setSym('error', True)
         sys.exit(1)
 
     type1,value1 = ParseBlockExpr(struct.expr1) # index 0: type, index 1: value
@@ -128,9 +137,11 @@ def ParseBlockBinOp(struct):
             value3 = value1 % value2
         else:
             logging.critical('unknown operator '+struct.oper)
+            state.setSym('error', True)
             sys.exit(1)
     except TypeError:
         logging.critical('incompatible types for '+struct.oper+': '+str(value1)+', '+str(value2))
+        state.setSym('error', True)
         sys.exit(1)
 
     testtype = type(value3)
@@ -151,6 +162,7 @@ def ParseBlockBinOp(struct):
 def ParseBlockUnOp(struct):
     if type(struct) != blocks.UnOpBlock:
         logging.critical('Attempt to parse '+struct.block+' as UnOp')
+        state.setSym('error', True)
         sys.exit(1)
 
     type1,value1 = ParseBlockExpr(struct.expr1) # index 0: type, index 1: value
@@ -183,12 +195,15 @@ def ParseBlockUnOp(struct):
             value2 = bool(value1)
         else:
             logging.critical('unknown operator '+struct.oper)
+            state.setSym('error', True)
             sys.exit(1)
     except TypeError:
         logging.critical('incompatible type for '+struct.oper+': '+str(expr1[0]))
+        state.setSym('error', True)
         sys.exit(1)
     except ValueError:
         logging.critical('incompatible value for '+struct.oper+': '+str(expr1[0]))
+        state.setSym('error', True)
         sys.exit(1)
 
     testtype = type(value2)
@@ -257,9 +272,11 @@ def parse(str_json):
 
     return json.dumps(state.getState(), indent=2, sort_keys=True)
 
-
 if __name__ == '__main__':
-    # with open('sample_prog.json','r') as openFile:
+    # with open(sys.argv[1],'r') as openFile:
     #     text = openFile.read()
+    # text = text.replace('\n','').replace(' ','')
+    # print(parse(text).replace('\n','').replace(' ',''))
 
     parse(sys.argv[1])
+    # file_parse()
