@@ -27,8 +27,8 @@ export default function Signin() {
       .then((res) => res.json())
       .then((data) => {
         if(data.result === 0){
-            this.setStatus(true)
-            this.setName(data.name)
+            setStatus(true)
+            setName(data.name)
             console.log(name)
             console.log(status)
             alert(data.name);//////////////////////////////////////////////////////////////replace for good authentication operations

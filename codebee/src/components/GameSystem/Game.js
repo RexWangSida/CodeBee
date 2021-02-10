@@ -37,13 +37,21 @@ class Result extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      result: "The result of game will be shown here."
+      showMessage: false
     }
   }
+  onButtonClickHandler = () => {
+    this.setState({showMessage: true});
+   };
 
   render() {
     return (
-      <div className="left result">{this.state.result}</div>
+      <>
+      <div className="left result">{this.state.showMessage && <p>You are correct!</p>}</div>
+      <div className='right' style={{ margin: "auto" }}>
+            <button className="py-2 px-4 font-semibold rounded-lg shadow-md text-white bg-indigo-600 hover:bg-indigo-700" onClick={this.onButtonClickHandler}>Submit</button>
+          </div>
+          </>
     );
   }
 }
@@ -85,6 +93,7 @@ class Game extends React.Component {
   };
 
   submit = () => {
+
     // var stms = []
     // var blocks = this.state[ATTRS.PLAY];
     // for (var i=0; i < blocks.length; i++) {
@@ -201,9 +210,7 @@ class Game extends React.Component {
         </DragDropContext>
         <div className='row' style={{ bottom: "0px" }}>
           <Result />
-          <div className='right' style={{ margin: "auto" }}>
-            <button className="py-2 px-4 font-semibold rounded-lg shadow-md text-white bg-indigo-600 hover:bg-indigo-700" onClick={this.submit}>Submit</button>
-          </div></div>
+          </div>
       </div>
     );
   }
