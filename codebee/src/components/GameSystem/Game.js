@@ -22,13 +22,23 @@ class Instruction extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      instruction: "A variable can be thought of as a container with a name. The container is uniquely named and can be assigned a value, which will then be stored as the contents of the container. The name can then be used to retrieve the contents of the container.\nThe retrieved data can be viewed, modified or used in other, more complex operations. As an example, a variable can be called \"num\" and assigned a value 5 through the code:\nnum = 5\nYour challenge here is to store the values 2 and 3 in two variables called \"a\" and \"b\". \nStore the result of adding the value in these two variables in a new variable called \"c\"."
+      instruction: "A variable can be thought of as a container with a name. The container is uniquely named and can be assigned a value, which will then be stored as the contents of the container. The name can then be used to retrieve the contents of the container.\nThe retrieved data can be viewed, modified or used in other, more complex operations. As an example, a variable can be called \"num\" and assigned a value 5 through the code:\nnum = 5\nYour challenge here is to store the values 1 and 3 in two variables called \"a\" and \"b\". \nStore the result of adding the value in these two variables in a new variable called \"c\"."
     }
   }
 
   render() {
     return (
       <div className="left instruction">{this.state.instruction}</div>
+    );
+  }
+}
+class Title extends React.Component {
+  render() {
+    return (
+      <h1 className="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-3xl" style={{ margin: "20px auto" }}>
+        <span className="block xl:inline" >Level</span>
+        <span className="block text-indigo-600 xl:inline"> 1-1 </span>
+      </h1>
     );
   }
 }
@@ -41,45 +51,60 @@ class Result extends React.Component {
     }
   }
   onButtonClickHandler = () => {
-    this.setState({showMessage: true});
-   };
+    this.setState({ showMessage: true });
+  };
 
   render() {
     return (
       <>
-      <div className="left result">{this.state.showMessage && <p>You are correct!</p>}</div>
-      <div className='right' style={{ margin: "auto" }}>
-            <button className="py-2 px-4 font-semibold rounded-lg shadow-md text-white bg-indigo-600 hover:bg-indigo-700" onClick={this.onButtonClickHandler}>Submit</button>
-          </div>
-          </>
+        {this.state.showMessage && <Complete />}
+        <div className="left result">{this.state.showMessage && <p>c = 3<br />You are correct!</p>}</div>
+        <div className='right' style={{ margin: "auto" }}>
+          <button className="py-3 px-5 font-semibold rounded-lg shadow-md text-white bg-indigo-600 hover:bg-indigo-700" onClick={this.onButtonClickHandler}>Submit</button>
+        </div>
+      </>
     );
   }
 }
 
-class Buttons extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-    }
+class Complete extends React.Component {
+
+  render() {
+    return (
+      <>
+        <div className="popwindow">
+          <div className="windowtitle text-xl tracking-tight font-bold text-indigo-600">Level Completed</div>
+          <div className="windowcontent">
+            <div className="windowtext text-xl tracking-tight" >
+              Congratulations, you're completed this level.
+          </div>
+            <div className="windowtext">
+              <span className="text-xl tracking-tight">You have unlocked an achievement.</span><br />
+              <Link to="/achievements">
+                <button className="gamebutton py-2 px-4 font-semibold rounded-lg shadow-md text-white bg-indigo-600 hover:bg-indigo-700">Check Achievement</button></Link>
+            </div>
+            <Buttons comp={true} />
+          </div>
+        </div>
+      </>
+    );
   }
+}
+
+
+class Buttons extends React.Component {
 
   restart = () => {
     window.location.reload();
   }
   render() {
     return (
-      <div className="right buttonGroup">
-        <h1 className="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-3xl" style={{ marginBottom: "20px" }}>
-          <span className="block xl:inline" >
-            Level
-              </span>
-          <span className="block text-indigo-600 xl:inline"> 1-1 </span>
-        </h1>
+      <div className="buttonGroup">
         <Link to="/level-selection">
           <button className="gamebutton py-2 px-4 font-semibold rounded-lg shadow-md text-white bg-indigo-600 hover:bg-indigo-700">Return</button>
         </Link>
         <button className="gamebutton py-2 px-4 font-semibold rounded-lg shadow-md text-white bg-indigo-600 hover:bg-indigo-700" onClick={this.restart}>Restart</button>
-        <button className="gamebutton py-2 px-4 font-semibold rounded-lg shadow-md text-white bg-indigo-600 hover:bg-indigo-700">Save</button>
+        {this.props.comp ? <button className="gamebutton py-2 px-4 font-semibold rounded-lg shadow-md text-white bg-indigo-600 hover:bg-indigo-700">Next</button> : <button className="gamebutton py-2 px-4 font-semibold rounded-lg shadow-md text-white bg-indigo-600 hover:bg-indigo-700">Save</button>}
       </div>
     );
   }
@@ -184,10 +209,16 @@ class Game extends React.Component {
 
     return (
       <div className='canves'>
-        <div className='row'><Instruction /><Buttons /></div>
+        <div className='row'>
+          <Instruction />
+          <div className="right">
+            <Title />
+            <Buttons />
+          </div>
+        </div>
         <DragDropContext onDragEnd={this.onDragEnd}>
-          <div className="row row-auto" style={{ height: "calc(100% - 400px)" }}>
-            <div className="row">
+          <div className="row row-auto" style={{ height: "calc(100% - 408px)" }}>
+            <div className="left row block bg-indigo-200 rounded-lg p-4 border border-gray-200">
               <Dropzone
                 pos="col"
                 id={ATTRS.VAR}
@@ -208,7 +239,7 @@ class Game extends React.Component {
               />
             </div>
             <Dropzone
-              pos="right scrollble"
+              pos="right"
               id="bench"
               blocks={bench}
               isDropDisabled={isDropDisabled} />
@@ -216,7 +247,7 @@ class Game extends React.Component {
         </DragDropContext>
         <div className='row' style={{ bottom: "0px" }}>
           <Result />
-          </div>
+        </div>
       </div>
     );
   }

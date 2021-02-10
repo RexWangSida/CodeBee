@@ -1,5 +1,5 @@
 .canves {
-    padding: 0 30px 0 30px;
+    padding: 0 40px;
     height: calc(100vh - 122px);
     display: flex;
     flex-direction: column;
@@ -9,11 +9,11 @@
     width: 100%;
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
 }
 
 .col {
-    width: 30%;
-    margin-left: 5px;
+    width: 32%;
 }
 
 .left {
@@ -23,7 +23,7 @@
 
 .right {
     width: 30%;
-    margin-left: 20px;
+    margin-left: 30px;
     margin-right: 0;
 }
 
@@ -45,11 +45,11 @@
 }
 
 .buttonGroup {
-    margin: auto;
+    margin: 0 auto;
 }
 
 .gamebutton {
-    margin-left: 10px;
+    margin: 5px;
 }
 
 .dropzone {
@@ -57,13 +57,36 @@
 }
 
 .codeblock {
-    padding: 5px;
-    margin: 0 auto 10px auto;
+    margin: 5px auto;
     max-width: 100px;
-    border: solid indigo;
-    border-radius: 5px;
 }
 
 .scrollble {
-    overflow: scroll;
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+
+.popwindow {
+    position: fixed;
+    width: 500px;
+    top: calc(50% - 100px);
+    left: calc(50% - 250px);
+    background-color: white;
+    border: solid indigo;
+    border-radius: 6px;
+}
+
+.windowtitle {
+    margin-top: 5px;
+    padding: 5px;
+    border-bottom: solid indigo;
+}
+
+.windowcontent {
+    padding: 10px;
+}
+
+.windowtext {
+    padding: 5px;
+    margin-bottom: 5px;
 }
