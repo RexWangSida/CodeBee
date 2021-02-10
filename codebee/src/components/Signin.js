@@ -7,10 +7,13 @@ export default function Signin() {
   const [name, setName] = useState("");
 
   function validateForm() {
-    return email.length > 0 && password.length > 0;
+    return (email.length >> 0 && password.length >> 0);
   }
 
   function signin() {
+    console.log(email.length)
+    console.log(status)
+    console.log(validateForm)
     const data = {
       email: email,
       password: password,
@@ -29,8 +32,6 @@ export default function Signin() {
         if(data.result === 0){
             setStatus(true)
             setName(data.name)
-            console.log(name)
-            console.log(status)
             alert(data.name);//////////////////////////////////////////////////////////////replace for good authentication operations
         }else if(data.result === 1){
           alert("The password does not match the email you registered");//////////////////////replace for email-password not matching(email exists)
@@ -113,7 +114,7 @@ export default function Signin() {
           <div>
             <button
               type="button"
-              disabled={!validateForm}
+              disabled={!email && !password}
               onClick={signin}
               className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
