@@ -16,7 +16,7 @@ constructor(props){
     super(props);
     this.state = {
         username: '',
-        status: '',
+        status: false,
         expand: false,
     }
 }
@@ -26,6 +26,7 @@ onLoginChange = (username, status) => {
       username: username,
       status: status
     });
+    console.log(this.state.status)
     console.log(this.state.username)
   }
 
@@ -80,7 +81,7 @@ onLoginChange = (username, status) => {
               delay={200}
               className="md:p-4 pl-2 py-3 px-0 block border-b-2 border-transparent  width:1px text-gray-700 tracking-wider rounded-md"
             >
-              Hi There
+              {this.state.status ? "Hi " + this.state.username : "Hi There" }
             </h4>
             <a
               activeClass="active"
@@ -117,7 +118,7 @@ onLoginChange = (username, status) => {
             <div className="auth-inner">
               <Switch>
                 <Route exact path="/" component={Home} />
-                <Route path="/sign-in" render={()=><Signin onLoginChange = {this.onLoginChange.bind(this)}/>}/>
+                <Route path="/sign-in" render={(props)=><Signin {...props} onLoginChange = {this.onLoginChange.bind(this)}/> }/>
                 <Route path="/sign-up" component={SignUp} />
                 <Route path="/level-selection" component={Level} />
                 <Route path="/achievements" component={Achievement} />

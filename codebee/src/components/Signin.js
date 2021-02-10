@@ -30,7 +30,7 @@ export default class Signin extends Component{
       .then((data) => {
         if(data.result === 0){
             this.setState({status: true})
-            this.setState({name:data.name})
+            this.setState({username: data.name})
             this.props.onLoginChange(this.state.username, this.state.status);
             alert(data.name);//////////////////////////////////////////////////////////////replace for good authentication operations
         }else if(data.result === 1){
