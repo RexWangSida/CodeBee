@@ -1,14 +1,14 @@
 import React from "react";
 import "./Achievement.css"
 
-var unlockedAchievements = ['01', '02', '04', '06']
+var lockedAchievement = 'Locked Achievement';
 
 export default class Achievement extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            allAchievements: ['01', '02', '03', '04', '05', '06', '07'],
-            unlockedAchievements: ['01', '02', '04', '06'],
+            allAchievements: ['Completed 1st Level', lockedAchievement, lockedAchievement, lockedAchievement, lockedAchievement, lockedAchievement, lockedAchievement],
+            unlockedAchievements: ['Completed 1st Level'],
         }
     }
 
@@ -24,10 +24,10 @@ export default class Achievement extends React.Component {
         for (i = 0; i < this.state.allAchievements.length; i++) {
             var achievement = this.state.allAchievements[i];
             if (this.state.unlockedAchievements.includes(achievement)) {
-                achievements.push(<li className="achievement" achievementname={achievement} key={achievement} onClick={this.select}>{achievement}</li>);
+                achievements.push(<li className="achievement py-2 px-4 font-semibold rounded-lg shadow-md text-white bg-indigo-600" achievementname={achievement} key={achievement} onClick={this.select}>{achievement}</li>);
             }
             else {
-                achievements.push(<li className="locked achievement" achievementname={achievement} key={achievement} >{achievement}</li>);
+                achievements.push(<li className="locked achievement py-2 px-4 font-semibold rounded-lg shadow-md text-white bg-indigo-600" achievementname={achievement} key={achievement} >{achievement}</li>);
             }
         }
 

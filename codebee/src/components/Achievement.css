@@ -1,20 +1,16 @@
 #canvas {
     padding: 20px;
     margin: auto;
-    width: 500px;
-    background-color: rgb(175, 175, 175);
 }
 
 .achievement {
-    padding-left: 20px;
+    width: 500px;
+    padding: 17px;
+    padding-left: 30px;
     text-align: left;
-    line-height: 47px;
     list-style: none;
-    height: 50px;
-    border: solid black;
-    margin: 10px;
-    background-color: rgb(0, 175, 0);
-    color: black;
+    height: 60px;
+    margin: auto auto 10px auto;
 }
 
 .locked {
