@@ -1,5 +1,5 @@
 .canves {
-    padding: 0 20px 0 20px;
+    padding: 0 30px 0 30px;
     height: calc(100vh - 122px);
     display: flex;
     flex-direction: column;

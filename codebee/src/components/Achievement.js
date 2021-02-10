@@ -33,6 +33,11 @@ export default class Achievement extends React.Component {
 
         return (
             <ul id="canvas" className="list-disc">
+                <h1 className="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-3xl" style={{ marginBottom: "30px" }}>
+                    <span className="block text-indigo-600 xl:inline" >
+                        Achievements
+              </span>
+                </h1>
                 {achievements}
             </ul>
         );

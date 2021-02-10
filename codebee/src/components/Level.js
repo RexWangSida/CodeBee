@@ -51,7 +51,12 @@ export default class Level extends React.Component {
 
         return (
             <>
-
+                <h1 className="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-3xl" style={{ margin: "30px" }}>
+                    <span className="block text-indigo-600 xl:inline" >
+                        Level
+              </span>
+                    <span className="block xl:inline"> Selection </span>
+                </h1>
                 <div id="levelGrid" className="grid grid-rows-3 grid-flow-col gap-4" >
                     {buttons}
                 </div>
