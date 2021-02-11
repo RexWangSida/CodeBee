@@ -11,7 +11,7 @@ import Game from "./GameSystem/Game";
 
 export default function Navbar({ disableLinks }) {
   const [isExpanded, toggleExpansion] = useState(false);
-
+  const [name, setName] = useState("");
   return (
     <>
       <header className="md:px-6 px-6 border-b-2 bg-white flex flex-wrap items-center py-4">
@@ -98,7 +98,7 @@ export default function Navbar({ disableLinks }) {
             <div className="auth-inner">
               <Switch>
                 <Route exact path="/" component={Home} />
-                <Route path="/sign-in" component={Signin} />
+                <Route path="/sign-in" component={()=><Signin userName={name} setName={setName}/>} />
                 <Route path="/sign-up" component={SignUp} />
                 <Route path="/level-selection" component={Level} />
                 <Route path="/achievements" component={Achievement} />

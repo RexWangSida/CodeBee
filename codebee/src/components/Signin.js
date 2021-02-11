@@ -1,10 +1,9 @@
 import { stat } from "fs";
 import React, { useState } from "react";
-export default function Signin() {
+export default function Signin(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [status, setStatus] = useState(false);
-  const [name, setName] = useState("");
 
   function validateForm() {
     return (email.length >> 0 && password.length >> 0);
@@ -31,7 +30,7 @@ export default function Signin() {
       .then((data) => {
         if(data.result === 0){
             setStatus(true)
-            setName(data.name)
+            props.setName(data.name)
             alert(data.name);//////////////////////////////////////////////////////////////replace for good authentication operations
         }else if(data.result === 1){
           alert("The password does not match the email you registered");//////////////////////replace for email-password not matching(email exists)
