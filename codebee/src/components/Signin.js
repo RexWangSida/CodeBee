@@ -1,21 +1,21 @@
 import { stat } from "fs";
-import React, { useState } from "react";
-export default function Signin(props) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [status, setStatus] = useState(false);
+import React, { Component, useState } from "react";
+export default class Signin extends Component{
+  constructor(props) {
 
-  function validateForm() {
-    return (email.length >> 0 && password.length >> 0);
+    super(props);
+    this.state = {
+      username: "",
+      password: "",
+      status: false,
+      email: "",
+    };
   }
 
-  function signin() {
-    console.log(email.length)
-    console.log(status)
-    console.log(validateForm)
+  signin = () => {
     const data = {
-      email: email,
-      password: password,
+      email: this.state.email,
+      password: this.state.password,
     };
 
     fetch("/user/login", {
@@ -29,8 +29,9 @@ export default function Signin(props) {
       .then((res) => res.json())
       .then((data) => {
         if(data.result === 0){
-            setStatus(true)
-            props.setName(data.name)
+            this.setState({status: true})
+            this.setState({username: data.name})
+            this.props.onLoginChange(this.state.username, this.state.status);
             alert(data.name);//////////////////////////////////////////////////////////////replace for good authentication operations
         }else if(data.result === 1){
           alert("The password does not match the email you registered");//////////////////////replace for email-password not matching(email exists)
@@ -43,7 +44,8 @@ export default function Signin(props) {
       });
   }
 
-
+render(){
+  console.log(this.state)
   return (
     <div className="max-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
@@ -60,7 +62,7 @@ export default function Signin(props) {
                 Email address
               </label>
               <input
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) => this.setState({email: e.target.value})}
                 id="email-address"
                 name="email"
                 type="email"
@@ -75,7 +77,7 @@ export default function Signin(props) {
                 Password
               </label>
               <input
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={(e) => this.setState({password: e.target.value})}
                 id="password"
                 name="password"
                 type="password"
@@ -113,8 +115,8 @@ export default function Signin(props) {
           <div>
             <button
               type="button"
-              disabled={!email && !password}
-              onClick={signin}
+              disabled={!this.state.email && !this.state.password}
+              onClick={this.signin.bind(this)}
               className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
               <span className="absolute left-0 inset-y-0 flex items-center pl-3">
@@ -139,4 +141,5 @@ export default function Signin(props) {
       </div>
     </div>
   );
+}
 }

@@ -1,7 +1,6 @@
 var express = require('express');
 var router = express.Router();
 const User = require('../model/User')
-
 router.post('/create', async(req, res) => {
     try{
       const {name,email,password} = req.body;
@@ -13,7 +12,7 @@ router.post('/create', async(req, res) => {
       var num = (decU[0].toObject()._uid); // get largest uid
       console.log(num);
       const uInfo = {
-        uid: num+1,
+        _uid: num+1,
         name:name,
         email:email,
         password:password
