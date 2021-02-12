@@ -1,17 +1,20 @@
 {
+  "error": false,
+  "errorno": 0,
   "ident": {
-    "var1": [
-      "int",
-      "1"
+    "cond": [
+      "bool",
+      "False"
     ],
-    "var2": [
+    "iter": [
       "int",
-      "3"
+      "11"
     ],
-    "var3": [
+    "max": [
       "int",
-      "4"
+      "10"
     ]
   },
+  "output": [],
   "program": "testProg"
 }

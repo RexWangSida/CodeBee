@@ -8,11 +8,11 @@
         "expr": {
           "block": "literal",
           "type": "int",
-          "value": "1"
+          "value": "0"
         },
         "ident": {
           "block": "variable",
-          "ident": "var1"
+          "ident": "iter"
         }
       },
       {
@@ -20,49 +20,84 @@
         "expr": {
           "block": "literal",
           "type": "int",
-          "value": "-1"
+          "value": "10"
         },
         "ident": {
           "block": "variable",
-          "ident": "var2"
+          "ident": "max"
         }
       },
       {
-        "block": "assignment",
-        "expr": {
+        "block": "while",
+        "body": {
+          "block": "assignment",
+          "expr": {
+            "block": "binop",
+            "expr1": {
+              "block": "variable",
+              "ident": "iter"
+            },
+            "expr2": {
+              "block": "literal",
+              "type": "int",
+              "value": "1"
+            },
+            "oper": "+"
+          },
+          "ident": {
+            "block": "variable",
+            "ident": "iter"
+          }
+        },
+        "cond": {
           "block": "binop",
           "expr1": {
             "block": "variable",
-            "ident": "var1"
+            "ident": "iter"
           },
           "expr2": {
             "block": "variable",
-            "ident": "var2"
+            "ident": "max"
           },
-          "oper": "+"
-        },
-        "ident": {
-          "block": "variable",
-          "ident": "var3"
+          "oper": "<="
         }
       },
       {
         "block": "ifelse",
         "cond": {
-          "block": "variable",
-          "ident": "var3"
+          "block": "binop",
+          "expr1": {
+            "block": "variable",
+            "ident": "iter"
+          },
+          "expr2": {
+            "block": "variable",
+            "ident": "max"
+          },
+          "oper": "<"
         },
-        "false": "None",
+        "false": {
+          "block": "assignment",
+          "expr": {
+            "block": "literal",
+            "type": "bool",
+            "value": "False"
+          },
+          "ident": {
+            "block": "variable",
+            "ident": "cond"
+          }
+        },
         "true": {
           "block": "assignment",
           "expr": {
             "block": "literal",
-            "type": "int",
-            "value": "-1"
+            "type": "bool",
+            "value": "True"
           },
           "ident": {
             "block": "variable",
-            "ident": "var1"
+            "ident": "cond"
           }
         }
       }
