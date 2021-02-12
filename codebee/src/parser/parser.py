@@ -327,7 +327,6 @@ def file_parse():
     readfile = 'sample_prog.json'
     writefile = 'response_prog.json'
 
-    logging.basicConfig(filename='log_parser.txt', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
     logging.info("===Start File Parse===")
     logging.info('JSON Read : ' + readfile)
     logging.info('JSON Write: ' + writefile)
@@ -340,8 +339,8 @@ def file_parse():
 
 def parse(str_json):
     '''Takes a string json as input and returns a string json'''
-    logging.basicConfig(filename='log_parser.txt', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
     logging.info("===Start Arg Parse===")
+    logging.info('JSON Input : ' + str_json.replace("\n","").replace("\t",""))
 
     struct = json.loads(str_json, cls=coder.Decoder)
 
@@ -350,6 +349,8 @@ def parse(str_json):
     return json.dumps(state.getState(), indent=2, sort_keys=True)
 
 if __name__ == '__main__':
+    logging.basicConfig(filename='log_parser.txt', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+
     # with open(sys.argv[1],'r') as openFile:
     #     text = openFile.read()
     # text = text.replace('\n','').replace(' ','')
