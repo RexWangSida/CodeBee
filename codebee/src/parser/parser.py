@@ -230,6 +230,11 @@ def ParseBlockStmt(struct):
         ParseBlockScope(struct)
     elif type(struct) == blocks.AssignmentBlock:
         ParseBlockAssignment(struct)
+    elif type(struct) == blocks.IfElseBlock:
+        ParseBlockIfElse(struct)
+
+    else:
+        logging.warning('unmatched stmt')
 
 def ParseBlockExpr(struct):
     '''Expects a struct to be a tree of expression type classes and evaluates to a single value'''
