@@ -3,7 +3,6 @@ import json, logging, sys
 import blocks, state, coder
 
 # TODO: Read initial state from file/input json string
-# TODO: Record errors in state
 
 def readFile(filename):
     '''Reads raw json and converts it to blocks'''
