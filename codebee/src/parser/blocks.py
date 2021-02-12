@@ -1,9 +1,7 @@
 # Implements the structure of Bee blocks
 import json, logging, sys
 
-# logging.basicConfig(filename='log_blocks.txt', level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
-
-IMPLEMENTED = ('program', 'scope', 'assignment', 'literal', 'variable', 'binop', 'unop')
+IMPLEMENTED = ('program', 'scope', 'assignment', 'literal', 'variable', 'binop', 'unop', 'ifelse')
 
 class _Block:
     '''Implements trans-block functionality, like JSON functions'''
@@ -27,35 +25,42 @@ class _Block:
 class ProgramBlock(_Block):
     def __init__(self, ident, body, param = None):
         self.block = 'program'
-        self.ident = ident # Name of program - Stored as variable block
+        self.ident = ident # Variable block
 
         # At this stage, parameters are not needed
         # if type(param) == list: self.param =  param
         # elif param != None:     self.param = [param]
         # else:                   self.param = [     ]
 
-        self.body = body # Body of program.
+        self.body = body # stmt type
 
 class ScopeBlock(_Block):
     def __init__(self, stmts = None):
         self.block = 'scope'
-        self.stmts = []
+        self.stmts = [] # stmt type
         if type(stmts) == list:
             for stmt in stmts: self.stmts.append(stmt)
 
 class AssignmentBlock(_Block):
     def __init__(self, ident, expression):
         self.block = 'assignment'
-        self.ident = ident
-        self.expr = expression
+        self.ident = ident # variable block
+        self.expr = expression # expr type
+
+class IfElseBlock(_Block):
+    def __init__(self, cond, true, false = None):
+        self.block = 'ifelse'
+        self.cond = cond # expr type
+        self.true = true # stmt type
+        self.false = false # stmt type
 
 class LiteralBlock(_Block):
     def __init__(self, type, value):
         self.block = 'literal'
         # Available types are int, float, str, bool
-        self.type = type
+        self.type = type # str
         # value for bool is '1' for true and '' for false
-        self.value = value
+        self.value = value # str
 
 class VariableBlock(_Block):
     def __init__(self, ident):
@@ -65,12 +70,12 @@ class VariableBlock(_Block):
 class BinOpBlock(_Block):
     def __init__(self, oper, expr1, expr2):
         self.block = 'binop'
-        self.oper = oper
-        self.expr1 = expr1
-        self.expr2 = expr2
+        self.oper = oper # str
+        self.expr1 = expr1 # expr type
+        self.expr2 = expr2 # expr type
 
 class UnOpBlock(_Block):
     def __init__(self, oper, expr1):
         self.block = 'unop'
-        self.oper = oper
-        self.expr1 = expr1
+        self.oper = oper # str
+        self.expr1 = expr1 # expr type

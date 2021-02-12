@@ -8,15 +8,18 @@ import blocks
 class Decoder(json.JSONDecoder):
 
     # Supported stmt blocks
-    _STMTBLOCKS = ('program', 'scope', 'assignment')
+    _STMTBLOCKS = ('program', 'scope', 'assignment', 'ifelse')
     # Supported expr blocks
     _EXPRBLOCKS = ('literal', 'variable', 'binop', 'unop')
 
     def __init__(self, *args, **kwargs):
 
+        uncoded = []
         for implemented in blocks.IMPLEMENTED:
             if implemented not in Decoder._STMTBLOCKS + Decoder._EXPRBLOCKS:
-                logging.warning('unimplemented JSON block: ' + str(implemented))
+                uncoded.append(str(implemented))
+        if len(uncoded)>0:
+            logging.warning('unimplemented JSON block: ' + str(implemented))
 
         json.JSONDecoder.__init__(self, object_hook=self.object_hook, *args, **kwargs)
 
@@ -64,7 +67,6 @@ class Decoder(json.JSONDecoder):
             logging.debug('Finished BinOp Block Load')
             return blocks.BinOpBlock(oper,expr1,expr2)
 
-
         elif dct['block'] == 'unop':
             oper = dct['oper']
             expr1 = dct['expr1']
@@ -100,6 +102,14 @@ class Decoder(json.JSONDecoder):
 
             logging.debug('Finished Program Block Load')
             return blocks.ProgramBlock(ident,body,param)
+
+        elif dct['block'] == 'ifelse':
+            cond = dct['cond']
+            true = dct['true']
+            false = dct['false']
+
+            logging.debug('Finished IfElse Block Load')
+            return blocks.IfElseBlock(cond,true,false)
 
         else:
             logging.critical('Unknown stmt block: ' + str(dct['block']))
