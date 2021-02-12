@@ -193,6 +193,18 @@ def ParseBlockBinOp(struct):
             value3 = value1 / value2
         elif struct.oper == '%':
             value3 = value1 % value2
+        elif struct.oper == '<':
+            value3 = value1 < value2
+        elif struct.oper == '<=':
+            value3 = value1 <= value2
+        elif struct.oper == '>':
+            value3 = value1 > value2
+        elif struct.oper == '>=':
+            value3 = value1 >= value2
+        elif struct.oper == '=':
+            value3 = value1 == value2
+        elif struct.oper == '!=':
+            value3 = value1 != value2
         else:
             logging.critical('unknown operator '+struct.oper)
             state.setSym('error', True)
