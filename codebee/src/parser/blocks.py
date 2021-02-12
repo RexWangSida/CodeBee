@@ -1,7 +1,7 @@
 # Implements the structure of Bee blocks
 import json, logging, sys
 
-IMPLEMENTED = ('program', 'scope', 'assignment', 'literal', 'variable', 'binop', 'unop', 'ifelse')
+IMPLEMENTED = ('program', 'scope', 'assignment', 'ifelse', 'while', 'literal', 'variable', 'binop', 'unop')
 
 class _Block:
     '''Implements trans-block functionality, like JSON functions'''
@@ -52,14 +52,20 @@ class IfElseBlock(_Block):
         self.block = 'ifelse'
         self.cond = cond # expr type
         self.true = true # stmt type
-        self.false = false # stmt type
+        self.false = false # stmt type or None
+
+class WhileBlock(_Block):
+    def __init__(self, cond, body):
+        self.block = 'while'
+        self.cond = cond # expr type
+        self.body = body # stmt type
 
 class LiteralBlock(_Block):
     def __init__(self, type, value):
         self.block = 'literal'
         # Available types are int, float, str, bool
         self.type = type # str
-        # value for bool is 'true' for true and 'false' for false
+        # value for bool is 'True' for true and 'False' for false
         self.value = value # str
 
 class VariableBlock(_Block):

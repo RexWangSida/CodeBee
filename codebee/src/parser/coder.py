@@ -8,7 +8,7 @@ import blocks
 class Decoder(json.JSONDecoder):
 
     # Supported stmt blocks
-    _STMTBLOCKS = ('program', 'scope', 'assignment', 'ifelse')
+    _STMTBLOCKS = ('program', 'scope', 'assignment', 'ifelse', 'while')
     # Supported expr blocks
     _EXPRBLOCKS = ('literal', 'variable', 'binop', 'unop')
 
@@ -110,6 +110,13 @@ class Decoder(json.JSONDecoder):
 
             logging.debug('Finished IfElse Block Load')
             return blocks.IfElseBlock(cond,true,false)
+
+        elif dct['block'] == 'while':
+            cond = dct['cond']
+            body = dct['body']
+
+            logging.debug('Finished While Block Load')
+            return blocks.WhileBlock(cond,body)
 
         else:
             logging.critical('Unknown stmt block: ' + str(dct['block']))

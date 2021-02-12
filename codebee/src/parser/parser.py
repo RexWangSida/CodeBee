@@ -80,6 +80,37 @@ def ParseBlockIfElse(struct):
     if exc != None:
         ParseBlockStmt(exc)
 
+def ParseBlockWhile(struct):
+    if type(struct) != blocks.WhileBlock:
+        logging.critical('Attempt to parse '+struct.block+' as While')
+        state.setSym('error', True)
+        sys.exit(1)
+
+    MAXITER = 15
+    CURITER = 0
+    while True:
+        result = ParseBlockExpr(struct.cond) # (type, value)
+        exc = None
+
+        if result[0] != 'bool':
+            logging.warning('while condition not boolean (%s,%s)' % result)
+
+        if (result[0] == 'bool'     and result[1] == "True"):   exc = struct.body
+        elif (result[0] == 'int'    and result[1] != '0'):      exc = struct.body
+        elif (result[0] == 'float'  and result[1] != '0.0'):    exc = struct.body
+        elif (result[0] == 'str'    and result[1] != ''):       exc = struct.body
+
+        logging.debug('while condition evaluated to %s' % ('True' if exc else 'False'))
+
+        if exc != None and CURITER < MAXITER:
+            ParseBlockStmt(exc)
+            CURITER += 1
+        else:
+            break
+
+    if CURITER >= MAXITER:
+        logging.warning('loop reached max')
+
 def ParseBlockLiteral(struct):
     if type(struct) != blocks.LiteralBlock:
         logging.critical('Attempt to parse '+struct.block+' as Literal')
@@ -256,6 +287,8 @@ def ParseBlockStmt(struct):
         ParseBlockAssignment(struct)
     elif type(struct) == blocks.IfElseBlock:
         ParseBlockIfElse(struct)
+    elif type(struct) == blocks.WhileBlock:
+        ParseBlockWhile(struct)
 
     else:
         logging.warning('unmatched stmt %s' % struct.block)
