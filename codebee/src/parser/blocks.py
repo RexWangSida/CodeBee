@@ -59,7 +59,7 @@ class LiteralBlock(_Block):
         self.block = 'literal'
         # Available types are int, float, str, bool
         self.type = type # str
-        # value for bool is '1' for true and '' for false
+        # value for bool is 'true' for true and 'false' for false
         self.value = value # str
 
 class VariableBlock(_Block):
