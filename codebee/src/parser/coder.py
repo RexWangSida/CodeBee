@@ -128,16 +128,37 @@ def _coder_test():
     logging.info("Starting Encoding/ Decoding Clone Test")
     filename = 'sample_prog.json'
 
-    progname = blocks.VariableBlock('testProg')
-    var1 = blocks.VariableBlock('var1')
-    var2 = blocks.VariableBlock('var2')
-    var3 = blocks.VariableBlock('var3')
+    def ass(var,val):
+        return blocks.AssignmentBlock(var,val)
+    def sco(stm):
+        return blocks.ScopeBlock(stm)
+    def pro(stm):
+        return blocks.ScopeBlock(stm)
+    def ife(con,tru,fls=None):
+        return blocks.IfElseBlock(con,tru,fls)
+    def whi(con,bod):
+        return blocks.WhileBlock(con,bod)
 
-    body = blocks.ScopeBlock([
-        blocks.AssignmentBlock(var1, blocks.LiteralBlock('int','1')),
-        blocks.AssignmentBlock(var2, blocks.LiteralBlock('int','-1')),
-        blocks.AssignmentBlock(var3, blocks.BinOpBlock('+',var1,var2)),
-        blocks.IfElseBlock(var3,blocks.AssignmentBlock(var1, blocks.LiteralBlock('int','-1')),blocks.AssignmentBlock(var1, blocks.LiteralBlock('int','-2')))
+    def bo(op,v1,v2):
+        return blocks.BinOpBlock(op,v1,v2)
+    def uo(op,v1):
+        return blocks.UnOpBlock(op,v1)
+    def li(ty,vl):
+        return blocks.LiteralBlock(ty,vl)
+    def va(nm):
+        return blocks.VariableBlock(nm)
+
+
+    progname = va('testProg')
+    var1 = va('iter')
+    var2 = va('max')
+    var3 = va('cond')
+
+    body = sco([
+        ass(var1, li('int','0')),
+        ass(var2, li('int','10')),
+        whi(bo('<=',var1,var2),ass(var1,bo('+',var1,li('int','1')))),
+        ife(bo('<',var1,var2),ass(var3,li('bool','True')),ass(var3,li('bool','False')))
     ])
 
     prog = blocks.ProgramBlock(progname,body) # Object Version
