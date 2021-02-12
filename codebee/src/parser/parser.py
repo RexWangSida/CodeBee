@@ -50,11 +50,36 @@ def ParseBlockAssignment(struct):
         state.setSym('error', True)
         sys.exit(1)
 
-    name = struct.ident.ident # one ident gets a variable block
+    name = struct.ident.ident # first ident gets a variable block
     store = ParseBlockExpr(struct.expr) # (type, value)
 
     logging.debug('assigned variable '+name+' to '+str(store))
     state.setSym(name,store)
+
+def ParseBlockIfElse(struct):
+    if type(struct) != blocks.IfElseBlock:
+        logging.critical('Attempt to parse '+struct.block+' as IfElse')
+        state.setSym('error', True)
+        sys.exit(1)
+
+    result = ParseBlockExpr(struct.cond) # (type, value)
+    exc = None
+
+    if result[0] != 'bool':
+        logging.warning('if condition not boolean (%s,%s)' % result)
+
+    if (result[0] == 'bool'     and result[1] == "true"):   exc = struct.true
+    elif (result[0] == 'int'    and result[1] != '0'):      exc = struct.true
+    elif (result[0] == 'float'  and result[1] != '0.0'):    exc = struct.true
+    elif (result[0] == 'str'    and result[1] != ''):       exc = struct.true
+
+    logging.debug('if condition evaluated to %s' % ('true' if exc else 'false'))
+
+    if exc == None and struct.false != None:
+        exc = struct.false
+
+    if exc != None:
+        ParseBlockStmt(exc)
 
 def ParseBlockLiteral(struct):
     if type(struct) != blocks.LiteralBlock:
@@ -234,7 +259,7 @@ def ParseBlockStmt(struct):
         ParseBlockIfElse(struct)
 
     else:
-        logging.warning('unmatched stmt')
+        logging.warning('unmatched stmt %s' % struct.block)
 
 def ParseBlockExpr(struct):
     '''Expects a struct to be a tree of expression type classes and evaluates to a single value'''
