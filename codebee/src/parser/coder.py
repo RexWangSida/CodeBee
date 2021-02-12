@@ -127,9 +127,10 @@ def _coder_test():
     var3 = blocks.VariableBlock('var3')
 
     body = blocks.ScopeBlock([
-        blocks.AssignmentBlock(var1,blocks.LiteralBlock('int','1')),
-        blocks.AssignmentBlock(var2,blocks.LiteralBlock('int','3')),
-        blocks.AssignmentBlock(var3,blocks.BinOpBlock('+',var1,var2))
+        blocks.AssignmentBlock(var1, blocks.LiteralBlock('int','1')),
+        blocks.AssignmentBlock(var2, blocks.LiteralBlock('int','-1')),
+        blocks.AssignmentBlock(var3, blocks.BinOpBlock('+',var1,var2)),
+        blocks.IfElseBlock(var3,blocks.AssignmentBlock(var1, blocks.LiteralBlock('int','-1')),blocks.AssignmentBlock(var1, blocks.LiteralBlock('int','-2')))
     ])
 
     prog = blocks.ProgramBlock(progname,body) # Object Version

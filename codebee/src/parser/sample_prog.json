@@ -20,7 +20,7 @@
         "expr": {
           "block": "literal",
           "type": "int",
-          "value": "3"
+          "value": "-1"
         },
         "ident": {
           "block": "variable",
@@ -44,6 +44,26 @@
         "ident": {
           "block": "variable",
           "ident": "var3"
+        }
+      },
+      {
+        "block": "ifelse",
+        "cond": {
+          "block": "variable",
+          "ident": "var3"
+        },
+        "false": "None",
+        "true": {
+          "block": "assignment",
+          "expr": {
+            "block": "literal",
+            "type": "int",
+            "value": "-1"
+          },
+          "ident": {
+            "block": "variable",
+            "ident": "var1"
+          }
         }
       }
     ]
