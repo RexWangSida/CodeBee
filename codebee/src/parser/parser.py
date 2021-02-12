@@ -67,12 +67,12 @@ def ParseBlockIfElse(struct):
     if result[0] != 'bool':
         logging.warning('if condition not boolean (%s,%s)' % result)
 
-    if (result[0] == 'bool'     and result[1] == "true"):   exc = struct.true
+    if (result[0] == 'bool'     and result[1] == "True"):   exc = struct.true
     elif (result[0] == 'int'    and result[1] != '0'):      exc = struct.true
     elif (result[0] == 'float'  and result[1] != '0.0'):    exc = struct.true
     elif (result[0] == 'str'    and result[1] != ''):       exc = struct.true
 
-    logging.debug('if condition evaluated to %s' % ('true' if exc else 'false'))
+    logging.debug('if condition evaluated to %s' % ('True' if exc else 'false'))
 
     if exc == None and struct.false != None:
         exc = struct.false
