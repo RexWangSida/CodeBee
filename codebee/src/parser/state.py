@@ -3,17 +3,19 @@
 
 import json, logging, sys
 
-# Set initial state of symtab
-    # program is program name
-    # error is if an error occured
-    # errorno is the error number (agreement between front end and parser of what each number means)
-    # ident is dictionary of variable names and values
-    # output is a list of printed text
-state = {'program': None, 'error': False, 'errorno': 0, 'ident':{}, 'output': []}
+def init():
+    global state
+    # Set initial state of symtab
+        # program is program name
+        # error is if an error occured
+        # errorno is the error number (agreement between front end and parser of what each number means)
+        # ident is dictionary of variable names and values
+        # output is a list of printed text
+    state = {'program': None, 'error': False, 'errorno': 0, 'ident':{}, 'output': []}
 
 def stateSym(name, value):
     '''Sets the value of a state (@ prefix) symbol'''
-    logging.info('Set state '+name+' to '+value)
+    logging.info('Set state '+name+' to '+str(value))
     state[name] = value
 
 def setSym(name,packet):

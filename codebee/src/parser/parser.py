@@ -335,7 +335,7 @@ def file_parse():
     logging.info('JSON Write: ' + writefile)
 
     struct = readFile(readfile) # Read JSON and convert to blocks
-
+    state.init()
     ParseBlockProgram(struct)
 
     writeFile(writefile, state.getState()) # Write internal state to JSON
@@ -347,8 +347,12 @@ def parse(str_json):
 
     struct = json.loads(str_json, cls=coder.Decoder)
 
+    state.init()
     ParseBlockProgram(struct)
 
+    return parse_output()
+
+def parse_output():
     return json.dumps(state.getState(), indent=2, sort_keys=True)
 
 if __name__ == '__main__':
