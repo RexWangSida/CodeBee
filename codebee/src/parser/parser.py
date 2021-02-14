@@ -192,6 +192,8 @@ def ParseBlockBinOp(struct):
             value3 = value1 * value2
         elif struct.oper == '/':
             value3 = value1 / value2
+        elif struct.oper == '//':
+            value3 = value1 // value2
         elif struct.oper == '%':
             value3 = value1 % value2
         elif struct.oper == '<':
