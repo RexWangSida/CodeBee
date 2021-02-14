@@ -1,28 +1,26 @@
+from utilities import *
 from blocks import *
 
-def makeOp(oper,var1,var2=None):
-
-    if type(var1) == int:       var1 = LiteralBlock('int',var1)
-    elif type(var1) == str:     var1 = LiteralBlock('str',var1)
-
-    if type(var2) == int:       var2 = LiteralBlock('int',var2)
-    elif type(var2) == str:     var2 = LiteralBlock('str',var2)
-
-    if var2 == None:            return UnOpBlock(oper,var1)
-    else:                       return BinOpBlock(oper,var1,var2)
-
-def makeAssign(var3,value):
-    if type(var3) == str:   var3 = VariableBlock(var3)
-
-    return AssignmentBlock(var3,value)
-
-def test_literal():
+def test_literal_creation():
     typ, val = 'int', '1'
     block = LiteralBlock(typ, val)
 
     assert 'literal' == block.block
     assert typ == block.type
     assert val == block.value
+
+def test_literal_comparison():
+    typ, val = 'int', '1'
+    block1 = LiteralBlock(typ, val)
+    block2 = LiteralBlock(typ, val)     # Should be the same
+    block3 = LiteralBlock('str', val)   # Wrong type
+    block4 = LiteralBlock(typ, '2')     # Wrong value
+    block5 = LiteralBlock('bool', 'True')     # Wrong value and type
+
+    assert block1 == block2
+    assert block1 != block3
+    assert block1 != block4
+    assert block1 != block5
 
 def test_variable():
     name = "var3"
