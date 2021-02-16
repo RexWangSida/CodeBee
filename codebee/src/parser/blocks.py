@@ -1,7 +1,9 @@
 # Implements the structure of Bee blocks
 import json, logging, sys
 
-IMPLEMENTED = ('program', 'scope', 'assignment', 'ifelse', 'while', 'literal', 'variable', 'binop', 'unop')
+STMT_TYPE = set(('literal', 'variable', 'binop', 'unop'))
+EXPR_TYPE = set(('program', 'scope', 'assignment', 'ifelse', 'while', 'output'))
+IMPLEMENTED = STMT_TYPE | EXPR_TYPE
 
 class _Block:
     '''Implements trans-block functionality, like JSON functions'''
@@ -89,6 +91,16 @@ class WhileBlock(_Block):
     def __eq__(self,other):
         if (isinstance(other,WhileBlock) and self.block == other.block):
             return self.cond == other.cond and self.body == other.block
+        return False
+
+class OutputBlock(_Block):
+    def __init__(self, expr):
+        self.block = 'output'
+        self.expr = expr # expr type
+
+    def __eq__(self,other):
+        if (isinstance(other,OutputBlock) and self.block == other.block):
+            return self.expr == other.expr
         return False
 
 class LiteralBlock(_Block):

@@ -8,18 +8,14 @@ import blocks
 class Decoder(json.JSONDecoder):
 
     # Supported stmt blocks
-    _STMTBLOCKS = ('program', 'scope', 'assignment', 'ifelse', 'while')
+    _STMTBLOCKS = set(('program', 'scope', 'assignment', 'ifelse', 'while', 'output'))
     # Supported expr blocks
-    _EXPRBLOCKS = ('literal', 'variable', 'binop', 'unop')
+    _EXPRBLOCKS = set(('literal', 'variable', 'binop', 'unop'))
 
     def __init__(self, *args, **kwargs):
 
-        uncoded = []
-        for implemented in blocks.IMPLEMENTED:
-            if implemented not in Decoder._STMTBLOCKS + Decoder._EXPRBLOCKS:
-                uncoded.append(str(implemented))
-        if len(uncoded)>0:
-            logging.warning('unimplemented JSON block: ' + str(implemented))
+        for missing in (Decoder._STMTBLOCKS | Decoder._EXPRBLOCKS) & blocks.IMPLEMENTED:
+            logging.warning('unimplemented JSON block: ' + str(missing))
 
         json.JSONDecoder.__init__(self, object_hook=self.object_hook, *args, **kwargs)
 
@@ -117,6 +113,12 @@ class Decoder(json.JSONDecoder):
 
             logging.debug('Finished While Block Load')
             return blocks.WhileBlock(cond,body)
+
+        elif dct['block'] == 'output':
+            expr = dct['expr']
+
+            logging.debug('Finished Output Block Load')
+            return blocks.OutputBlock(expr)
 
         else:
             logging.critical('Unknown stmt block: ' + str(dct['block']))
