@@ -1,8 +1,8 @@
 # Implements the structure of Bee blocks
 import json, logging, sys
 
-STMT_TYPE = set(('literal', 'variable', 'binop', 'unop'))
-EXPR_TYPE = set(('program', 'scope', 'assignment', 'ifelse', 'while', 'output'))
+EXPR_TYPE = set(('literal', 'variable', 'binop', 'unop'))
+STMT_TYPE = set(('program', 'scope', 'assignment', 'ifelse', 'while', 'output'))
 IMPLEMENTED = STMT_TYPE | EXPR_TYPE
 
 class _Block:
@@ -30,14 +30,18 @@ class _Block:
 class ProgramBlock(_Block):
     def __init__(self, ident, body, param = None):
         self.block = 'program'
+
+        if not isinstance(ident,VariableBlock) or not hasattr(body,'block') or body.block not in STMT_TYPE:
+            raise ValueError
+
         self.ident = ident # Variable block
+        self.body = body # stmt type
 
         # At this stage, parameters are not needed
         # if type(param) == list: self.param =  param
         # elif param != None:     self.param = [param]
         # else:                   self.param = [     ]
 
-        self.body = body # stmt type
 
     def __eq__(self,other):
         if (isinstance(other,ProgramBlock) and self.block == other.block):
@@ -48,8 +52,11 @@ class ScopeBlock(_Block):
     def __init__(self, stmts = None):
         self.block = 'scope'
         self.stmts = [] # stmt type
-        if type(stmts) == list:
-            for stmt in stmts: self.stmts.append(stmt)
+
+        for stmt in stmts:
+            if not hasattr(stmt,'block') or stmt.block not in STMT_TYPE:
+                raise ValueError
+            self.stmts.append(stmt)
 
     def __eq__(self,other):
         if (isinstance(other,ScopeBlock) and self.block == other.block):
@@ -60,10 +67,14 @@ class ScopeBlock(_Block):
         return False
 
 class AssignmentBlock(_Block):
-    def __init__(self, ident, expression):
+    def __init__(self, ident, expr):
         self.block = 'assignment'
+
+        if not isinstance(ident,VariableBlock) or not hasattr(expr,'block') or not expr.block in EXPR_TYPE:
+            raise ValueError
+
         self.ident = ident # variable block
-        self.expr = expression # expr type
+        self.expr = expr # expr type
 
     def __eq__(self,other):
         if (isinstance(other,AssignmentBlock) and self.block == other.block):
@@ -73,6 +84,12 @@ class AssignmentBlock(_Block):
 class IfElseBlock(_Block):
     def __init__(self, cond, true, false = None):
         self.block = 'ifelse'
+
+        if not (hasattr(cond,'block') and hasattr(true,'block')) or cond.block not in EXPR_TYPE or true.block not in STMT_TYPE:
+            raise ValueError
+        elif false != None and not (hasattr(false,'block') and false.block in STMT_TYPE):
+            raise ValueError
+
         self.cond = cond # expr type
         self.true = true # stmt type
         self.false = false # stmt type or None
@@ -85,6 +102,10 @@ class IfElseBlock(_Block):
 class WhileBlock(_Block):
     def __init__(self, cond, body):
         self.block = 'while'
+
+        if not (hasattr(cond,'block') and hasattr(body,'block')) or cond.block not in EXPR_TYPE or body.block not in STMT_TYPE:
+            raise ValueError
+
         self.cond = cond # expr type
         self.body = body # stmt type
 
@@ -96,6 +117,10 @@ class WhileBlock(_Block):
 class OutputBlock(_Block):
     def __init__(self, expr):
         self.block = 'output'
+
+        if not hasattr(expr,'block') or expr.block not in EXPR_TYPE:
+            raise ValueError
+
         self.expr = expr # expr type
 
     def __eq__(self,other):
@@ -104,12 +129,16 @@ class OutputBlock(_Block):
         return False
 
 class LiteralBlock(_Block):
-    def __init__(self, type, value):
+    def __init__(self, typ, value):
         self.block = 'literal'
+
+        if type(typ) != str or type(value) != str:
+            raise ValueError
+
         # Available types are int, float, str, bool
-        self.type = str(type) # str
+        self.type = typ # str
         # value for bool is 'True' for true and 'False' for false
-        self.value = str(value) # str
+        self.value = value # str
 
     def __eq__(self,other):
         if (isinstance(other,LiteralBlock) and self.block == other.block):
@@ -119,6 +148,10 @@ class LiteralBlock(_Block):
 class VariableBlock(_Block):
     def __init__(self, ident):
         self.block = 'variable'
+
+        if type(ident) != str:
+            raise ValueError
+
         self.ident = ident
 
     def __eq__(self,other):
@@ -129,6 +162,10 @@ class VariableBlock(_Block):
 class BinOpBlock(_Block):
     def __init__(self, oper, expr1, expr2):
         self.block = 'binop'
+
+        if type(oper) != str or not (hasattr(expr1,'block') and hasattr(expr2,'block')) or expr1.block not in EXPR_TYPE or expr2.block not in EXPR_TYPE:
+            raise ValueError
+
         self.oper = oper # str
         self.expr1 = expr1 # expr type
         self.expr2 = expr2 # expr type
@@ -141,6 +178,10 @@ class BinOpBlock(_Block):
 class UnOpBlock(_Block):
     def __init__(self, oper, expr1):
         self.block = 'unop'
+
+        if type(oper) != str or not hasattr(expr1,'block') or expr1.block not in EXPR_TYPE:
+            raise ValueError
+
         self.oper = oper # str
         self.expr1 = expr1 # expr type
 
