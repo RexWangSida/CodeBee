@@ -1,7 +1,7 @@
 from utilities import *
 from blocks import *
 
-def test_literal_creation():
+def test_literal():
     typ, val = 'int', '1'
     block = LiteralBlock(typ, val)
 
@@ -81,7 +81,7 @@ def test_ifelse():
 
     condition = makeOp('>',1,4)
     true_body = makeAssign('var1',1)
-    false_body = makeAssign('var2',0)
+    false_body = makeAssign('var1',0)
     block = IfElseBlock(condition,true_body,false_body)
 
     assert 'ifelse' == block.block
@@ -89,7 +89,7 @@ def test_ifelse():
     assert true_body == block.true
     assert false_body == block.false
 
-def test_ifelse():
+def test_while():
     var = VariableBlock('var1')
     condition = makeOp('>',var,4)
     body = makeAssign(var,makeOp('+',var,1))
@@ -98,6 +98,98 @@ def test_ifelse():
     assert 'while' == block.block
     assert condition == block.cond
     assert body == block.body
+
+
+def test_malformed_literal():
+    typ, val = 'int', 1
+
+    try:
+        block = LiteralBlock(typ, val)
+        assert False
+    except ValueError:
+        pass
+
+def test_malformed_variable():
+    name = 1
+    try:
+        block = VariableBlock(name)
+        assert False
+    except ValueError:
+        pass
+
+def test_malformed_binop():
+    oper, var1, var2 = True, VariableBlock('var1'), VariableBlock('var2')
+    try:
+        block = BinOpBlock(oper,var1,var2)
+        assert False
+    except ValueError:
+        pass
+
+    oper, var1, var2 = '+', VariableBlock('var1'), 1
+    try:
+        block = BinOpBlock(oper,var1,var2)
+        assert False
+    except ValueError:
+        pass
+
+def test_malformed_unop():
+    oper, var1 = True, VariableBlock('var1')
+    try:
+        block = UnOpBlock(oper,var1)
+        assert False
+    except ValueError:
+        pass
+
+    oper, var1 = '+', 1
+    try:
+        block = UnOpBlock(oper,var1)
+        assert False
+    except ValueError:
+        pass
+
+def test_malformed_program():
+    assignment = makeAssign('var3',makeOp('+','var1',2))
+    try:
+        block = ProgramBlock('prog',assignment)
+        assert False
+    except ValueError:
+        pass
+
+    name, assignment = VariableBlock('var1'), makeOp('+','var1',2)
+    try:
+        block = ProgramBlock(name,assignment)
+        assert False
+    except ValueError:
+        pass
+
+def test_malformed_scope():
+    stmts = [makeOp('+',3,2)]
+    try:
+        block = ScopeBlock(stmts)
+        assert False
+    except ValueError:
+        pass
+
+def test_malformed_assignment():
+    var1, lit1 = VariableBlock('prog'), LiteralBlock('int','2')
+    try:
+        block = AssignmentBlock('var1',lit1)
+        assert False
+    except ValueError:
+        pass
+
+
+    try:
+        block = AssignmentBlock(var1,1)
+        assert False
+    except ValueError:
+        pass
+
+def test_ifelse():
+    pass
+
+def test_while():
+    pass
 
 if __name__ == '__main__':
     test_ifelse()

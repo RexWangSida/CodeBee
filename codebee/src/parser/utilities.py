@@ -3,9 +3,9 @@
 from blocks import *
 
 def makeLiteral(value):
-    if type(value) == int:      return LiteralBlock('int', value)
-    elif type(value) == str:    return LiteralBlock('str', value)
-    elif type(value) == bool:   return LiteralBlock('bool',value)
+    if type(value) == int:      return LiteralBlock('int', str(value))
+    elif type(value) == str:    return LiteralBlock('str', str(value))
+    elif type(value) == bool:   return LiteralBlock('bool',str(value))
     return value
 
 def makeOp(oper,val1,val2=None):

@@ -78,6 +78,22 @@ def test_loop():
     assert state['output'] == []
 
 
+    body = ScopeBlock([ makeAssign('var1',15),
+        WhileBlock( makeOp('<',makeVar('var1'),10),
+                    makeAssign('var1',makeOp('+',makeVar('var1'),1))
+        )
+    ])
+    prog = makeProgram('prog',body)
+
+    struct = json.dumps(prog.get_json())
+    state = json.loads(parse(struct))
+
+    assert state['ident']['var1'] == ['int', '15']
+    assert state['error'] == False
+    assert state['program'] == 'prog'
+    assert state['output'] == []
+
+
 
     body = ScopeBlock([ makeAssign('var1',0),
         WhileBlock( makeOp('>=',makeVar('var1'),0),
@@ -87,35 +103,6 @@ def test_loop():
     prog = makeProgram('prog',body)
 
     struct = json.dumps(prog.get_json())
-    try:
-        state = json.loads(parse(struct))
-    except UnboundLocalError:
-        state = json.loads(parse_output())
-
-    assert state['error'] == True
-    assert state['program'] == 'prog'
-    assert state['output'] == []
-
-def test_malformed():
-
-    body = makeAssign('var1',makeOp('+','4',1))
-    prog = makeProgram('prog',body)
-
-    struct = json.dumps(prog.get_json())
-    try:
-        state = json.loads(parse(struct))
-    except UnboundLocalError:
-        state = json.loads(parse_output())
-
-    assert state['error'] == True
-    assert state['program'] == 'prog'
-    assert state['output'] == []
-
-
-    body = makeOp('+',1,2)
-    prog = makeProgram('prog',body)
-    struct = json.dumps(prog.get_json())
-
     try:
         state = json.loads(parse(struct))
     except UnboundLocalError:
@@ -172,4 +159,4 @@ def test_path():
     assert state['error'] == False
 
 if __name__ == '__main__':
-    test_malformed()
+    pass
