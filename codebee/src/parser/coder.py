@@ -14,7 +14,7 @@ class Decoder(json.JSONDecoder):
 
     def __init__(self, *args, **kwargs):
 
-        for missing in (Decoder._STMTBLOCKS | Decoder._EXPRBLOCKS) & blocks.IMPLEMENTED:
+        for missing in  blocks.IMPLEMENTED - (Decoder._STMTBLOCKS | Decoder._EXPRBLOCKS):
             logging.warning('unimplemented JSON block: ' + str(missing))
 
         json.JSONDecoder.__init__(self, object_hook=self.object_hook, *args, **kwargs)
