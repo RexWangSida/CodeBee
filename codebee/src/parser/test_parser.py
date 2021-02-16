@@ -112,15 +112,12 @@ def test_loop():
     assert state['program'] == 'prog'
     assert state['output'] == []
 
-
-
-    body = makeAssign('var1',makeAssign('var1',1))
-    prog = makeProgram('prog',body)
-    struct = json.dumps(prog.get_json())
-
     try:
+        body = makeAssign('var1',makeAssign('var1',1))
+        prog = makeProgram('prog',body)
+        struct = json.dumps(prog.get_json())
         state = json.loads(parse(struct))
-    except UnboundLocalError:
+    except ValueError:
         state = json.loads(parse_output())
 
     assert state['error'] == True
