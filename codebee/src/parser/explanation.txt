@@ -1,0 +1,66 @@
+Blocks are separated into 2 types, EXPR and STMT. Below are the .block values for each
+EXPR = set( 'literal', 'variable', 'binop', 'unop')
+STMT = set( 'program', 'scope', 'assignment', 'ifelse', 'while', 'output')
+
+Below are implemented blocks in the parser. Under each block is the attributes
+they have and what is expected
+
+ProgramBlock              # the top-level block. contains the entire program
+.block = 'program'        # used for identification in json
+.ident = VariableBlock    # program name -> no functional difference, but needed for parser
+.body  = element of STMT  # the code to execute -> use ScopeBlock for more than one statement
+
+ScopeBlock                # funcitons like { } in other languages. Treats multiple STMT type blocks as one
+.block = 'scope'
+.stmts = list of STMT     # list of statements
+
+AssignmentBlock           # assigns value to an identifier
+.block = 'assignment'
+.ident = VariableBlock    # must be a variable block
+.expr  = element of EXPR  # must be one of .block = 'literal', 'variable', 'binop', or 'unop'
+
+IfElseBlock               # if/ else statement. depending on the result of .cond, it will execute .true or .false
+.cond  = 'ifelse'
+.true  = element of STMT  # must be one of .block = 'program', 'scope', 'assignment', 'ifelse', 'while', 'output'
+.false = element of STMT (not required -> use null if not needed)
+
+WhileBlock                # only looping block
+.cond  = 'while'
+.cond  = element of EXPR  # evaluated on each iteration
+.body  = element of STMT
+
+OutputBlock               # produces output which is sent to the user
+.block = 'output'
+.expr  = element of EXPR  # string output to the user
+
+LiteralBlock              # stores a literal value, like the number 1, string 'hello' or boolean True
+.block = 'literal'
+.type  = one of ('int', 'float', 'str', 'bool')
+                          # dictates how .value will be interpreted
+.value = a string value (like '1', '3.14', 'this is text', 'True')
+                          # in json, it is stored as a string! do not provide non-string
+
+VariableBlock             # represents a variable. variables do not have specific type (i.e. like Python)
+.block = 'variable'
+.ident = a string value to identify variable
+                          # string representing the variable
+
+BinOpBlock                # an operation which takes two expressions to evaluate
+.block = 'binop'
+.oper  = one of ('+', '-', '*', '/', '%', '//', '>', '<', '>=', '<=', '==', '!=')
+                          # // is integer division
+.expr1 = element of EXPR
+.expr2 = element of EXPR
+
+UnOpBlock                 # an operation which takes one expression to evaluate
+.block = 'unop'
+.oper  = one of ('+', '-', '++', '--', 'int', 'float', 'str', 'bool')
+                          # type operators will type cast the expression
+                          # ++ and -- will increment or decrement by 1
+.expr1 = element of EXPR
+
+%Below are not implemented but can be%
+
+FunctionCallBlock
+.block = 'call'
+.ident = VariableBlock

@@ -15,6 +15,9 @@
       "10"
     ]
   },
-  "output": [],
+  "output": [
+    "True",
+    "False"
+  ],
   "program": "testProg"
 }
