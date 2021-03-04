@@ -125,7 +125,7 @@ class Decoder(json.JSONDecoder):
             sys.exit(1)
 
 def _coder_test():
-    logging.basicConfig(filename='log_coder.txt', level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
+    logging.basicConfig(filename='log_coder.txt', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
     logging.info("Starting Encoding/ Decoding Clone Test")
     filename = 'sample_prog.json'
@@ -140,6 +140,8 @@ def _coder_test():
         return blocks.IfElseBlock(con,tru,fls)
     def whi(con,bod):
         return blocks.WhileBlock(con,bod)
+    def out(expr):
+        return blocks.OutputBlock(expr)
 
     def bo(op,v1,v2):
         return blocks.BinOpBlock(op,v1,v2)
@@ -152,15 +154,20 @@ def _coder_test():
 
 
     progname = va('testProg')
-    var1 = va('iter')
-    var2 = va('max')
-    var3 = va('cond')
+    iter = va('iter') # iter
+    maxiter = va('max')
+    cond = va('cond')
 
     body = sco([
-        ass(var1, li('int','0')),
-        ass(var2, li('int','10')),
-        whi(bo('<=',var1,var2),ass(var1,bo('+',var1,li('int','1')))),
-        ife(bo('<',var1,var2),ass(var3,li('bool','True')),ass(var3,li('bool','False')))
+        ass(iter, li('int','0')),
+        ass(maxiter, li('int','10')),
+        whi(    bo('<=',iter,maxiter),
+            ass(iter,   bo('+',iter,li('int','1')))),
+        ife(    bo('<',iter,maxiter),
+            ass(cond,li('bool','True')),
+            ass(cond,li('bool','False'))),
+        out(uo('not',cond)),
+        out(cond)
     ])
 
     prog = blocks.ProgramBlock(progname,body) # Object Version

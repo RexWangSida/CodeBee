@@ -112,6 +112,19 @@ def ParseBlockWhile(struct):
         logging.warning('loop reached max')
         state.stateSym('error',True)
 
+def ParseBlockOutput(struct):
+    if type(struct) != blocks.OutputBlock:
+        logging.critical('Attempt to parse '+struct.block+' as While')
+        state.stateSym('error', True)
+
+    # print(struct.expr)
+
+    typ,val = ParseBlockExpr(struct.expr) # (type, value)
+
+    state.addOutput(str(val))
+    # print(state.getState())
+    # quit()
+
 def ParseBlockLiteral(struct):
     if type(struct) != blocks.LiteralBlock:
         logging.critical('Attempt to parse '+struct.block+' as Literal')
@@ -126,7 +139,8 @@ def ParseBlockLiteral(struct):
         elif struct.type == 'float':
             float(struct.value)
         elif struct.type == 'bool':
-            bool(struct.value)
+            if struct.value == 'False': value1 = False
+            else:                       value1 = bool(struct.value)
         else:
             logging.error('Unknown literal type: '+struct.type)
             state.stateSym('error', True)
@@ -208,6 +222,10 @@ def ParseBlockBinOp(struct):
             value3 = value1 == value2
         elif struct.oper == '!=':
             value3 = value1 != value2
+        elif struct.oper == 'and':
+            value3 = value1 and value2
+        elif struct.oper == 'or':
+            value3 = value1 or value2
         else:
             logging.critical('unknown operator '+struct.oper)
             state.stateSym('error', True)
@@ -247,7 +265,11 @@ def ParseBlockUnOp(struct):
     elif type1 == 'str':
         value1 = str(value1)
     elif type1 == 'bool':
-        value1 = bool(value1)
+        if value1 == 'False':   value1 = False
+        else:                   value1 = bool(value1)
+    else:
+        logging.critical('unknown type '+type1)
+        state.stateSym('error', True)
 
     try:
         if struct.oper == '+':
@@ -265,7 +287,10 @@ def ParseBlockUnOp(struct):
         elif struct.oper == 'str':
             value2 = str(value1)
         elif struct.oper == 'bool':
-            value2 = bool(value1)
+            if value1 == 'False':   value1 = False
+            else:                   value1 = bool(value1)
+        elif struct.oper == 'not':
+            value2 = not bool(value1)
         else:
             logging.critical('unknown operator '+struct.oper)
             state.stateSym('error', True)
@@ -291,6 +316,10 @@ def ParseBlockUnOp(struct):
 
     logging.debug('calculated '+struct.oper+str(value1)+'='+str(value2))
     packet = (type2, str(value2))
+
+    print(type1,value1)
+    print(type2,value2)
+
     return packet
 
 def ParseBlockStmt(struct):
@@ -304,6 +333,8 @@ def ParseBlockStmt(struct):
         ParseBlockIfElse(struct)
     elif type(struct) == blocks.WhileBlock:
         ParseBlockWhile(struct)
+    elif type(struct) == blocks.OutputBlock:
+        ParseBlockOutput(struct)
 
     else:
         logging.critical('unknown stmt %s' % struct.block)
@@ -340,6 +371,8 @@ def file_parse():
     state.init()
     ParseBlockProgram(struct)
 
+    print(state.getState())
+
     writeFile(writefile, state.getState()) # Write internal state to JSON
 
 def parse(str_json):
@@ -358,12 +391,12 @@ def parse_output():
     return json.dumps(state.getState(), indent=2, sort_keys=True)
 
 if __name__ == '__main__':
-    logging.basicConfig(filename='log_parser.txt', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+    logging.basicConfig(filename='log_parser.txt', level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 
     # with open(sys.argv[1],'r') as openFile:
     #     text = openFile.read()
     # text = text.replace('\n','').replace(' ','')
     # print(parse(text).replace('\n','').replace(' ',''))
 
-    parse(sys.argv[1])
-    # file_parse()
+    # parse(sys.argv[1])
+    file_parse()

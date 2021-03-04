@@ -24,6 +24,9 @@ def setSym(name,packet):
 
     state['ident'][name] = packet
 
+def addOutput(packet):
+    state['output'].append(packet)
+
 def isSym(name):
     '''Returns true if name exists'''
     if name in state['ident']:
