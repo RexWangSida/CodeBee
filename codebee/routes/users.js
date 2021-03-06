@@ -1,25 +1,26 @@
 var express = require('express');
 var router = express.Router();
 const User = require('../model/User')
+
 router.post('/create', async(req, res) => {
     try{
       const {name,email,password} = req.body;
       const user = await User.findOne({
         email:email
       });
-      if(user !== null){  res.json({result:1, name:""})}; //check if this email is registered, if yes return result as 1
+      if(user !== null){return res.json({result:1, name:""})}; //check if this email is registered, if yes return result as 1
       var decU = await User.find({}).sort({"_uid":-1}).limit(1); // get the user with largest uid
       var num = (decU[0].toObject()._uid); // get largest uid
-      console.log(num);
       const uInfo = {
         _uid: num+1,
         name:name,
         email:email,
         password:password
       };
+      console.log(uInfo)
       const newUser = new User(uInfo);
       await newUser.save();
-      res.json({result:0, name:name}); //send a successful message includes the name to be displayed
+      return res.json({result:0, name:name}); //send a successful message includes the name to be displayed
     }catch(e){
       return res.status(400).json({
         message:e.message,

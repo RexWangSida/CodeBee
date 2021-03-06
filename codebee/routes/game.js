@@ -11,8 +11,7 @@ router.post('/parse', async(req, res) => {
   // run a simple script
   PythonShell.run('./parser/parser.py', options, (err, results) => {
     // script finished
-    console.log(JSON.parse(results));
-    res.json(JSON.parse(results));
+    return res.json(JSON.parse(results));
   });
 });
 
