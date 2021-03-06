@@ -8,6 +8,7 @@ import SignUp from "./Signup";
 import Level from "./Level";
 import Achievement from "./Achievement";
 import Game from "./GameSystem/Game";
+import Game2 from "./GameSystem/Game2"
 import {useSelector,useDispatch} from "react-redux"
 import {setUserName,setUserStatus} from '../store/reducer'
 
@@ -143,6 +144,7 @@ export default function Navbar(props){
                 <Route path="/level-selection" component={Level} />
                 <Route path="/achievements" component={Achievement} />
                 <Route path="/game" component={Game} />
+                <Route path="/second" component={Game2} />
               </Switch>
             </div>
           </div>

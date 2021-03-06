@@ -90,7 +90,7 @@ export default function SignUp (props){
               class={validateForm()?
                 "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                 //style when button is disabled
-                :"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"}
+                :"bg-gray-500  text-white font-bold py-2 px-4 rounded"}
             >
               Create Account
             </button>
