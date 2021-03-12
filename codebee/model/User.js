@@ -6,7 +6,7 @@ const UserSchema = new mongoose.Schema({
     required:true,
     unique:true
   },
-  name:{
+  username:{
     type:String,
     required:true,
     trim:true,
@@ -22,6 +22,10 @@ const UserSchema = new mongoose.Schema({
     required:true,
     trim:true,
   },
+  token:{
+    type:String,
+    required:false,
+  }
 })
 
 const User = mongoose.model('User',UserSchema);

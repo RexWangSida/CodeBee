@@ -7,7 +7,6 @@ router.post('/parse', async(req, res) => {
   let options = {
     args: [JSON.stringify(req.body)]
   };
-
   // run a simple script
   PythonShell.run('./parser/parser.py', options, (err, results) => {
     // script finished

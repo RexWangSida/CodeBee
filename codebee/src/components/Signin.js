@@ -3,13 +3,13 @@ import {useSelector,useDispatch} from "react-redux"
 import {setUserName,setUserStatus} from '../store/reducer'
 import {Redirect} from "react-router-dom";
 
-export default function SignIn(props){
+export default function Signin(props){
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [redirect, setRedirect] = useState(false);
   const dispatch = useDispatch();
 
-  function signin(){
+  function signIn(){
     const data = {
       email: email,
       password: password,
@@ -25,18 +25,17 @@ export default function SignIn(props){
       .then((res) => res.json())
       .then((data) => {
         if(data.result === 0){
-            dispatch(setUserName(data.name))
+            dispatch(setUserName(data.username))
             dispatch(setUserStatus(true))
-            localStorage.setItem('userData', JSON.stringify(data.name));
+            localStorage.setItem('userToken', data.token);
+            localStorage.setItem('userName', data.username);
             setRedirect(true);
-        }else if(data.result === 1){
-          alert("The password does not match the email you registered");//////////////////////replace for email-password not matching(email exists)
         }else{
-          alert("The email is not registered with us");/////////////////////////////////////replace for email not registered
+          alert(data.message);/////////////////////////////////////replace for email not registered
         }
       })
-      .catch(() => {
-        console.log("bad request!");
+      .catch((e) => {
+        console.log(e);
       });
   }
   if (redirect) {
@@ -112,7 +111,7 @@ export default function SignIn(props){
             <button
               type="button"
               disabled={!email && !password}
-              onClick={signin}
+              onClick={signIn}
               className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
               <span className="absolute left-0 inset-y-0 flex items-center pl-3">

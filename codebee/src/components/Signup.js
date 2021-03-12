@@ -3,21 +3,21 @@ import {useSelector,useDispatch} from "react-redux"
 import {setUserName,setUserStatus} from '../store/reducer'
 import {Redirect} from "react-router-dom";
 
-export default function SignUp (props){
+export default function Signup (props){
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPWD, setConfirmPWD] = useState("");
-    const [name, setName] = useState("");
+    const [username, setUsername] = useState("");
     const [redirect, setRedirect] = useState(false);
     const dispatch = useDispatch();
 
     function validateForm() {
-      return name.length > 0 && email.length > 0 && password.length > 0 && password === confirmPWD;
+      return username.length > 0 && email.length > 0 && password.length > 0 && password === confirmPWD;
     }
 
-    function signup() {
+    function signUp() {
       const data = {
-        name : name,
+        username : username,
         email: email,
         password: password,
       };
@@ -32,17 +32,18 @@ export default function SignUp (props){
         .then((res) => res.json())
         .then((data) => {
           if(data.result === 0){
-            dispatch(setUserName(data.name))
+            dispatch(setUserName(data.username))
             dispatch(setUserStatus(true))
-            localStorage.setItem('userData', JSON.stringify(data.name));
+            localStorage.setItem('userToken', data.token);
+            localStorage.setItem('userName', data.username);
             setRedirect(true);
-            console.log("registered")
-          }else if(data.result === 1){
-            alert("The email is already signed up");//////////////////////replace for duplicate email
+            console.log(data.username,data.token)
+          }else{
+            alert(data.message);
           }
         })
-        .catch(() => {
-          console.log("bad request!");
+        .catch((e) => {
+          console.log(e);
         });
     }
     if (redirect) {
@@ -58,7 +59,7 @@ export default function SignUp (props){
               class="block border border-grey-light w-full p-3 rounded mb-4"
               name="fullname"
               placeholder="Full Name"
-              onChange={(e) => setName(e.target.value)}
+              onChange={(e) => setUsername(e.target.value)}
             />
 
             <input
@@ -86,7 +87,7 @@ export default function SignUp (props){
 
             <button
               disabled={!validateForm()}
-              type="button" onClick={signup}
+              type="button" onClick={signUp}
               class={validateForm()?
                 "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                 //style when button is disabled

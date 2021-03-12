@@ -19,18 +19,63 @@ export default function Navbar(props){
   const dispatch = useDispatch();
   //componentWillMount
   useEffect(() => {
-    let username = localStorage.getItem("userData")
-    if (username){
-      console.log("Already Logined In.");
-      dispatch(setUserName(username))
-      dispatch(setUserStatus(true))
-    }
-  }, [])
+    const name = localStorage.getItem("userName");
+    const token = localStorage.getItem("userToken");
+    if(name && token){
+    const data = JSON.stringify({
+      username: name,
+      token:token
+    });
+    fetch("/user/auth", {
+      method: "POST",
+      headers: {
+        "Accept": "application/json,text/plain,*/*",
+        "Content-Type": "application/json",
+      },
+      body: data,
+    }).then((res) => res.json())
+      .then((data) => {
+        if(data.result === 0){
+            dispatch(setUserName(data.username))
+            dispatch(setUserStatus(true))
+        }else{
+          console.log(data.message);
+        }
+      })
+      .catch((e) => {
+        console.log(e)
+      });
+  }}, [])
 
   function loginOut(){
-    dispatch(setUserName("UnregisteredUser"))
-    dispatch(setUserStatus(false))
-    localStorage.removeItem("userData")
+    const data = {
+      username:username,
+      token:localStorage.getItem("userToken")}
+    fetch("/user/logout", {
+      method: "POST",
+      headers: {
+        "Accept": "application/json,text/plain,*/*",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if(data.result === 0){
+            dispatch(setUserName("UnregisteredUser"))
+            dispatch(setUserStatus(false))
+            localStorage.removeItem("userName")
+            localStorage.removeItem("userToken")
+        }else if (data.result === 1){
+          alert(data.message);
+        }else{
+          console.log(data.message);
+        }
+      })
+      .catch((e) => {
+        console.log(e)
+      });
+
   }
   if(status){
     var varSign = (

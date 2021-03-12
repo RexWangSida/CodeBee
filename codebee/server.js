@@ -5,9 +5,9 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const mongoose = require('mongoose');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var gameRouter = require('./routes/game');
+var indexRouter = require('./routes/indexAPI');
+var usersRouter = require('./routes/userAPI');
+var gameRouter = require('./routes/gameAPI');
 
 const DB = "mongodb+srv://Sida:108740@cluster0.5fddy.mongodb.net/codebee?retryWrites=true&w=majority";
 
