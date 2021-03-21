@@ -1,0 +1,11 @@
+{
+    "blockList": ["while", "condition", "variable_num1", "variable_num2", "+_operator", "=_operator", "=_operator", "<=_operator", "num_1", "num_2", "num_9"],
+    "answer": "num1 == 9", /*Need to know how we can check print statement output*/
+    "solution": [],
+    "questionStatement": "A while loop performs a certain operation till a certain condition becomes false. It can be used to repeatedly perform an action for a fixed number of times. Here, your challenge is to start with 1, and print out a series of odd numbers in ascending order, such that the last number in the series is 9, and each number is 2 larger than the previous number.",
+    "hints": [
+                "1: You are trying to create the series 1 3 5 7 9.",
+                "2: You can start with the number 1, and then repeatedly add 2 to this value, till you reach a value of 9.",
+                "3: Run a while loop starting at 1 and ending at 9, incrementing the variable by 2 every time."
+             ]
+}
