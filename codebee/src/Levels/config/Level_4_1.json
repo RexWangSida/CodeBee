@@ -1,11 +1,10 @@
 {
-    "blockList": ["if", "condition", "then", "else", "end", "even_condition_block", "odd_string", "even_string", "num_1", "constant_5", "str_1", "=_operator", "=_operator"],
-    "answer": "str_1=='odd'",
+    "blockList": ["+_operator", "-_operator", "*_operator", "/_operator", "=_operator", "=_operator", "=_operator", "=_operator", "num_1", "num_2", "num_3", "num_4", "constant_5", "constant_5", "constant_5", "constant_5", "constant_5", "constant_5", "constant_5", "constant_5",],
+    "answer": "num_1 == 10 && num_2 == 0 && num_3 == 25 && num_4 == 1",
     "solution": [],
-    "questionStatement": "An if-then-else statement is used to perform actions depending on whether a certain condition is true or false. Your task in this level is to set the value of str_1 to either Odd or Even, by checking if the given number num_1 is odd or even.",
+    "questionStatement": "This is a basic exercise in performing addition, subtraction, multiplication and division. Recall the lessons learnt in the variables level, and store the result of adding, subtracting, multiplying and dividing 5 and 5 in variables num_1, num_2, num_3 and num_4 respectively.",
     "hints": [
-                "1: You have been given the condition to check if num_1 is odd or even.",
-                "2: Set the value of num_1 to Even when the given condition is true.",
-                "3: Else, set the value of num_1 to False."
+                "1: You can store the result of an operation into a variable by using the = operator.",
+                "2: As an example: the result of storing 1 + 2 in a variable num_x is: num_x = 1 + 2",
              ]
 }

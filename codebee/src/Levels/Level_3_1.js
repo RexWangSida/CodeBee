@@ -1,5 +1,5 @@
 import React from 'react';
-import * as config from './config/Level_2_1.json';
+import * as config from './config/Level_3_1.json';
 
 class Level_3_1 extends React.Component {
     constructor(props) {

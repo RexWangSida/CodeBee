@@ -1,11 +1,11 @@
 import React from 'react';
-import * as config from './config/Level_2_1.json';
+import * as config from './config/Level_4_1.json';
 
 class Level_4_1 extends React.Component {
     constructor(props) {
         super(props);
         this.state = { 
-            blockList: [], 
+            blockList: [],
             answer: config.answer, 
             solution: [], 
             achievementList: [], 
@@ -18,8 +18,8 @@ class Level_4_1 extends React.Component {
     // This method should be called by the front end when the submit button is pressed.
     achievementUpdate(){
         achievement = {}
-        achievement.key = "Conditional Success";
-        achievement.value = "Completed the conditionals level!";
+        achievement.key = "Master Operator";
+        achievement.value = "Completed the binary operators level!";
         achievements = [];
         achievements.push(achievement);
         this.setState({
