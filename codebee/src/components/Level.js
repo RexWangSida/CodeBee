@@ -90,7 +90,7 @@ export default class Level extends React.Component {
                                 <Switch>
                                     <Route exact path="/game" component={Game} />
                                     <Route path="/second" component={Game2} />
-                                    <Route path = "/third" component = {Game3}/>
+                                    <Route path="/third" component = {Game3}/>
                                 </Switch>
                             </div>
                         </div>
