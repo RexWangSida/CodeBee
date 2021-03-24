@@ -1,6 +1,6 @@
 import React from 'react';
 import { DragDropContext } from 'react-beautiful-dnd';
-import { BLOCKS, ATTRS } from './Data';
+import { BLOCKS, ATTRS } from './Data2';
 import { shuffle, move, GAME_STATE } from './utils';
 import Dropzone from './Dropzone';
 import { Link } from 'react-router-dom';
@@ -12,7 +12,8 @@ const initialState = {
   // we initialize the state by populating the bench with a shuffled collection of blocks
   bench: shuffle(BLOCKS),
   [ATTRS.VAR]: [],
-  [ATTRS.OP]: [],
+  [ATTRS.EXP]: [],
+  [ATTRS.STATE]:[],
   [ATTRS.VAL]: [],
   gameState: GAME_STATE.READY,
   timeLeft: 0,
@@ -22,7 +23,7 @@ class Instruction extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      instruction: "A variable can be thought of as a container with a name. The container is uniquely named and can be assigned a value, which will then be stored as the contents of the container. The name can then be used to retrieve the contents of the container.\nThe retrieved data can be viewed, modified or used in other, more complex operations. As an example, a variable can be called \"num\" and assigned a value 5 through the code:\nnum = 5\nYour challenge here is to store the values 1 and 3 in two variables called \"a\" and \"b\". \nStore the result of adding the value in these two variables in a new variable called \"c\"."
+      instruction: ""
     }
   }
 
@@ -110,7 +111,7 @@ class Buttons extends React.Component {
   }
 }
 
-class Game2 extends React.Component {
+class Game extends React.Component {
   state = initialState;
 
   onDragEnd = ({ source, destination }) => {
@@ -199,16 +200,24 @@ class Game2 extends React.Component {
         <DragDropContext onDragEnd={this.onDragEnd}>
           <div className="row row-auto" style={{ height: "calc(100% - 408px)" }}>
             <div className="left row block bg-indigo-200 rounded-lg p-4 border border-gray-200">
+        
               <Dropzone
                 pos="col"
                 id={ATTRS.VAR}
                 blocks={this.state[ATTRS.VAR]}
                 isDropDisabled={isDropDisabled}
               />
+              
               <Dropzone
                 pos="col"
-                id={ATTRS.OP}
-                blocks={this.state[ATTRS.OP]}
+                id={ATTRS.VAL}
+                blocks={this.state[ATTRS.VAL]}
+                isDropDisabled={isDropDisabled}
+              />
+              <Dropzone
+                pos="col"
+                id={ATTRS.EXP}
+                blocks={this.state[ATTRS.EXP]}
                 isDropDisabled={isDropDisabled}
               />
               <Dropzone
@@ -233,4 +242,4 @@ class Game2 extends React.Component {
   }
 }
 
-export default Game2;
+export default Game;
