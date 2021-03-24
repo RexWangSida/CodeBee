@@ -2,7 +2,7 @@ import React from 'react';
 
 import { GAME_STATE, getTotalScore } from './utils';
 
-const Modal = ({ gameState, groups, startGame, timeLeft, resetGame }) => (
+const Modal = ({ gameState, groups, startGame, resetGame }) => (
   <div className="modal modal-sm active">
     <div className="modal-overlay" />
     <div className="modal-container">
@@ -14,7 +14,7 @@ const Modal = ({ gameState, groups, startGame, timeLeft, resetGame }) => (
           {' '}
           {gameState === GAME_STATE.READY
             ? `Drag and Drop the heroes in the correct comics list, sort them alphabetically and quickly for better score...`
-            : `You scored - ${getTotalScore(groups, timeLeft)}`}
+            : `You scored - ${getTotalScore(groups)}`}
         </div>
       </div>
       <div className="modal-footer">

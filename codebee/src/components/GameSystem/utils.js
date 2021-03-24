@@ -36,13 +36,13 @@ function calculateScore(groupedBlocks, attrs) {
   }, 0);
 }
 
-export function getTotalScore(groups, timeLeft) {
+export function getTotalScore(groups) {
   const gameScore = Object.values(ATTRS).reduce(
     (sum, attrsName) => sum + calculateScore(groups[attrsName], attrsName),
     0
   );
-  const timeBonus = getSeconds(timeLeft);
-  return gameScore ? gameScore + timeBonus : 0;
+  // const timeBonus = getSeconds(timeLeft);
+  return gameScore;
 }
 
 // method to handle to the blocke cards movement

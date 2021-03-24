@@ -2,24 +2,19 @@ import React from "react";
 import "./Level.css"
 import Game from "./GameSystem/Game"
 import Game2 from "./GameSystem/Game2";
+import Game3 from "./GameSystem/Game_3";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-
-var unlockedLevels = ["1-1", "1-2", "2-1", "2-2"]
 
 export default class Level extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             allLevels: ["1-1", "1-2", "1-3", "2-1", "2-2"],
-            unlockedLevels: ["1-1","1-2"],
+            unlockedLevels: ["1-1","1-2","1-3"],
             selected: ""
         }
     }
 
-    // load() {
-    //     var unlockedLevels = fetch("data")
-    //     this.setState({ unlockedLevels: unlockedLevels})
-    // }
 
     select = (event) => {
         console.log(event.target.value)
@@ -32,7 +27,6 @@ export default class Level extends React.Component {
         var i;
         for (i = 0; i < this.state.allLevels.length; i++) {
             var levelname = this.state.allLevels[i];
-            console.log(levelname)
             if (levelname == "1-1") {
                 buttons.push(
                     <Link to="/game" key={levelname}>
@@ -49,6 +43,19 @@ export default class Level extends React.Component {
             else if (levelname == "1-2") {
                 buttons.push(
                     <Link to="/second" key={levelname}>
+                        <button
+                            id="levelButton"
+                            className="py-2 px-4 font-semibold rounded-lg shadow-md text-white bg-indigo-600 hover:bg-indigo"
+                            onClick={this.select}
+                            value={levelname}>
+                            {levelname}
+                        </button>
+                    </Link>
+                );
+            }
+            else if (levelname == "1-3") {
+                buttons.push(
+                    <Link to="/third" key={levelname}>
                         <button
                             id="levelButton"
                             className="py-2 px-4 font-semibold rounded-lg shadow-md text-white bg-indigo-600 hover:bg-indigo"
@@ -83,6 +90,7 @@ export default class Level extends React.Component {
                                 <Switch>
                                     <Route exact path="/game" component={Game} />
                                     <Route path="/second" component={Game2} />
+                                    <Route path = "/third" component = {Game3}/>
                                 </Switch>
                             </div>
                         </div>

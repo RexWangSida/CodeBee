@@ -5,7 +5,6 @@ import { shuffle, move, GAME_STATE, getTotalScore } from './utils';
 import Dropzone from './Dropzone';
 import { Link } from 'react-router-dom';
 import './Game.css';
-import Modal from './Modal';
 
 const GAME_DURATION = 1000 * 30; // 30 seconds
 
@@ -39,7 +38,7 @@ class Title extends React.Component {
     return (
       <h1 className="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-3xl" style={{ margin: "20px auto" }}>
         <span className="block xl:inline" >Level</span>
-        <span className="block text-indigo-600 xl:inline"> 1-2 </span>
+        <span className="block text-indigo-600 xl:inline"> 1-3 </span>
       </h1>
     );
   }
@@ -111,7 +110,7 @@ class Buttons extends React.Component {
   }
 }
 
-class Game2 extends React.Component {
+class Game3 extends React.Component {
   state = initialState;
 
   onDragEnd = ({ source, destination }) => {
@@ -192,7 +191,6 @@ class Game2 extends React.Component {
       <>
       <div className='canves'>
         <div className='row'>
-    
           <Instruction />
           <div className="right">
             <Title />
@@ -202,29 +200,10 @@ class Game2 extends React.Component {
         <DragDropContext onDragEnd={this.onDragEnd}>
           <div className="row row-auto" style={{ height: "calc(100% - 408px)" }}>
             <div className="left row block bg-indigo-200 rounded-lg p-4 border border-gray-200">
-        
               <Dropzone
                 pos="col"
                 id={ATTRS.VAR}
                 blocks={this.state[ATTRS.VAR]}
-                isDropDisabled={isDropDisabled}
-              />
-              <Dropzone
-                pos="col"
-                id={ATTRS.VAL}
-                blocks={this.state[ATTRS.VAL]}
-                isDropDisabled={isDropDisabled}
-              />
-              <Dropzone
-                pos="col"
-                id={ATTRS.EXP}
-                blocks={this.state[ATTRS.EXP]}
-                isDropDisabled={isDropDisabled}
-              />
-              <Dropzone
-                pos="col"
-                id={ATTRS.STATE}
-                blocks={this.state[ATTRS.STATE]}
                 isDropDisabled={isDropDisabled}
               />
             </div>
@@ -244,4 +223,4 @@ class Game2 extends React.Component {
   }
 }
 
-export default Game2;
+export default Game3;
