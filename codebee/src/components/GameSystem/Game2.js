@@ -13,7 +13,10 @@ const initialState = {
   // we initialize the state by populating the bench with a shuffled collection of blocks
   bench: shuffle(BLOCKS),
   showHint: false,
-  hint:"You are trying to create the series 1 3 5 7 9",
+  hint:`You are trying to create the series 1 3 5 7 9
+  You can start with the number 1, and then repeatedly add 2 to this value, till you reach a value of 9
+  Run a while loop starting at 1 and ending at 9, incrementing the variable by 2 every time
+  `,
   [ATTRS.VAR]: [],
   [ATTRS.EXP]: [],
   [ATTRS.STATE]:[],
@@ -109,7 +112,6 @@ class Buttons extends React.Component {
           <button className="gamebutton py-2 px-4 font-semibold rounded-lg shadow-md text-white bg-indigo-600 hover:bg-indigo-700">Return</button>
         </Link>
         <button className="gamebutton py-2 px-4 font-semibold rounded-lg shadow-md text-white bg-indigo-600 hover:bg-indigo-700" onClick={this.restart}>Restart</button>
-        <button className="gamebutton py-2 px-4 font-semibold rounded-lg shadow-md text-white bg-indigo-600 hover:bg-indigo-700">Hint</button>
       </div>
     );
   }

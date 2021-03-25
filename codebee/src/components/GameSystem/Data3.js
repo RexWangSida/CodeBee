@@ -17,32 +17,32 @@ export const ATTRS = {
       ddd: '1'
     },
     {
-      name: 'variable_num1',
+      name: 'var_1',
       type:'var',
       ddd: '2'
     },
     {
-      name: 'variable_num2',
+      name: 'var_2',
       type:'var',
       ddd: '3'
     },
     {
-      name: '+_operator',
+      name: '+',
       type:'exp',
       ddd: '4'
     },
     {
-        name: '=_operator',
+        name: '=',
         type:'exp',
         ddd: '5'
       },
       {
-        name: '=_operator',
+        name: '=',
         type:'exp',
         ddd: '6'
       },
     {
-      name: '<=_operator',
+      name: '<=',
       type:'exp',
       ddd: '7'
     },

@@ -11,6 +11,11 @@ const GAME_DURATION = 1000 * 30; // 30 seconds
 const initialState = {
   // we initialize the state by populating the bench with a shuffled collection of blocks
   bench: shuffle(BLOCKS),
+  showHint: false,
+  hint:`You are trying to create the series 1 3 5 7 9
+  You can start with the number 1, and then repeatedly add 2 to this value, till you reach a value of 9
+  Run a while loop starting at 1 and ending at 9, incrementing the variable by 2 every time
+  `,
   [ATTRS.VAR]: [],
   [ATTRS.EXP]: [],
   [ATTRS.STATE]:[],
@@ -123,68 +128,15 @@ class Game3 extends React.Component {
     });
   };
 
-  submit = () => {
-    const code = {
-      "block": "program",
-      "body": {
-        "block": "scope",
-        "stmts": [
-          {
-            "block": "assignment",
-            "expr": {
-              "block": "literal",
-              "type": "int",
-              "value": "1"
-            },
-            "ident": {
-              "block": "variable",
-              "ident": "var1"
-            }
-          },
-          {
-            "block": "assignment",
-            "expr": {
-              "block": "literal",
-              "type": "int",
-              "value": "3"
-            },
-            "ident": {
-              "block": "variable",
-              "ident": "var2"
-            }
-          },
-          {
-            "block": "assignment",
-            "expr": {
-              "block": "binop",
-              "expr1": {
-                "block": "variable",
-                "ident": "var1"
-              },
-              "expr2": {
-                "block": "variable",
-                "ident": "var2"
-              },
-              "oper": "+"
-            },
-            "ident": {
-              "block": "variable",
-              "ident": "var3"
-            }
-          }
-        ]
-      },
-      "ident": {
-        "block": "variable",
-        "ident": "testProg"
-      }
-    }
-    //need a fetch here to send to backend?
-    console.log(code);
+  restart = () => {
+    window.location.reload();
+  }
+  setHint = () => {
+    this.setState({showHint : true});
   }
 
   render() {
-    const { gameState, timeLeft, bench, ...groups } = this.state;
+    const { gameState,showHint,hint, timeLeft, bench, ...groups  } = this.state;
     const isDropDisabled = gameState === GAME_STATE.DONE;
 
     return (
@@ -192,6 +144,7 @@ class Game3 extends React.Component {
       <div className='canves'>
         <div className='row'>
           <Instruction />
+          <h2 className = "left instruction">{showHint ? hint : ""}</h2>
           <div className="right">
             <Title />
             <div className="buttonGroup">
@@ -199,6 +152,7 @@ class Game3 extends React.Component {
           <button className="gamebutton py-2 px-4 font-semibold rounded-lg shadow-md text-white bg-indigo-600 hover:bg-indigo-700">Return</button>
         </Link>
         <button className="gamebutton py-2 px-4 font-semibold rounded-lg shadow-md text-white bg-indigo-600 hover:bg-indigo-700" onClick={this.restart}>Restart</button>
+        <button className="gamebutton py-2 px-4 font-semibold rounded-lg shadow-md text-white bg-indigo-600 hover:bg-indigo-700" onClick = {this.setHint}>Hint</button>
       </div>
           </div>
         </div>
