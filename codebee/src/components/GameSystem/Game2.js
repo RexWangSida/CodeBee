@@ -10,7 +10,7 @@ const initialState = {
   // we initialize the state by populating the bench with a shuffled collection of blocks
   bench: shuffle(BLOCKS),
   showHint: false,
-  hint:`You are trying to create the series 1 3 5 7 9\n You can start with the number 1, and then repeatedly add 2 to this value, till you reach a value of 9\n Run a while loop starting at 1 and ending at 9, incrementing the variable by 2 every time\n  `,
+  hint: `You are trying to create the series 1 3 5 7 9\n You can start with the number 1, and then repeatedly add 2 to this value, till you reach a value of 9\n Run a while loop starting at 1 and ending at 9, incrementing the variable by 2 every time\n  `,
   [ATTRS.VAR]: [],
   [ATTRS.EXP]: [],
   [ATTRS.STATE]: [],
@@ -49,20 +49,28 @@ class Result extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      showMessage: false
+      showMessage: false,
+      answer: false
     }
   }
   onButtonClickHandler = () => {
+    // this.props.submit();
     this.setState({ showMessage: true });
+    // console.log(this.props.blocks);
+    // console.log(this.props.blocks[0] == 3 && this.props.blocks[1] == 2 && this.props.blocks[2] == 1 && this.props.blocks[3] == 3);
+    if (this.props.blocks[0] == 3 && this.props.blocks[1] == 2 && this.props.blocks[2] == 1 && this.props.blocks[3] == 3) {
+      this.setState({ answer: true });
+    }
   };
 
   render() {
     return (
       <>
-        {this.state.showMessage && <Complete />}
-        <div className="left result">{this.state.showMessage && <p>c = 3<br />You are correct!</p>}</div>
+        {this.state.showMessage && this.state.answer && <Complete />}
+        <div className="left result">{this.state.showMessage && this.state.answer && <p>c = 4<br />You are correct!</p>}{this.state.showMessage && !this.state.answer && <p>Unable to parse, please retry.</p>}</div>
         <div className='right' style={{ margin: "auto" }}>
-          <button className="py-3 px-5 font-semibold rounded-lg shadow-md text-white bg-indigo-600 hover:bg-indigo-700" onClick={this.onButtonClickHandler}>Submit</button>
+          <button className="gamebutton py-3 px-5 font-semibold rounded-lg shadow-md text-white bg-indigo-600 hover:bg-indigo-700" onClick={this.onButtonClickHandler}>Submit</button>
+          {this.state.showMessage && !this.state.answer && <button className="gamebutton py-3 px-5 font-semibold rounded-lg shadow-md text-white bg-indigo-600 hover:bg-indigo-700" onClick={window.location.reload.bind(window.location)}>Restart</button>}
         </div>
       </>
     );
@@ -98,6 +106,7 @@ class Buttons extends React.Component {
   restart = () => {
     window.location.reload();
   }
+
   render() {
     return (
       <div className="buttonGroup">
@@ -105,6 +114,7 @@ class Buttons extends React.Component {
           <button className="gamebutton py-2 px-4 font-semibold rounded-lg shadow-md text-white bg-indigo-600 hover:bg-indigo-700">Return</button>
         </Link>
         <button className="gamebutton py-2 px-4 font-semibold rounded-lg shadow-md text-white bg-indigo-600 hover:bg-indigo-700" onClick={this.restart}>Restart</button>
+        {this.props.comp ? <Link to="/third"><button className="gamebutton py-2 px-4 font-semibold rounded-lg shadow-md text-white bg-indigo-600 hover:bg-indigo-700">Next</button></Link> : <button className="gamebutton py-2 px-4 font-semibold rounded-lg shadow-md text-white bg-indigo-600 hover:bg-indigo-700">Hint</button>}
       </div>
     );
   }
@@ -131,7 +141,7 @@ class Game2 extends React.Component {
     this.setState({ showHint: true });
   }
   render() {
-    const { gameState, showHint, hint, timeLeft, bench } = this.state;
+    const { gameState, showHint, hint, bench } = this.state;
     const isDropDisabled = gameState === GAME_STATE.DONE;
 
     return (
@@ -153,37 +163,36 @@ class Game2 extends React.Component {
             </div>
           </div>
           <DragDropContext onDragEnd={this.onDragEnd}>
-            <div className="left">
+            {/* <div className="left">
               <div class="max-w-screen-xl mx-auto px-4">
                 <div class="-mx-6 flex flex-wrap">
                   <div class="w-full p-3 sm:w-1/4 lg:w-1/4">
-                    <h2>Variables</h2>
+                    <h2>Statements</h2>
                   </div>
                   <div class="w-full p-3 sm:w-1/4 lg:w-1/4">
-                    <h2>Values</h2>
+                    <h2>Variables</h2>
                   </div>
                   <div class="w-full p-3 sm:w-1/4 lg:w-1/4">
                     <h2>Expressions</h2>
                   </div>
                   <div class="w-full p-3 sm:w-1/4 lg:w-1/4">
-                    <h2>Statements</h2>
+                    <h2>Values</h2>
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
             <div className="row row-auto" style={{ height: "calc(100% - 408px)" }}>
-              <div className="left row block bg-indigo-200 rounded-lg p-4 border border-gray-200">
-
+              <div className="row row-auto block bg-indigo-200 rounded-lg p-4 border border-gray-200" >
                 <Dropzone
                   pos="col"
-                  id={ATTRS.VAR}
-                  blocks={this.state[ATTRS.VAR]}
+                  id={ATTRS.STATE}
+                  blocks={this.state[ATTRS.STATE]}
                   isDropDisabled={isDropDisabled}
                 />
                 <Dropzone
                   pos="col"
-                  id={ATTRS.VAL}
-                  blocks={this.state[ATTRS.VAL]}
+                  id={ATTRS.VAR}
+                  blocks={this.state[ATTRS.VAR]}
                   isDropDisabled={isDropDisabled}
                 />
                 <Dropzone
@@ -194,8 +203,8 @@ class Game2 extends React.Component {
                 />
                 <Dropzone
                   pos="col"
-                  id={ATTRS.STATE}
-                  blocks={this.state[ATTRS.STATE]}
+                  id={ATTRS.VAL}
+                  blocks={this.state[ATTRS.VAL]}
                   isDropDisabled={isDropDisabled}
                 />
               </div>
@@ -207,7 +216,7 @@ class Game2 extends React.Component {
             </div>
           </DragDropContext>
           <div className='row' style={{ bottom: "0px" }}>
-            <Result />
+            <Result blocks={[this.state[ATTRS.STATE].length, this.state[ATTRS.VAR].length, this.state[ATTRS.EXP].length, this.state[ATTRS.VAL].length]} submit={this.submit}/>
           </div>
         </div>
       </>
