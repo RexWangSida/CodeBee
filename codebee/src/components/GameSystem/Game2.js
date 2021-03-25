@@ -10,7 +10,7 @@ const initialState = {
   // we initialize the state by populating the bench with a shuffled collection of blocks
   bench: shuffle(BLOCKS),
   showHint: false,
-  hint: `You are trying to create the series 1 3 5 7 9\n You can start with the number 1, and then repeatedly add 2 to this value, till you reach a value of 9\n Run a while loop starting at 1 and ending at 9, incrementing the variable by 2 every time\n  `,
+  hint: `You are trying to create the series 1 3 5 7 9\n You can start with the number 1, and then repeatedly add 2 to this value, till you reach a value of 9\n Run a while loop starting at 1 and ending at 9, incrementing the variable by 2 every time\n Try putting each statement in a column. There are 4 columns, so you need 4 statements.\n  `,
   [ATTRS.VAR]: [],
   [ATTRS.EXP]: [],
   [ATTRS.STATE]: [],
@@ -67,7 +67,7 @@ class Result extends React.Component {
     return (
       <>
         {this.state.showMessage && this.state.answer && <Complete />}
-        <div className="left result">{this.state.showMessage && this.state.answer && <p>1<br />3<br />5<br />7<br />9<br />You are correct!</p>}{this.state.showMessage && !this.state.answer && <p>Unable to parse, please retry.</p>}</div>
+        <div className="left result">{this.state.showMessage && this.state.answer && <p>1<br />3<br />5<br />7<br />9<br />You are correct!</p>}{this.state.showMessage && !this.state.answer && <p>Your answer is incorrect, please retry.</p>}</div>
         <div className='right' style={{ margin: "auto" }}>
           <button className="gamebutton py-3 px-5 font-semibold rounded-lg shadow-md text-white bg-indigo-600 hover:bg-indigo-700" onClick={this.onButtonClickHandler}>Submit</button>
           {this.state.showMessage && !this.state.answer && <button className="gamebutton py-3 px-5 font-semibold rounded-lg shadow-md text-white bg-indigo-600 hover:bg-indigo-700" onClick={window.location.reload.bind(window.location)}>Restart</button>}
@@ -86,7 +86,7 @@ class Complete extends React.Component {
           <div className="windowtitle text-xl tracking-tight font-bold text-indigo-600">Level Completed</div>
           <div className="windowcontent">
             <div className="windowtext text-xl tracking-tight" >
-              Congratulations, you're completed this level.
+              Congratulations, you've completed this level.
           </div>
             {/* <div className="windowtext">
               <span className="text-xl tracking-tight">You have unlocked an achievement.</span><br />
