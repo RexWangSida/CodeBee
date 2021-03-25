@@ -194,7 +194,12 @@ class Game3 extends React.Component {
           <Instruction />
           <div className="right">
             <Title />
-            <Buttons />
+            <div className="buttonGroup">
+        <Link to="/level-selection">
+          <button className="gamebutton py-2 px-4 font-semibold rounded-lg shadow-md text-white bg-indigo-600 hover:bg-indigo-700">Return</button>
+        </Link>
+        <button className="gamebutton py-2 px-4 font-semibold rounded-lg shadow-md text-white bg-indigo-600 hover:bg-indigo-700" onClick={this.restart}>Restart</button>
+      </div>
           </div>
         </div>
         <DragDropContext onDragEnd={this.onDragEnd}>

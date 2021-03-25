@@ -2,7 +2,7 @@ import React from "react";
 import "./Level.css"
 import Game from "./GameSystem/Game"
 import Game2 from "./GameSystem/Game2";
-import Game3 from "./GameSystem/Game_3";
+import Game3 from "./GameSystem/Game3";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 export default class Level extends React.Component {
@@ -82,9 +82,7 @@ export default class Level extends React.Component {
                 <div id="levelGrid" className="grid grid-rows-3 grid-flow-col gap-4" >
                     {buttons}
                 </div>
-
                 <Router>
-                    <div >
                         <div className="auth-wrapper">
                             <div className="auth-inner">
                                 <Switch>
@@ -94,7 +92,6 @@ export default class Level extends React.Component {
                                 </Switch>
                             </div>
                         </div>
-                    </div>
                 </Router>
             </>
         );

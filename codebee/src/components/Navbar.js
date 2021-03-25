@@ -9,7 +9,7 @@ import Level from "./Level";
 import Achievement from "./Achievement";
 import Game from "./GameSystem/Game";
 import Game2 from "./GameSystem/Game2";
-import Game3 from "./GameSystem/Game_3";
+import Game3 from "./GameSystem/Game3";
 import {useSelector,useDispatch} from "react-redux"
 import {setUserName,setUserStatus} from '../store/reducer'
 

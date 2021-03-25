@@ -12,6 +12,8 @@ const GAME_DURATION = 1000 * 30; // 30 seconds
 const initialState = {
   // we initialize the state by populating the bench with a shuffled collection of blocks
   bench: shuffle(BLOCKS),
+  showHint: false,
+  hint:"You are trying to create the series 1 3 5 7 9",
   [ATTRS.VAR]: [],
   [ATTRS.EXP]: [],
   [ATTRS.STATE]:[],
@@ -24,13 +26,16 @@ class Instruction extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      instruction: "Put each corresponding blocks into their own dropzone"
+      instruction: "Put each corresponding blocks into their own dropzone",
+      hint:""
     }
   }
 
   render() {
     return (
+      <>
       <div className="left instruction">{this.state.instruction}</div>
+      </>
     );
   }
 }
@@ -93,9 +98,7 @@ class Complete extends React.Component {
   }
 }
 
-
 class Buttons extends React.Component {
-
   restart = () => {
     window.location.reload();
   }
@@ -106,6 +109,7 @@ class Buttons extends React.Component {
           <button className="gamebutton py-2 px-4 font-semibold rounded-lg shadow-md text-white bg-indigo-600 hover:bg-indigo-700">Return</button>
         </Link>
         <button className="gamebutton py-2 px-4 font-semibold rounded-lg shadow-md text-white bg-indigo-600 hover:bg-indigo-700" onClick={this.restart}>Restart</button>
+        <button className="gamebutton py-2 px-4 font-semibold rounded-lg shadow-md text-white bg-indigo-600 hover:bg-indigo-700">Hint</button>
       </div>
     );
   }
@@ -123,69 +127,16 @@ class Game2 extends React.Component {
       return move(state, source, destination);
     });
   };
-
-  submit = () => {
-    const code = {
-      "block": "program",
-      "body": {
-        "block": "scope",
-        "stmts": [
-          {
-            "block": "assignment",
-            "expr": {
-              "block": "literal",
-              "type": "int",
-              "value": "1"
-            },
-            "ident": {
-              "block": "variable",
-              "ident": "var1"
-            }
-          },
-          {
-            "block": "assignment",
-            "expr": {
-              "block": "literal",
-              "type": "int",
-              "value": "3"
-            },
-            "ident": {
-              "block": "variable",
-              "ident": "var2"
-            }
-          },
-          {
-            "block": "assignment",
-            "expr": {
-              "block": "binop",
-              "expr1": {
-                "block": "variable",
-                "ident": "var1"
-              },
-              "expr2": {
-                "block": "variable",
-                "ident": "var2"
-              },
-              "oper": "+"
-            },
-            "ident": {
-              "block": "variable",
-              "ident": "var3"
-            }
-          }
-        ]
-      },
-      "ident": {
-        "block": "variable",
-        "ident": "testProg"
-      }
-    }
-    //need a fetch here to send to backend?
-    console.log(code);
+  
+  restart = () => {
+    window.location.reload();
   }
 
+  setHint = () => {
+    this.setState({showHint : true});
+  }
   render() {
-    const { gameState, timeLeft, bench, ...groups } = this.state;
+    const { gameState,showHint,hint, timeLeft, bench, ...groups } = this.state;
     const isDropDisabled = gameState === GAME_STATE.DONE;
 
     return (
@@ -194,12 +145,37 @@ class Game2 extends React.Component {
         <div className='row'>
     
           <Instruction />
+          <h2 className = "left instruction">{showHint ? hint : ""}</h2>
           <div className="right">
             <Title />
-            <Buttons />
+            <div className="buttonGroup">
+        <Link to="/level-selection">
+          <button className="gamebutton py-2 px-4 font-semibold rounded-lg shadow-md text-white bg-indigo-600 hover:bg-indigo-700">Return</button>
+        </Link>
+        <button className="gamebutton py-2 px-4 font-semibold rounded-lg shadow-md text-white bg-indigo-600 hover:bg-indigo-700" onClick={this.restart}>Restart</button>
+        <button className="gamebutton py-2 px-4 font-semibold rounded-lg shadow-md text-white bg-indigo-600 hover:bg-indigo-700" onClick = {this.setHint}>Hint</button>
+      </div>
           </div>
         </div>
         <DragDropContext onDragEnd={this.onDragEnd}>
+        <div className = "left">
+        <div class="max-w-screen-xl mx-auto px-4">
+  <div class="-mx-6 flex flex-wrap">
+    <div class="w-full p-3 sm:w-1/4 lg:w-1/4">
+    <h2>Variables</h2>
+    </div>
+    <div class="w-full p-3 sm:w-1/4 lg:w-1/4">
+    <h2>Values</h2>
+    </div>
+    <div class="w-full p-3 sm:w-1/4 lg:w-1/4">
+    <h2>Expressions</h2>
+    </div>
+    <div class="w-full p-3 sm:w-1/4 lg:w-1/4">
+    <h2>Statements</h2>
+    </div>
+  </div>
+</div>
+</div>
           <div className="row row-auto" style={{ height: "calc(100% - 408px)" }}>
             <div className="left row block bg-indigo-200 rounded-lg p-4 border border-gray-200">
         
