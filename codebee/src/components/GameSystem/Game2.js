@@ -1,6 +1,6 @@
 import React from 'react';
 import { DragDropContext } from 'react-beautiful-dnd';
-import { BLOCKS, ATTRS } from './Data2';
+import { BLOCKS, ATTRS } from './Data3';
 import { shuffle, move, GAME_STATE, getTotalScore } from './utils';
 import Dropzone from './Dropzone';
 import { Link } from 'react-router-dom';
@@ -39,7 +39,7 @@ class Title extends React.Component {
     return (
       <h1 className="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-3xl" style={{ margin: "20px auto" }}>
         <span className="block xl:inline" >Level</span>
-        <span className="block text-indigo-600 xl:inline"> 1-3 </span>
+        <span className="block text-indigo-600 xl:inline"> 1-2 </span>
       </h1>
     );
   }

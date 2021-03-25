@@ -190,8 +190,8 @@ export default function Navbar(props){
                 <Route path="/level-selection" component={Level} />
                 <Route path="/achievements" component={Achievement} />
                 <Route path="/game" component={Game} />
-                <Route path="/second" component={Game3} />
-                <Route path="/third" component = {Game2}/>
+                <Route path="/second" component={Game2} />
+                <Route path="/third" component = {Game3}/>
               </Switch>
             </div>
           </div>
