@@ -10,10 +10,7 @@ const initialState = {
   // we initialize the state by populating the bench with a shuffled collection of blocks
   bench: shuffle(BLOCKS),
   showHint: false,
-  hint: `You are trying to create the series 1 3 5 7 9
-  You can start with the number 1, and then repeatedly add 2 to this value, till you reach a value of 9
-  Run a while loop starting at 1 and ending at 9, incrementing the variable by 2 every time
-  `,
+  hint:`You are trying to create the series 1 3 5 7 9\n You can start with the number 1, and then repeatedly add 2 to this value, till you reach a value of 9\n Run a while loop starting at 1 and ending at 9, incrementing the variable by 2 every time\n  `,
   [ATTRS.VAR]: [],
   [ATTRS.EXP]: [],
   [ATTRS.STATE]: [],
