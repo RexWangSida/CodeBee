@@ -9,7 +9,7 @@ import './Game.css';
 const initialState = {
     // we initialize the state by populating the bench with a shuffled collection of blocks
     bench: shuffle(BLOCKS),
-    hint: "You are trying to create the series 1 3 5 7 9",
+    hint: "1: The assignment operator can be used to assign a value to a variable.\n2: The + operator can be assigned on two variables. Eg: num1 + num2.\n3: The result of an operation can be directly stored in a variable. Eg: num3 = num1 + 5.",
     showHint: false,
     [ATTRS.VAR]: [],
     [ATTRS.OP]: [],
@@ -20,7 +20,7 @@ class Instruction extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            instruction: "A variable can be thought of as a container with a name. The container is uniquely named and can be assigned a value, which will then be stored as the contents of the container. The name can then be used to retrieve the contents of the container.\nThe retrieved data can be viewed, modified or used in other, more complex operations. As an example, a variable can be called \"num\" and assigned a value 5 through the code:\nnum = 5\nYour challenge here is to store the values 1 and 3 in two variables called \"a\" and \"b\". \nStore the result of adding the value in these two variables in a new variable called \"c\".",
+            instruction: "A variable can be thought of as a container with a name, that stores some data. This data can be viewed, changed and use for other purposes. For example, a variable called num stores a value 5 as:\n num = 5\n Your challenge here is to store the values 1 and 3 in two variables called a and b. Then store the result of adding the value in these two variables in a new variable called c.",
             hint: ""
         }
     }
@@ -102,7 +102,7 @@ class Buttons extends React.Component {
     restart = () => {
         window.location.reload();
     }
-    
+
     render() {
         return (
             <div className="buttonGroup">
@@ -136,7 +136,7 @@ class Game extends React.Component {
     setHint = () => {
         this.setState({ showHint: true });
     }
-    
+
     submit = () => {
         // var stms = []
         // var blocks = this.state[ATTRS.PLAY];

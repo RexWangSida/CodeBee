@@ -12,9 +12,7 @@ const initialState = {
   // we initialize the state by populating the bench with a shuffled collection of blocks
   bench: shuffle(BLOCKS),
   showHint: false,
-  hint:`You are trying to create the series 1 3 5 7 9
-  You can start with the number 1, and then repeatedly add 2 to this value, till you reach a value of 9
-  Run a while loop starting at 1 and ending at 9, incrementing the variable by 2 every time
+  hint:`You are trying to create the series 1 3 5 7 9\n  You can start with the number 1, and then repeatedly add 2 to this value, till you reach a value of 9\n  Run a while loop starting at 1 and ending at 9, incrementing the variable by 2 every time
   `,
   [ATTRS.VAR]: [],
   [ATTRS.EXP]: [],
@@ -28,7 +26,7 @@ class Instruction extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      instruction: "Put each corresponding blocks into their own dropzone"
+      instruction: "A while loop performs a certain operation till a certain condition becomes false. It can be used to repeatedly perform an action for a fixed number of times. Here, your challenge is to start with 1, and print out a series of odd numbers in ascending order, such that the last number in the series is 9, and each number is 2 larger than the previous number."
     }
   }
 
@@ -43,7 +41,7 @@ class Title extends React.Component {
     return (
       <h1 className="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-3xl" style={{ margin: "20px auto" }}>
         <span className="block xl:inline" >Level</span>
-        <span className="block text-indigo-600 xl:inline"> 1-3 </span>
+        <span className="block text-indigo-600 xl:inline"> 1-2 </span>
       </h1>
     );
   }
@@ -160,7 +158,7 @@ class Game3 extends React.Component {
           <div className="row row-auto" style={{ height: "calc(100% - 408px)" }}>
             <div className="left row block bg-indigo-200 rounded-lg p-4 border border-gray-200">
               <Dropzone
-                pos="col"
+                pos="fullcol"
                 id={ATTRS.VAR}
                 blocks={this.state[ATTRS.VAR]}
                 isDropDisabled={isDropDisabled}

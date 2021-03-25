@@ -21,7 +21,7 @@ class Instruction extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      instruction: "Put each corresponding blocks into their own dropzone",
+      instruction: "A while loop performs a certain operation till a certain condition becomes false. It can be used to repeatedly perform an action for a fixed number of times. Here, your challenge is to start with 1, and print out a series of odd numbers in ascending order, such that the last number in the series is 9, and each number is 2 larger than the previous number.",
       hint: ""
     }
   }
@@ -39,7 +39,7 @@ class Title extends React.Component {
     return (
       <h1 className="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-3xl" style={{ margin: "20px auto" }}>
         <span className="block xl:inline" >Level</span>
-        <span className="block text-indigo-600 xl:inline"> 1-2 </span>
+        <span className="block text-indigo-600 xl:inline"> 1-3 </span>
       </h1>
     );
   }
@@ -140,7 +140,7 @@ class Game2 extends React.Component {
           <div className='row'>
 
             <Instruction />
-            <h2 className="left instruction">{showHint ? hint : ""}</h2>
+            <h2 className="left instruction" >{showHint ? hint : ""}</h2>
             <div className="right">
               <Title />
               <div className="buttonGroup">

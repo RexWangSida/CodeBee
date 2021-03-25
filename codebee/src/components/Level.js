@@ -87,8 +87,8 @@ export default class Level extends React.Component {
                             <div className="auth-inner">
                                 <Switch>
                                     <Route exact path="/game" component={Game} />
-                                    <Route path="/second" component={Game2} />
-                                    <Route path="/third" component = {Game3}/>
+                                    <Route path="/second" component={Game3} />
+                                    <Route path="/third" component = {Game2}/>
                                 </Switch>
                             </div>
                         </div>
