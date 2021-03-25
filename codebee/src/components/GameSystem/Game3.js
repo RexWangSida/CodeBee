@@ -1,6 +1,6 @@
 import React from 'react';
 import { DragDropContext } from 'react-beautiful-dnd';
-import { BLOCKS, ATTRS } from './Data2';
+import { BLOCKS, ATTRS } from './Data3';
 import { shuffle, move, GAME_STATE, getTotalScore } from './utils';
 import Dropzone from './Dropzone';
 import { Link } from 'react-router-dom';
