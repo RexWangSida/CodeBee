@@ -16,6 +16,10 @@
     width: 32%;
 }
 
+.fullcol {
+    width: 100%;
+}
+
 .left {
     width: 70%;
     margin-left: 0;
@@ -63,7 +67,7 @@
 
 .scrollble {
     overflow-x: hidden;
-    overflow-y: hidden;
+    overflow-y: scroll;
 }
 
 .popwindow {

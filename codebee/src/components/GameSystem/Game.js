@@ -9,6 +9,8 @@ import './Game.css';
 const initialState = {
     // we initialize the state by populating the bench with a shuffled collection of blocks
     bench: shuffle(BLOCKS),
+    hint: "You are trying to create the series 1 3 5 7 9",
+    showHint: false,
     [ATTRS.VAR]: [],
     [ATTRS.OP]: [],
     [ATTRS.VAL]: [],
@@ -18,7 +20,8 @@ class Instruction extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            instruction: "A variable can be thought of as a container with a name. The container is uniquely named and can be assigned a value, which will then be stored as the contents of the container. The name can then be used to retrieve the contents of the container.\nThe retrieved data can be viewed, modified or used in other, more complex operations. As an example, a variable can be called \"num\" and assigned a value 5 through the code:\nnum = 5\nYour challenge here is to store the values 1 and 3 in two variables called \"a\" and \"b\". \nStore the result of adding the value in these two variables in a new variable called \"c\"."
+            instruction: "A variable can be thought of as a container with a name. The container is uniquely named and can be assigned a value, which will then be stored as the contents of the container. The name can then be used to retrieve the contents of the container.\nThe retrieved data can be viewed, modified or used in other, more complex operations. As an example, a variable can be called \"num\" and assigned a value 5 through the code:\nnum = 5\nYour challenge here is to store the values 1 and 3 in two variables called \"a\" and \"b\". \nStore the result of adding the value in these two variables in a new variable called \"c\".",
+            hint: ""
         }
     }
 
@@ -99,6 +102,7 @@ class Buttons extends React.Component {
     restart = () => {
         window.location.reload();
     }
+    
     render() {
         return (
             <div className="buttonGroup">
@@ -106,7 +110,7 @@ class Buttons extends React.Component {
                     <button className="gamebutton py-2 px-4 font-semibold rounded-lg shadow-md text-white bg-indigo-600 hover:bg-indigo-700">Return</button>
                 </Link>
                 <button className="gamebutton py-2 px-4 font-semibold rounded-lg shadow-md text-white bg-indigo-600 hover:bg-indigo-700" onClick={this.restart}>Restart</button>
-                {this.props.comp && <Link to="/second"><button className="gamebutton py-2 px-4 font-semibold rounded-lg shadow-md text-white bg-indigo-600 hover:bg-indigo-700">Next</button></Link>}
+                {this.props.comp ? <Link to="/second"><button className="gamebutton py-2 px-4 font-semibold rounded-lg shadow-md text-white bg-indigo-600 hover:bg-indigo-700">Next</button></Link> : <button className="gamebutton py-2 px-4 font-semibold rounded-lg shadow-md text-white bg-indigo-600 hover:bg-indigo-700">Hint</button>}
             </div>
         );
     }
@@ -125,6 +129,14 @@ class Game extends React.Component {
         });
     };
 
+    restart = () => {
+        window.location.reload();
+    }
+
+    setHint = () => {
+        this.setState({ showHint: true });
+    }
+    
     submit = () => {
         // var stms = []
         // var blocks = this.state[ATTRS.PLAY];
@@ -149,16 +161,23 @@ class Game extends React.Component {
     }
 
     render() {
-        const { gameState, timeLeft, bench, ...groups } = this.state;
+        const { gameState, showHint, hint, bench } = this.state;
         const isDropDisabled = gameState === GAME_STATE.DONE;
 
         return (
             <div className='canves'>
                 <div className='row'>
                     <Instruction />
+                    <h2 className="left instruction">{showHint ? hint : ""}</h2>
                     <div className="right">
                         <Title />
-                        <Buttons />
+                        <div className="buttonGroup">
+                            <Link to="/level-selection">
+                                <button className="gamebutton py-2 px-4 font-semibold rounded-lg shadow-md text-white bg-indigo-600 hover:bg-indigo-700">Return</button>
+                            </Link>
+                            <button className="gamebutton py-2 px-4 font-semibold rounded-lg shadow-md text-white bg-indigo-600 hover:bg-indigo-700" onClick={this.restart}>Restart</button>
+                            <button className="gamebutton py-2 px-4 font-semibold rounded-lg shadow-md text-white bg-indigo-600 hover:bg-indigo-700" onClick={this.setHint}>Hint</button>
+                        </div>
                     </div>
                 </div>
                 <DragDropContext onDragEnd={this.onDragEnd}>
