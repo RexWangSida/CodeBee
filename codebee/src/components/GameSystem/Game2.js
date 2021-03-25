@@ -67,7 +67,7 @@ class Result extends React.Component {
     return (
       <>
         {this.state.showMessage && this.state.answer && <Complete />}
-        <div className="left result">{this.state.showMessage && this.state.answer && <p>c = 4<br />You are correct!</p>}{this.state.showMessage && !this.state.answer && <p>Unable to parse, please retry.</p>}</div>
+        <div className="left result">{this.state.showMessage && this.state.answer && <p>1<br />3<br />5<br />7<br />9<br />You are correct!</p>}{this.state.showMessage && !this.state.answer && <p>Unable to parse, please retry.</p>}</div>
         <div className='right' style={{ margin: "auto" }}>
           <button className="gamebutton py-3 px-5 font-semibold rounded-lg shadow-md text-white bg-indigo-600 hover:bg-indigo-700" onClick={this.onButtonClickHandler}>Submit</button>
           {this.state.showMessage && !this.state.answer && <button className="gamebutton py-3 px-5 font-semibold rounded-lg shadow-md text-white bg-indigo-600 hover:bg-indigo-700" onClick={window.location.reload.bind(window.location)}>Restart</button>}
