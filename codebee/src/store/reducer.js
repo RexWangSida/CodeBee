@@ -21,7 +21,12 @@ const initState = {
   username: "UnregisteredUser",
   status: false,
   users:[
-    {name:"Kris Yang",email:"yangw19@mcmaster.ca",password:"123123"},
+    {name:"Kris Yang",email:"yangw19@mcmaster.ca",password:"123456"},
+    {name:"Sida Wang",email:"wangs132@mcmaster.ca",password:"123456"},
+    {name:"Jason Nagy",email:"nagyj2@mcmaster.ca",password:"123456"},
+    {name:"Deuce Cao",email:"caoh8@mcmaster.ca",password:"123456"},
+    {name:"Shivaansh Prasann",email:"prasanns@mcmaster.ca",password:"123456"},
+    {name:"Josh Wu",email:"wuy176@mcmaster.ca",password:"123456"},
     {name:"Tester",email:"usertest@gmail.com",password:"123456"},
   ]
 }
