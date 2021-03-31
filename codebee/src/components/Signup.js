@@ -10,7 +10,7 @@ export default function Signup (props){
     const [username, setUsername] = useState("");
     const [redirect, setRedirect] = useState(false);
     const dispatch = useDispatch();
-
+    const users = useSelector(state => state.users);
     function validateForm() {
       return username.length > 0 && email.length > 0 && password.length > 0 && password === confirmPWD;
     }
@@ -21,30 +21,45 @@ export default function Signup (props){
         email: email,
         password: password,
       };
-      fetch("/user/create", {
-        method: "POST",
-        headers: {
-          "Accept": "application/json,text/plain,*/*",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          if(data.result === 0){
-            dispatch(setUserName(data.username))
-            dispatch(setUserStatus(true))
-            localStorage.setItem('userToken', data.token);
-            localStorage.setItem('userName', data.username);
-            setRedirect(true);
-            console.log(data.username,data.token)
-          }else{
-            alert(data.message);
-          }
-        })
-        .catch((e) => {
-          console.log(e);
-        });
+      for (var user of users){
+        if (user.email == email){
+          alert("The email has been registered!");
+          return;
+        }else if(user.name == username){
+          alert("Username has been taken.");
+          return;
+        }
+      }
+      dispatch(setUserName(username))
+      dispatch(setUserStatus(true))
+      localStorage.setItem('userName', username);
+      setRedirect(true);
+
+
+      // fetch("/user/create", {
+      //   method: "POST",
+      //   headers: {
+      //     "Accept": "application/json,text/plain,*/*",
+      //     "Content-Type": "application/json",
+      //   },
+      //   body: JSON.stringify(data),
+      // })
+      //   .then((res) => res.json())
+      //   .then((data) => {
+      //     if(data.result === 0){
+      //       dispatch(setUserName(data.username))
+      //       dispatch(setUserStatus(true))
+      //       localStorage.setItem('userToken', data.token);
+      //       localStorage.setItem('userName', data.username);
+      //       setRedirect(true);
+      //       console.log(data.username,data.token)
+      //     }else{
+      //       alert(data.message);
+      //     }
+      //   })
+      //   .catch((e) => {
+      //     console.log(e);
+      //   });
     }
     if (redirect) {
       return <Redirect to={'/'} />;

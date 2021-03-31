@@ -11,7 +11,7 @@ import Game from "./GameSystem/Game";
 import Game2 from "./GameSystem/Game2";
 import Game3 from "./GameSystem/Game3";
 import {useSelector,useDispatch} from "react-redux"
-import {setUserName,setUserStatus} from '../store/reducer'
+import {setUserName,setUserStatus,authentication} from '../store/reducer'
 
 export default function Navbar(props){
   const [expand, setExpand] = useState(false);
@@ -21,62 +21,16 @@ export default function Navbar(props){
   //componentWillMount
   useEffect(() => {
     const name = localStorage.getItem("userName");
-    const token = localStorage.getItem("userToken");
-    if(name && token){
-    const data = JSON.stringify({
-      username: name,
-      token:token
-    });
-    fetch("/user/auth", {
-      method: "POST",
-      headers: {
-        "Accept": "application/json,text/plain,*/*",
-        "Content-Type": "application/json",
-      },
-      body: data,
-    }).then((res) => res.json())
-      .then((data) => {
-        if(data.result === 0){
-            dispatch(setUserName(data.username))
-            dispatch(setUserStatus(true))
-        }else{
-          console.log(data.message);
-        }
-      })
-      .catch((e) => {
-        console.log(e)
-      });
-  }}, [])
+    if(name){
+      dispatch(setUserStatus(true));
+      dispatch(setUserName(name));
+    }
+  }, [])
 
   function loginOut(){
-    const data = {
-      username:username,
-      token:localStorage.getItem("userToken")}
-    fetch("/user/logout", {
-      method: "POST",
-      headers: {
-        "Accept": "application/json,text/plain,*/*",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if(data.result === 0){
-            dispatch(setUserName("UnregisteredUser"))
-            dispatch(setUserStatus(false))
-            localStorage.removeItem("userName")
-            localStorage.removeItem("userToken")
-        }else if (data.result === 1){
-          alert(data.message);
-        }else{
-          console.log(data.message);
-        }
-      })
-      .catch((e) => {
-        console.log(e)
-      });
-
+    dispatch(setUserStatus(false));
+    dispatch(setUserName("UnregisteredUser"));
+    localStorage.removeItem("userName");
   }
   if(status){
     var varSign = (

@@ -1,6 +1,6 @@
 import React, { useState,useEffect} from "react";
 import {useSelector,useDispatch} from "react-redux"
-import {setUserName,setUserStatus} from '../store/reducer'
+import {setUserName,setUserStatus,signin} from '../store/reducer'
 import {Redirect} from "react-router-dom";
 
 export default function Signin(props){
@@ -8,35 +8,25 @@ export default function Signin(props){
   const [email, setEmail] = useState("");
   const [redirect, setRedirect] = useState(false);
   const dispatch = useDispatch();
+  const status = useSelector(state => state.status);
+  const users = useSelector(state => state.users);
 
   function signIn(){
-    const data = {
-      email: email,
-      password: password,
-    };
-    fetch("/user/login", {
-      method: "POST",
-      headers: {
-        "Accept": "application/json,text/plain,*/*",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if(data.result === 0){
-            dispatch(setUserName(data.username))
-            dispatch(setUserStatus(true))
-            localStorage.setItem('userToken', data.token);
-            localStorage.setItem('userName', data.username);
-            setRedirect(true);
+    for (var user of users){
+      if (user.email == email){
+        if(user.password == password){
+          dispatch(setUserStatus(true));
+          dispatch(setUserName(user.name));
+          localStorage.setItem('userName', user.name);
+          setRedirect(true);
+          return;
         }else{
-          alert(data.message);/////////////////////////////////////replace for email not registered
+          alert("The password does not match the email you registered!")
         }
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+
+      }
+    }
+    alert("The email is not registered with us!")
   }
   if (redirect) {
     return <Redirect to={'/'} />;

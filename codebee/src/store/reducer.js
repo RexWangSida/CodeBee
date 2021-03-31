@@ -1,5 +1,11 @@
 export const SET_USERNAME = "SET_USERNAME"
 export const SET_USERSTATUS = "SET_USERSTATUS"
+export const SIGN_UP = "SIGN_UP"
+
+export const signup = (value)=>({
+  type: SIGN_UP,
+  value
+})
 
 export const setUserName = (value) => ({
   type: SET_USERNAME,
@@ -13,7 +19,10 @@ export const setUserStatus = (value) => ({
 
 const initState = {
   username: "UnregisteredUser",
-  status: false
+  status: false,
+  users:[
+    {name:"Kris Yang",email:"yangw19@mcmaster.ca",password:"123123"},
+  ]
 }
 
 export default function reducer(state = initState, action) {
