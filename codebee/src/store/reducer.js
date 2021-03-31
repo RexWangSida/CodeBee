@@ -22,6 +22,7 @@ const initState = {
   status: false,
   users:[
     {name:"Kris Yang",email:"yangw19@mcmaster.ca",password:"123123"},
+    {name:"Tester",email:"usertest@gmail.com",password:"123456"},
   ]
 }
 
