@@ -1,6 +1,6 @@
 import React, { Component, useState } from "react";
 import {useSelector,useDispatch} from "react-redux"
-import {setUserName,setUserStatus} from '../store/reducer'
+import {setUserName,setUserStatus,addUser} from '../store/reducer'
 import {Redirect} from "react-router-dom";
 
 export default function Signup (props){
@@ -32,6 +32,7 @@ export default function Signup (props){
       }
       dispatch(setUserName(username))
       dispatch(setUserStatus(true))
+      dispatch(addUser(data))
       localStorage.setItem('userName', username);
       setRedirect(true);
 

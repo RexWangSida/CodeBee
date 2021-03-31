@@ -1,9 +1,9 @@
 export const SET_USERNAME = "SET_USERNAME"
 export const SET_USERSTATUS = "SET_USERSTATUS"
-export const SIGN_UP = "SIGN_UP"
+export const ADD_USER = "ADD_USER"
 
-export const signup = (value)=>({
-  type: SIGN_UP,
+export const addUser = (value)=>({
+  type: ADD_USER,
   value
 })
 
@@ -17,6 +17,8 @@ export const setUserStatus = (value) => ({
   value
 })
 
+const localUsers = JSON.parse(localStorage.getItem('users'));
+
 const initState = {
   username: "UnregisteredUser",
   status: false,
@@ -28,7 +30,7 @@ const initState = {
     {name:"Shivaansh Prasann",email:"prasanns@mcmaster.ca",password:"123456"},
     {name:"Josh Wu",email:"wuy176@mcmaster.ca",password:"123456"},
     {name:"Tester",email:"usertest@gmail.com",password:"123456"},
-  ]
+  ].concat((localUsers ? localUsers : [])),
 }
 
 export default function reducer(state = initState, action) {
@@ -39,6 +41,11 @@ export default function reducer(state = initState, action) {
       return newState
     case SET_USERSTATUS:
       newState.status = action.value
+      return newState
+    case ADD_USER:
+      var newuser = {name:action.value.username,email:action.value.email,password:action.value.password};
+      newState.users.push(newuser);
+      localStorage.setItem('users', JSON.stringify(newState.users.slice(7)));
       return newState
     default:
       return state
