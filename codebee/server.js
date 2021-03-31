@@ -9,7 +9,8 @@ var indexRouter = require('./routes/indexAPI');
 var usersRouter = require('./routes/userAPI');
 var gameRouter = require('./routes/gameAPI');
 
-const DB = "mongodb+srv://Sida:108740@cluster0.5fddy.mongodb.net/codebee?retryWrites=true&w=majority";
+// const DB = "mongodb+srv://Sida:108740@cluster0.5fddy.mongodb.net/codebee?retryWrites=true&w=majority&ssl=true";
+const DB = process.env.MONGODB_URI || "mongodb://Sida:108740@cluster0-shard-00-00.5fddy.mongodb.net:27017,cluster0-shard-00-01.5fddy.mongodb.net:27017,cluster0-shard-00-02.5fddy.mongodb.net:27017/codebee?ssl=true&replicaSet=atlas-3xgwi1-shard-0&authSource=admin&retryWrites=true&w=majority"
 
 var app = express();
 

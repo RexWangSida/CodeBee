@@ -1,6 +1,9 @@
 {
   "name": "codebee",
   "version": "0.1.0",
+  "engines": {
+    "node": "14.14.0"
+  },
   "private": true,
   "proxy": "http://localhost:8080",
   "dependencies": {
