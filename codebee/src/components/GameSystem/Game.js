@@ -11,6 +11,7 @@ const initialState = {
     bench: shuffle(BLOCKS),
     hint: "1: The assignment operator can be used to assign a value to a variable.\n2: The + operator can be assigned on two variables. Eg: num1 + num2.\n3: The result of an operation can be directly stored in a variable. Eg: num3 = num1 + 5.",
     showHint: false,
+    showTut: false,
     [ATTRS.VAR]: [],
     [ATTRS.OP]: [],
     [ATTRS.VAL]: [],
@@ -53,7 +54,7 @@ class Result extends React.Component {
     onButtonClickHandler = () => {
         // this.props.submit();
         this.setState({ showMessage: true });
-        if (this.props.blocks.length != 0) {
+        if (this.props.blocks.length == 3) {
             this.setState({ answer: true });
         }
     };
@@ -62,7 +63,7 @@ class Result extends React.Component {
         return (
             <>
                 {this.state.showMessage && this.state.answer && <Complete />}
-                <div className="left result">{this.state.showMessage && this.state.answer && <p>c = 4<br />You are correct!</p>}{this.state.showMessage && !this.state.answer && <p>Unable to parse, please retry.</p>}</div>
+                <div className="left result">{this.state.showMessage && this.state.answer && <p>c = 4<br />You are correct!</p>}{this.state.showMessage && !this.state.answer && <p>Your answer is incorrect, please retry.</p>}</div>
                 <div className='right' style={{ margin: "auto" }}>
                     <button className="gamebutton py-3 px-5 font-semibold rounded-lg shadow-md text-white bg-indigo-600 hover:bg-indigo-700" onClick={this.onButtonClickHandler}>Submit</button>
                     {this.state.showMessage && !this.state.answer && <button className="gamebutton py-3 px-5 font-semibold rounded-lg shadow-md text-white bg-indigo-600 hover:bg-indigo-700" onClick={window.location.reload.bind(window.location)}>Restart</button>}
@@ -96,6 +97,35 @@ class Complete extends React.Component {
     }
 }
 
+class Tutorial extends React.Component {
+    render() {
+        return (
+            <>
+                <div className="popwindow tut">
+                    <div className="windowtitle text-xl tracking-tight font-bold text-indigo-600">Tutorial</div>
+                    <div className="windowcontent">
+                        <div className="windowtext text-l tracking-tight" >
+                            Hello, and welcome to CodeBee!<br></br><br></br>
+                            For the first exercise, we will go over the basics of CodeBee and how to use it.<br></br>
+                            CodeBee has 4 basic 'sections' that you need to be aware of. First is the instruction box (what you are reading). The problems you must complete will be placed here. Directly below the screen is the coding area, where you actually solve the problem being asked. To do this, you must fill each column with code to generate the correct response. These blocks are found on the right side of the screen. They are dragged into the columns. Lastly, at the bottom of the screen, there is the code output. This is where your answer will be generated.<br></br>
+                            In the instruction area, there are some buttons which you can click. First is the 'run' button which will use your code to generate an output. Next is the 'back' button which will move you to the level select screen. Lastly is the 'hint' button, giving you additional information to solve the problem.<br></br>
+                            To program, you must first know what a 'statement' is. A statement is simply a line of code which will do something. Statements are ran in a sequential fashion. They can declare 'variables' (simple names which can be assigned a value) or control which statements are executed next.<br></br>
+                            The most simple statement is an assignment. This will assign some value with a text name, so when you use the name again, you will get the value instead. This name is then called a 'variable'. In CodeBee, you can perform variable assignment by the following:<br></br><br></br>
+                            [Text Name]<br></br>
+                            [=]<br></br>
+                            [Value]<br></br><br></br>
+                            The variable name block (Text Name) must be a sequence of letters with no spaces. The Value can contain other names, numbers and operations (like addition and subtraction). The result of the Value block will determine what will be assigned to the name.<br></br>
+                            Note that if a name has not been assigned, it cannot be used within the Value block.
+                            </div>
+                        <div className="windowtext">
+                                <button className="gamebutton py-2 px-4 font-semibold rounded-lg shadow-md text-white bg-indigo-600 hover:bg-indigo-700" style={{marginLeft:"calc(50% - 40px)"}}onClick={this.props.onClick}>I got it</button>
+                        </div>
+                    </div>
+                </div>
+            </>
+        );
+    }
+}
 
 class Buttons extends React.Component {
 
@@ -137,6 +167,14 @@ class Game extends React.Component {
         this.setState({ showHint: true });
     }
 
+    setTut = () => {
+        this.setState({ showTut: true });
+    }
+
+    closeTut = () => {
+        this.setState({ showTut: false });
+    }
+
     submit = () => {
         // var stms = []
         // var blocks = this.state[ATTRS.PLAY];
@@ -166,12 +204,14 @@ class Game extends React.Component {
 
         return (
             <div className='canves'>
+                <>{this.state.showTut && <Tutorial onClick={this.closeTut}/>}</>
                 <div className='row'>
                     <Instruction />
                     <h2 className="left instruction">{showHint ? hint : ""}</h2>
                     <div className="right">
                         <Title />
                         <div className="buttonGroup">
+                            <button className="gamebutton py-2 px-4 font-semibold rounded-lg shadow-md text-white bg-indigo-600 hover:bg-indigo-700" onClick={this.setTut}>How to play</button>
                             <Link to="/level-selection">
                                 <button className="gamebutton py-2 px-4 font-semibold rounded-lg shadow-md text-white bg-indigo-600 hover:bg-indigo-700">Return</button>
                             </Link>

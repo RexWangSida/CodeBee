@@ -92,10 +92,18 @@
     border-radius: 6px;
 }
 
+.tut {
+    width: 1000px;
+    top: 100px;
+    left: calc(50% - 500px);
+    text-align: left;
+}
+
 .windowtitle {
     margin-top: 5px;
     padding: 5px;
     border-bottom: solid indigo;
+    text-align: center;
 }
 
 .windowcontent {
