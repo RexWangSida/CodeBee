@@ -2,6 +2,7 @@ export const ATTRS = {
   VAR: 'var',
   OP: 'op',
   VAL: 'val',
+  STATE: 'state'
 };
 
 export const BLOCKS = [

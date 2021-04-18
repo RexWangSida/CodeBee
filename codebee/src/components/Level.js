@@ -3,6 +3,7 @@ import "./Level.css"
 import Game from "./GameSystem/Game"
 import Game2 from "./GameSystem/Game2";
 import Game3 from "./GameSystem/Game3";
+import Sandbox from "./GameSystem/Sandbox";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 export default class Level extends React.Component {
@@ -82,6 +83,7 @@ export default class Level extends React.Component {
                 <div id="levelGrid" className="grid grid-rows-3 grid-flow-col gap-4" >
                     {buttons}
                 </div>
+                <div id="levelGrid " style={{marginTop: "40px"}}> <Link to="/sandbox"><button style={{width: "300px"}}id="levelButton" className="py-2 px-4 font-semibold rounded-lg shadow-md text-white bg-indigo-600"> Sandbox Level</button> </Link></div>
                 <Router>
                         <div className="auth-wrapper">
                             <div className="auth-inner">
@@ -89,6 +91,7 @@ export default class Level extends React.Component {
                                     <Route exact path="/game" component={Game} />
                                     <Route path="/second" component={Game2} />
                                     <Route path="/third" component = {Game3}/>
+                                <Route path="/sandbox" component={Sandbox} />
                                 </Switch>
                             </div>
                         </div>
